@@ -157,6 +157,11 @@ namespace ShowOpenCVResult
         {
             new BitmapStitching().Show(this.dockPanel1, DockState.Document);
         }
+
+        private void 填充测试ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new FillTest().Show(this.dockPanel1, DockState.Document);
+        }
     }
 
 
