@@ -1,0 +1,396 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{7B631989-F6A6-41D7-923C-9B0151026850}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ShowOpenCVResult</RootNamespace>
+    <AssemblyName>ShowOpenCVResult</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <PublishUrl>发布\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Emgu.CV, Version=2.4.10.1939, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Emgu\emgucv-windows-universal 3.0.0.2157\bin\Emgu.CV.dll</HintPath>
+    </Reference>
+    <Reference Include="Emgu.CV.Contrib">
+      <HintPath>C:\Emgu\emgucv-windows-universal 3.0.0.2157\bin\Emgu.CV.Contrib.dll</HintPath>
+    </Reference>
+    <Reference Include="Emgu.CV.Cuda">
+      <HintPath>C:\Emgu\emgucv-windows-universal 3.0.0.2157\bin\Emgu.CV.Cuda.dll</HintPath>
+    </Reference>
+    <Reference Include="Emgu.CV.ML, Version=2.4.10.1939, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Emgu\emgucv-windows-universal 3.0.0.2157\bin\Emgu.CV.ML.dll</HintPath>
+    </Reference>
+    <Reference Include="Emgu.CV.OCR, Version=2.4.10.1939, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Emgu\emgucv-windows-universal 3.0.0.2157\bin\Emgu.CV.OCR.dll</HintPath>
+    </Reference>
+    <Reference Include="Emgu.CV.Shape">
+      <HintPath>C:\Emgu\emgucv-windows-universal 3.0.0.2157\bin\Emgu.CV.Shape.dll</HintPath>
+    </Reference>
+    <Reference Include="Emgu.CV.Stitching, Version=2.4.10.1939, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Emgu\emgucv-windows-universal 3.0.0.2157\bin\Emgu.CV.Stitching.dll</HintPath>
+    </Reference>
+    <Reference Include="Emgu.CV.Superres">
+      <HintPath>C:\Emgu\emgucv-windows-universal 3.0.0.2157\bin\Emgu.CV.Superres.dll</HintPath>
+    </Reference>
+    <Reference Include="Emgu.CV.UI, Version=2.4.10.1939, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Emgu\emgucv-windows-universal 3.0.0.2157\bin\Emgu.CV.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="Emgu.CV.UI.GL">
+      <HintPath>C:\Emgu\emgucv-windows-universal 3.0.0.2157\bin\Emgu.CV.UI.GL.dll</HintPath>
+    </Reference>
+    <Reference Include="Emgu.CV.VideoStab, Version=2.4.10.1939, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Emgu\emgucv-windows-universal 3.0.0.2157\bin\Emgu.CV.VideoStab.dll</HintPath>
+    </Reference>
+    <Reference Include="Emgu.Util, Version=2.4.10.1939, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Emgu\emgucv-windows-universal 3.0.0.2157\bin\Emgu.Util.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WeifenLuo.WinFormsUI.Docking">
+      <HintPath>bin\Debug\WeifenLuo.WinFormsUI.Docking.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="WindowsBlock\BitmapSVMTrain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WindowsBlock\BitmapSVMTrain.designer.cs">
+      <DependentUpon>BitmapSVMTrain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TestProc\BaseFunc.cs" />
+    <Compile Include="WindowsBlock\BitmapAdaptiveThreshold.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WindowsBlock\BitmapAdaptiveThreshold.Designer.cs">
+      <DependentUpon>BitmapAdaptiveThreshold.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WindowsBlock\BitmapBlur.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WindowsBlock\BitmapBlur.Designer.cs">
+      <DependentUpon>BitmapBlur.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WindowsBlock\BitmapWlakerTest.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WindowsBlock\BitmapWlakerTest.Designer.cs">
+      <DependentUpon>BitmapWlakerTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WindowsBlock\BitmapSVM.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WindowsBlock\BitmapSVM.Designer.cs">
+      <DependentUpon>BitmapSVM.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WindowsBlock\BitmapFindCon.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WindowsBlock\BitmapFindCon.Designer.cs">
+      <DependentUpon>BitmapFindCon.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WindowsBlock\BitmapHis.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WindowsBlock\BitmapHis.Designer.cs">
+      <DependentUpon>BitmapHis.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WindowsBlock\BitmapHSV.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WindowsBlock\BitmapHSV.Designer.cs">
+      <DependentUpon>BitmapHSV.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WindowsBlock\BitmapHuoghTest.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WindowsBlock\BitmapHuoghTest.Designer.cs">
+      <DependentUpon>BitmapHuoghTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WindowsBlock\BitmapOpenClose.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WindowsBlock\BitmapOpenClose.Designer.cs">
+      <DependentUpon>BitmapOpenClose.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WindowsBlock\BitmapStitching.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WindowsBlock\BitmapStitching.Designer.cs">
+      <DependentUpon>BitmapStitching.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WindowsBlock\BitmapTransformation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WindowsBlock\BitmapTransformation.Designer.cs">
+      <DependentUpon>BitmapTransformation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WindowsBlock\CompareTest.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WindowsBlock\CompareTest.Designer.cs">
+      <DependentUpon>CompareTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BaseUI\DrawImageBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="BaseUI\DrawImageBox.Designer.cs">
+      <DependentUpon>DrawImageBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TestProc\DrawMatches.cs" />
+    <Compile Include="TestProc\FinderDetect.cs" />
+    <Compile Include="TestProc\FindPedestrian.cs" />
+    <Compile Include="WindowsBlock\BitmapCreatAngles.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WindowsBlock\BitmapCreatAngles.Designer.cs">
+      <DependentUpon>BitmapCreatAngles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WindowsBlock\FillTest.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WindowsBlock\FillTest.Designer.cs">
+      <DependentUpon>FillTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WindowsBlock\FinalTest.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WindowsBlock\FinalTest.Designer.cs">
+      <DependentUpon>FinalTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TestProc\HarrisTest.cs" />
+    <Compile Include="BaseUI\ImageIO.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="BaseUI\ImageIO.Designer.cs">
+      <DependentUpon>ImageIO.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WindowsBlock\MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WindowsBlock\MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MathOp\MinTwoMulity.cs" />
+    <Compile Include="BaseUI\MoveBlock.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BaseUI\MoveBlock.Designer.cs">
+      <DependentUpon>MoveBlock.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BaseUI\MyTrackBar.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="BaseUI\MyTrackBar.Designer.cs">
+      <DependentUpon>MyTrackBar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WindowsBlock\BitmapSuftDetect.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WindowsBlock\BitmapSuftDetect.Designer.cs">
+      <DependentUpon>BitmapSuftDetect.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="WindowsBlock\BitmapSVMTrain.resx">
+      <DependentUpon>BitmapSVMTrain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WindowsBlock\BitmapAdaptiveThreshold.resx">
+      <DependentUpon>BitmapAdaptiveThreshold.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WindowsBlock\BitmapBlur.resx">
+      <DependentUpon>BitmapBlur.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WindowsBlock\BitmapWlakerTest.resx">
+      <DependentUpon>BitmapWlakerTest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WindowsBlock\BitmapSVM.resx">
+      <DependentUpon>BitmapSVM.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WindowsBlock\BitmapFindCon.resx">
+      <DependentUpon>BitmapFindCon.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WindowsBlock\BitmapHis.resx">
+      <DependentUpon>BitmapHis.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WindowsBlock\BitmapHSV.resx">
+      <DependentUpon>BitmapHSV.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WindowsBlock\BitmapHuoghTest.resx">
+      <DependentUpon>BitmapHuoghTest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WindowsBlock\BitmapOpenClose.resx">
+      <DependentUpon>BitmapOpenClose.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WindowsBlock\BitmapStitching.resx">
+      <DependentUpon>BitmapStitching.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WindowsBlock\BitmapTransformation.resx">
+      <DependentUpon>BitmapTransformation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WindowsBlock\BitmapCreatAngles.resx">
+      <DependentUpon>BitmapCreatAngles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WindowsBlock\CompareTest.resx">
+      <DependentUpon>CompareTest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WindowsBlock\FillTest.resx">
+      <DependentUpon>FillTest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WindowsBlock\FinalTest.resx">
+      <DependentUpon>FinalTest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BaseUI\ImageIO.resx">
+      <DependentUpon>ImageIO.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WindowsBlock\MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BaseUI\MoveBlock.resx">
+      <DependentUpon>MoveBlock.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BaseUI\MyTrackBar.resx">
+      <DependentUpon>MyTrackBar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="WindowsBlock\BitmapSuftDetect.resx">
+      <DependentUpon>BitmapSuftDetect.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 %28x86 和 x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.4.5">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 4.5</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="pedestrian.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="TestImgSrc\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
