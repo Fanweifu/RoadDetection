@@ -191,8 +191,37 @@ namespace ShowOpenCVResult
                     img[0, h * inputimg.Width + w] = inputimg[h, w];
             return img;
         }
+        #region PtrTest
+        static void PtrTest() {
 
+            Image<Bgr, byte> imgimg = new Image<Bgr, byte>(new Size(2, 2));
+            imgimg[0, 0] = new Bgr(0, 0, 0);
+            imgimg[0, 1] = new Bgr(1, 11, 111);
+            imgimg[1, 0] = new Bgr(2, 22, 222);
+            imgimg[1, 1] = new Bgr(3, 33, 250);
+            Mat img = imgimg.Mat;
+            int w = img.Width, h = img.Width, step = img.Step, chs = img.NumberOfChannels;
+            unsafe
+            {
+                byte* pt = (byte*)img.DataPointer;
+                for (int i = 0; i < h; i++)
+                {
+                    for (int j = 0; j < w; j++)
+                    {
+                        byte* value = pt + step * i + j * chs;
+                        for (int k = 0; k < chs; k++)
+                        {
+                            byte onevalue = *(value + k);
+                            //TODO:
+                        }
+                    }
+                }
+            }
 
+        
+        }
+
+        #endregion
     }
 
     static class Setting
