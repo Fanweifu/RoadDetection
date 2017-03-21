@@ -18,20 +18,23 @@ namespace ShowOpenCVResult
             InitializeComponent();
         }
 
-        Image<Gray, float> imgweight;
 
             
         private void imageIO1_DoImgChange(object sender, EventArgs e)
         {
-            if (imgweight == null) return;
-            var result = new Image<Gray, float>(imgweight.Size);
-            CvInvoke.Normalize(imgweight, result);
-            CvInvoke.Threshold(result, result,(double) myTrackBar1.Value/100,255, Emgu.CV.CvEnum.ThresholdType.Binary);
+            if (imageIO1.Image1 == null) return;
+
+            var img = imageIO1.Image1 as Image<Bgr, Byte>;
+            var imggray = img.Convert<Gray, byte>();
+            var imgblur = imggray.SmoothMedian(5);
+            Image<Gray, Byte> line =null , road =null;
+            BaseFunc.GetSplitRoadImg(imgblur,ref line,ref road);
+
             if (imageIO1.Image2!=null)
             {
                 imageIO1.Image2.Dispose();
             }
-            imageIO1.Image2 = result;
+            imageIO1.Image2 = line| road;
         }
 
 
@@ -51,12 +54,7 @@ namespace ShowOpenCVResult
 
         private void imageIO1_AfterImgLoaded(object sender, EventArgs e)
         {
-            if (imageIO1.Image1 == null) return;
-            var img = imageIO1.Image1 as Image<Bgr, Byte>;
-            var imggray = img.Convert<Gray, Byte>();
-            var imgblur = imggray.SmoothBilatral(20, 40, 10);
-            imgblur._EqualizeHist();
-            imgweight = imgblur.Sobel(1, 0, 3).AddWeighted(imgblur.Sobel(0, 1, 3), 0.5, 0.5, 0);
+           
         }
     }
 }

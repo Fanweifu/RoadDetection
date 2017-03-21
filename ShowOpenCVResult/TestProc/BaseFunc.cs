@@ -9,6 +9,7 @@ using System.Drawing;
 using Emgu.CV.CvEnum;
 using Emgu.CV.Util;
 using System.IO;
+using System.Diagnostics;
 
 namespace ShowOpenCVResult
 {
@@ -184,21 +185,61 @@ namespace ShowOpenCVResult
 
         static public Image<Gray, float> GetOneLineVector(Image<Gray, float> inputimg)
         {
-            Image<Gray, float> img = new Image<Gray, float>(inputimg.Size.Height * inputimg.Size.Width, 1);
-            
-            for (int h = 0; h < inputimg.Height; h++)
-                for (int w = 0; w < inputimg.Width; w++)
-                    img[0, h * inputimg.Width + w] = inputimg[h, w];
-            return img;
-        }
-        #region PtrTest
-        static void PtrTest() {
 
-            Image<Bgr, byte> imgimg = new Image<Bgr, byte>(new Size(2, 2));
+            Image<Gray, float> outimg = new Image<Gray, float>(inputimg.Size.Height * inputimg.Size.Width, 1);
+            unsafe {
+                float* inputhead = (float*)inputimg.Mat.DataPointer;
+                float* outputhead = (float*)outimg.Mat.DataPointer;
+                int w = inputimg.Width, h = inputimg.Height, instep = inputimg.Mat.Step;
+
+                for (int hidx = 0; hidx < h; hidx++)
+                    for (int widx = 0; widx < w ; widx++)
+                    {
+                        *(outputhead + hidx * w + widx) = *(inputhead + hidx * w  + widx);
+                    }
+            }
+                   
+            return outimg;
+        }
+        static public void  GetSplitRoadImg(Image<Gray, byte> inputimg, ref Image<Gray, byte> lineimg, ref Image<Gray, byte> blindness, int thresholdup = 170, int thresholdlow = 180) {
+            CvInvoke.Normalize(inputimg, inputimg, 0, 255, Emgu.CV.CvEnum.NormType.MinMax);
+            Gray g = new Gray(thresholdup);
+            if (lineimg != null) lineimg.Dispose();
+            lineimg = inputimg.ThresholdBinary(g, new Gray(255));
+            if (blindness != null) lineimg.Dispose();
+            blindness = inputimg.ThresholdBinaryInv(new Gray(20), new Gray(100));
+        }
+
+        #region PtrTest
+        static public void PtrTest() {
+
+            Image<Bgr, byte> imgimg = new Image<Bgr, byte>(new Size(500,500));
             imgimg[0, 0] = new Bgr(0, 0, 0);
             imgimg[0, 1] = new Bgr(1, 11, 111);
             imgimg[1, 0] = new Bgr(2, 22, 222);
             imgimg[1, 1] = new Bgr(3, 33, 250);
+            
+      
+            Stopwatch Watch = new Stopwatch();
+            Watch.Start();
+            var result2 = imgimg.Resize(250000, 1, Inter.Linear);
+            Watch.Stop();
+            long time1 = Watch.ElapsedMilliseconds;
+
+            Stopwatch Watch1 = new Stopwatch();
+            Watch1.Start();
+            var img2 = imgimg.Convert<Gray, float>();
+            Watch1.Stop();
+            long time2 = Watch1.ElapsedMilliseconds;
+
+            Stopwatch Watch2 = new Stopwatch();
+            Watch2.Start();
+            var result = BaseFunc.GetOneLineVector(img2);
+            Watch2.Stop();
+            long time3 = Watch2.ElapsedMilliseconds;
+
+
+
             Mat img = imgimg.Mat;
             int w = img.Width, h = img.Width, step = img.Step, chs = img.NumberOfChannels;
             unsafe
@@ -226,8 +267,18 @@ namespace ShowOpenCVResult
 
     static class Setting
     {
+
+        #region SaveImgOption
         public static int KicknessScale = 200;
-        public static Size ExampleSize = new Size(50, 50); 
+        public static Size ExampleSize = new Size(50, 50);
+        #endregion
+
+        #region transfrom
+
+        
+        
+        #endregion
+
     }
 }
         

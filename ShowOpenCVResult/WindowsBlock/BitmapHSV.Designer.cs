@@ -89,7 +89,7 @@
             this.myTrackBar2.Size = new System.Drawing.Size(262, 49);
             this.myTrackBar2.TabIndex = 1;
             this.myTrackBar2.Title = "最低亮度";
-            this.myTrackBar2.Value = 0;
+            this.myTrackBar2.Value = 170;
             this.myTrackBar2.ValueChanged += new System.EventHandler(this.myTrackBar1_ValueChanged);
             // 
             // myTrackBar1
@@ -113,7 +113,8 @@
             this.imageIOControl1.Image2 = null;
             this.imageIOControl1.Location = new System.Drawing.Point(0, 110);
             this.imageIOControl1.Name = "imageIOControl1";
-
+            this.imageIOControl1.Size = new System.Drawing.Size(805, 370);
+            this.imageIOControl1.SpOrientation = System.Windows.Forms.Orientation.Vertical;
             this.imageIOControl1.TabIndex = 2;
             this.imageIOControl1.DoImgChange += new System.EventHandler(this.imageIOControl1_DoImgChange);
             // 

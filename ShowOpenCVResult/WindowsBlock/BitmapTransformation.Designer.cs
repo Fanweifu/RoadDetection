@@ -121,6 +121,7 @@
             this.groupBox2.TabIndex = 3;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "保存参数";
+            this.groupBox2.Enter += new System.EventHandler(this.groupBox2_Enter);
             // 
             // lbOH
             // 
@@ -285,7 +286,7 @@
             this.nudOW.Size = new System.Drawing.Size(70, 21);
             this.nudOW.TabIndex = 6;
             this.nudOW.Value = new decimal(new int[] {
-            1024,
+            512,
             0,
             0,
             0});

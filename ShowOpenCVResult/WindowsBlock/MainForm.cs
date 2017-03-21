@@ -29,6 +29,8 @@ namespace ShowOpenCVResult
         {
             this.dockPanel1.DocumentStyle = DocumentStyle.DockingMdi;
             this.m_DockPath = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "DockPanel.config");
+
+                
         }
 
         private void FrmMain_FormClosing(object sender, FormClosingEventArgs e)
