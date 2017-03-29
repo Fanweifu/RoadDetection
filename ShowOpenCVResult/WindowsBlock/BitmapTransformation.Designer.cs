@@ -39,6 +39,7 @@
             this.lbAY = new System.Windows.Forms.Label();
             this.lbAX = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.btnSaveData = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -171,6 +172,7 @@
             // groupBox1
             // 
             this.groupBox1.BackColor = System.Drawing.Color.White;
+            this.groupBox1.Controls.Add(this.comboBox1);
             this.groupBox1.Controls.Add(this.btnSaveData);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.label4);
@@ -190,10 +192,19 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "调试参数";
             // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(178, 73);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(121, 20);
+            this.comboBox1.TabIndex = 13;
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            // 
             // btnSaveData
             // 
             this.btnSaveData.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btnSaveData.Location = new System.Drawing.Point(279, 76);
+            this.btnSaveData.Location = new System.Drawing.Point(322, 72);
             this.btnSaveData.Name = "btnSaveData";
             this.btnSaveData.Size = new System.Drawing.Size(70, 23);
             this.btnSaveData.TabIndex = 12;
@@ -458,5 +469,6 @@
         private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
         private ImageIO imageIOControl1;
         private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.ComboBox comboBox1;
     }
 }

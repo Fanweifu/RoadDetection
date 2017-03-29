@@ -96,6 +96,8 @@ namespace ShowOpenCVResult
 
         private void BitmapTransformation_Load(object sender, EventArgs e)
         {
+            comboBox1.DataSource = Enum.GetValues(typeof(Emgu.CV.CvEnum.Inter));
+            
             //DirectoryInfo di = new DirectoryInfo(@"E:\Users\fwf\Desktop\实习素材\Tran3");
             //FileInfo[] fs = di.GetFiles();
             //int i = 0;
@@ -123,7 +125,7 @@ namespace ShowOpenCVResult
                 imageIOControl1.Image2.Dispose();
              }
             Image<Bgr, Byte> img = imageIOControl1.Image2 as Image<Bgr, Byte>;
-            BaseFunc.AnchorTransformat<Bgr, Byte>(imageIOControl1.Image1 as Image<Bgr, Byte>, ref img, (float)nudAX.Value / 100, (float)nudAY.Value / 100, (float)nudLT.Value / 100, (int)nudOW.Value, (int)nudOH.Value);
+            BaseFunc.AnchorTransformat<Bgr, Byte>(imageIOControl1.Image1 as Image<Bgr, Byte>, ref img, (float)nudAX.Value / 100, (float)nudAY.Value / 100, (float)nudLT.Value / 100, (int)nudOW.Value, (int)nudOH.Value, (Emgu.CV.CvEnum.Inter)comboBox1.SelectedItem);
                 //imageIOControl1.OutputImage = GclrOpencvProces.BitmapTransformation(imageIOControl1.InputImage as Bitmap, TDepth, (double)nudAX.Value / 100, (double)nudAY.Value / 100, (int)nudOW.Value, (int)nudOH.Value);
              imageIOControl1.Image2 = img;
         }
@@ -136,6 +138,11 @@ namespace ShowOpenCVResult
         private void groupBox2_Enter(object sender, EventArgs e)
         {
 
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            imageIOControl1.DoChange();
         }
     }
 }

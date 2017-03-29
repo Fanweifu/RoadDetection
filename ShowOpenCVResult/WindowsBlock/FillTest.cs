@@ -32,16 +32,18 @@ namespace ShowOpenCVResult
         {
             if (imageIO1.Image1 == null) return;
             var imgbgr = imageIO1.Image1 as Image<Bgr, byte>;
-            var bgrcopy = imgbgr.Clone();
-            MCvScalar low = new MCvScalar((int)numericUpDown3.Value, (int)numericUpDown4.Value, (int)numericUpDown5.Value), high = new MCvScalar((int)numericUpDown6.Value, (int)numericUpDown7.Value, (int)numericUpDown8.Value);
-            CvInvoke.FloodFill(bgrcopy, null, new Point((int)numericUpDown1.Value, (int)numericUpDown2.Value), new MCvScalar(150, 150, 150), out rc, low, high, Emgu.CV.CvEnum.Connectivity.FourConnected, (Emgu.CV.CvEnum.FloodFillType)comboBox1.SelectedItem);
-            CvInvoke.Rectangle(bgrcopy, rc, new MCvScalar(0, 255, 0));
+            var imggray = imgbgr.Convert<Gray, byte>();
+          
+            MCvScalar low = new MCvScalar((int)numericUpDown3.Value/*, (int)numericUpDown4.Value, (int)numericUpDown5.Value*/), high = new MCvScalar((int)numericUpDown6.Value/*, (int)numericUpDown7.Value, (int)numericUpDown8.Value*/);
+            
+            CvInvoke.FloodFill(imggray, null, new Point((int)numericUpDown1.Value, (int)numericUpDown2.Value), new MCvScalar(255, 0, 0), out rc, low, high, Emgu.CV.CvEnum.Connectivity.FourConnected, (Emgu.CV.CvEnum.FloodFillType)comboBox1.SelectedItem);
+            CvInvoke.Rectangle(imggray, rc, new MCvScalar(0, 255, 0));
             if (imageIO1.Image2 != null)
             {
                 imageIO1.Image2.Dispose();
             }
 
-            imageIO1.Image2 = bgrcopy;
+            imageIO1.Image2 = imggray;
 
 
         }
@@ -53,6 +55,11 @@ namespace ShowOpenCVResult
         }
 
         private void button1_Click(object sender, EventArgs e)
+        {
+            imageIO1.DoChange();
+        }
+
+        private void comboBox1_SelectedValueChanged(object sender, EventArgs e)
         {
             imageIO1.DoChange();
         }

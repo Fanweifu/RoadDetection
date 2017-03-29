@@ -8,6 +8,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace ShowOpenCVResult
 {
@@ -19,6 +20,17 @@ namespace ShowOpenCVResult
         }
 
 
+
+        public Point FindLoadSeedPoint(Image<Gray, Byte> img ,double xscale =0.5, double yscale = 0.95) {
+            Point p = new Point((int)(img.Size.Width * xscale), (int)(img.Size.Height * yscale));
+            int distance = img.Size.Width / 20, tims = 0;
+            while (img[p.Y,p.X].Intensity>150) {
+                tims++;
+                p.X += (tims % 2 == 1 ? -1 : 1) * distance;
+                distance += 5;
+            }
+            return p;
+        }
             
         private void imageIO1_DoImgChange(object sender, EventArgs e)
         {
@@ -26,15 +38,29 @@ namespace ShowOpenCVResult
 
             var img = imageIO1.Image1 as Image<Bgr, Byte>;
             var imggray = img.Convert<Gray, byte>();
-            var imgblur = imggray.SmoothMedian(5);
-            Image<Gray, Byte> line =null , road =null;
-            BaseFunc.GetSplitRoadImg(imgblur,ref line,ref road);
+
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+            var imgblur = imggray.SmoothMedian(9);
+            Image<Gray, Byte> line =null , unroad =null;
+            BaseFunc.GetSplitRoadImg(imgblur,ref line,ref unroad);
+            Rectangle rect = new Rectangle(100,100,100,100);
+            int nums = CvInvoke.FloodFill(imgblur, null, FindLoadSeedPoint(imgblur), new MCvScalar(0), out rect, new MCvScalar(3), new MCvScalar(2), Emgu.CV.CvEnum.Connectivity.FourConnected, Emgu.CV.CvEnum.FloodFillType.Default);
+            if (nums < imgblur.Size.Width * imgblur.Size.Height / 10) {
+                nums = CvInvoke.FloodFill(imgblur, null, FindLoadSeedPoint(imgblur,0.3), new MCvScalar(0), out rect, new MCvScalar(3), new MCvScalar(2));
+            }
 
             if (imageIO1.Image2!=null)
             {
                 imageIO1.Image2.Dispose();
             }
-            imageIO1.Image2 = line| road;
+            var result = line & imgblur;
+            CvInvoke.Threshold(result, result,150, 255, Emgu.CV.CvEnum.ThresholdType.Binary);
+            sw.Stop();
+
+            imageIO1.Image2 = result;
+
+            MessageBox.Show(string.Format("耗时{0}毫秒", sw.ElapsedMilliseconds));
         }
 
 

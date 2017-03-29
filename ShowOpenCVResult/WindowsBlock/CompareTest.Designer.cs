@@ -80,9 +80,9 @@
             // 
             // drawImageBox2
             // 
-            this.drawImageBox2.DargOnNull = true;
             this.drawImageBox2.AllowDrop = true;
             this.drawImageBox2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.drawImageBox2.DargOnNull = true;
             this.drawImageBox2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.drawImageBox2.FunctionalMode = Emgu.CV.UI.ImageBox.FunctionalModeOption.Minimum;
             this.drawImageBox2.Location = new System.Drawing.Point(0, 202);
@@ -103,11 +103,10 @@
             // 
             // drawImageBox1
             // 
-            this.drawImageBox1.DargOnNull = true;
             this.drawImageBox1.AllowDrop = true;
             this.drawImageBox1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.drawImageBox1.DargOnNull = true;
             this.drawImageBox1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.drawImageBox1.FunctionalMode = Emgu.CV.UI.ImageBox.FunctionalModeOption.RightClickMenu;
             this.drawImageBox1.Location = new System.Drawing.Point(0, 0);
             this.drawImageBox1.Name = "drawImageBox1";
             this.drawImageBox1.Size = new System.Drawing.Size(241, 199);
@@ -117,9 +116,9 @@
             // 
             // drawImageBox4
             // 
-            this.drawImageBox4.DargOnNull = true;
             this.drawImageBox4.AllowDrop = true;
             this.drawImageBox4.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.drawImageBox4.DargOnNull = true;
             this.drawImageBox4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.drawImageBox4.FunctionalMode = Emgu.CV.UI.ImageBox.FunctionalModeOption.RightClickMenu;
             this.drawImageBox4.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Invalid;
@@ -132,9 +131,9 @@
             // 
             // drawImageBox3
             // 
-            this.drawImageBox3.DargOnNull = true;
             this.drawImageBox3.AllowDrop = true;
             this.drawImageBox3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.drawImageBox3.DargOnNull = true;
             this.drawImageBox3.Dock = System.Windows.Forms.DockStyle.Top;
             this.drawImageBox3.FunctionalMode = Emgu.CV.UI.ImageBox.FunctionalModeOption.RightClickMenu;
             this.drawImageBox3.Location = new System.Drawing.Point(0, 0);
@@ -227,7 +226,7 @@
             this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(45, 22);
+            this.toolStripButton1.Size = new System.Drawing.Size(46, 22);
             this.toolStripButton1.Text = "Cal";
             // 
             // toolStripButton4
@@ -235,7 +234,7 @@
             this.toolStripButton4.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton4.Image")));
             this.toolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton4.Name = "toolStripButton4";
-            this.toolStripButton4.Size = new System.Drawing.Size(52, 22);
+            this.toolStripButton4.Size = new System.Drawing.Size(53, 22);
             this.toolStripButton4.Text = "Cal2";
             this.toolStripButton4.Click += new System.EventHandler(this.toolStripButton4_Click);
             // 

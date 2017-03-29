@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
+using Emgu.CV.CvEnum;
 
 namespace ShowOpenCVResult
 {
@@ -67,7 +68,7 @@ namespace ShowOpenCVResult
         /// <param name="image">灰度图</param>
         /// <param name="b">表达树状数据的数组</param>
         /// <returns>VectorOfVectorOfPoint类型的轮廓数据</returns>
-        VectorOfVectorOfPoint GetTreeData(Image<Gray, Byte> image, ref int[] b,int minpts,int maxpts, double apppar =-1)
+        VectorOfVectorOfPoint GetTreeData(Image<Gray, Byte> image, ref int[] b, int minpts, int maxpts, double apppar = -1)
         {
             Mat he = new Mat();
             VectorOfVectorOfPoint cons = new VectorOfVectorOfPoint();
@@ -76,37 +77,43 @@ namespace ShowOpenCVResult
             he.CopyTo(b);
             int ccnt = cons.Size;
             List<int> dels = new List<int>();
-            for (int i = 0; i < ccnt; i++) {
-                if (cons[i].Size < minpts || cons[i].Size > maxpts) {
+            for (int i = 0; i < ccnt; i++)
+            {
+                if (cons[i].Size < minpts || cons[i].Size > maxpts)
+                {
                     cons[i].Clear();
                     dels.Add(i);
                 }
             }
-            for (int i = 0; i < b.Count(); i++) {
-                if (dels.Contains(i / 4)) {
-                    b[i] = - 2;
+            for (int i = 0; i < b.Count(); i++)
+            {
+                if (dels.Contains(i / 4))
+                {
+                    b[i] = -2;
                 }
-                if (dels.Contains(b[i])) {
+                if (dels.Contains(b[i]))
+                {
                     b[i] = -1;
                 }
             }
 
 
 
-                if (apppar == -1)
-                    return cons;
-                else
+            if (apppar == -1)
+                return cons;
+            else
+            {
+                VectorOfVectorOfPoint apcons = new VectorOfVectorOfPoint();
+                for (int i = 0; i <= cons.Size - 1; i++)
                 {
-                    VectorOfVectorOfPoint apcons = new VectorOfVectorOfPoint();
-                    for (int i = 0; i <= cons.Size - 1; i++)
-                    {
-                        VectorOfPoint vp = new VectorOfPoint();
-                        if (cons[i].Size>0)
-                            CvInvoke.ApproxPolyDP(cons[i], vp, apppar, true);
-                        apcons.Push(vp);
-                    }
-                    return apcons;
+                    VectorOfPoint vp = new VectorOfPoint();
+                    if (cons[i].Size > 0)
+                        CvInvoke.ApproxPolyDP(cons[i], vp, apppar, true);
+                    apcons.Push(vp);
                 }
+                cons.Dispose();
+                return apcons;
+            }
         }
 
         private void myTrackBar1_ValueChanged(object sender, EventArgs e)
@@ -203,18 +210,47 @@ namespace ShowOpenCVResult
         private void treeView1_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             int index = int.Parse(e.Node.Text);
-            if (imageIOControl1.Image1 != null) imageIOControl1.Image1.Dispose();
-            imageIOControl1.Image1 = filesrc.Clone();
+            
+            var img = filesrc.Clone();
             Point[] pts = cons.ToArrayOfArray()[index];
-            (imageIOControl1.Image1 as Image<Bgr, byte>).DrawPolyline(pts, true, new Bgr(0, 255, 0), 2);
-            var rr = CvInvoke.MinAreaRect(cons[index]);
-            BaseFunc.DrawRotatedRect(rr, (imageIOControl1.Image1 as Image<Bgr, byte>));
-            tsslblRectAngle.Text = rr.Angle.ToString("0.00");
-            tsslblRectSize.Text = rr.Size.ToString();
+            img.DrawPolyline(pts, true, new Bgr(0, 255, 0), 2);
+
+            if (tsbtnRotateRect.Checked)
+            {
+                var rr = CvInvoke.MinAreaRect(cons[index]);
+                BaseFunc.DrawRotatedRect(rr, img);
+                tsslblRectAngle.Text = rr.Angle.ToString("0.00");
+                tsslblRectSize.Text = rr.Size.ToString();
+            }
+
+            if (tsbtnWeightCentre.Checked)
+            {
+                var moment = CvInvoke.Moments(cons[index]);
+                Point p = new Point((int)(moment.M10 / moment.M00), (int)(moment.M01 / moment.M00));
+                CvInvoke.Circle(img, p, 1, new MCvScalar(255, 0, 0));
+            }
+
+            if (tsbtnFitLine.Checked)
+            {
+                PointF dir = new PointF(), point = new PointF();
+                Point[] pt = cons[index].ToArray();
+                int cnt = pt.Count();
+                PointF[] ptf = new PointF[cnt];
+                for (int i = 0; i < cnt; i++)
+                {
+                    ptf[i] = new PointF(pt[i].X, pt[i].Y);
+                }
+                CvInvoke.FitLine(ptf, out dir, out point, DistType.C,0, 0.01,0.01);
+                CvInvoke.Line(img, new Point((int)point.X, (int)point.Y), new Point((int)(point.X + dir.X), (int)(point.Y + dir.Y)),new MCvScalar(0,0,255));
+            }
+            
+
             selectIndex = index;
             Calfam(cons[index]);
 
-          
+            if (imageIOControl1.Image1 != null) imageIOControl1.Image1.Dispose();
+            imageIOControl1.Image1 = img;
+
             if (tsbtnLookWhenSelect.Checked)
             {
                 Mat a = BaseFunc.GetSquareExampleImg(cons[index], filesrc.Size);
@@ -225,6 +261,8 @@ namespace ShowOpenCVResult
                 }
                 ).Start();
             }
+
+
             
         }
 
@@ -389,5 +427,18 @@ namespace ShowOpenCVResult
 
         }
 
+        private void toolStripButton1_Click_1(object sender, EventArgs e)
+        {
+            if (cons == null) return;
+            long time = 0;
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+            Mat result = BaseFunc.JugdeTest(cons, filesrc.Mat, ref time);
+            sw.Stop();
+            MessageBox.Show(string.Format("耗时{0}毫秒", sw.ElapsedMilliseconds));
+
+            if (imageIOControl1.Image1 != null) imageIOControl1.Image1.Dispose();
+            imageIOControl1.Image1 = result;
+        }
     }
 }

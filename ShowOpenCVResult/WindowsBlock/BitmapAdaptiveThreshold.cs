@@ -33,8 +33,7 @@ namespace ShowOpenCVResult
             Image<Gray, Byte> img = (imageIOControl1.Image1 as Image<Bgr, Byte>).Convert<Gray, Byte>();
            
             CvInvoke.AdaptiveThreshold(img, img, 255, (radioButton1.Checked ? AdaptiveThresholdType.GaussianC : AdaptiveThresholdType.MeanC),ThresholdType.Binary, 2 * myTrackBar1.Value + 1, (double)myTrackBar2.Value);
-            imageIOControl1.Image2 = (imageIOControl1.Image1 as Image<Bgr, Byte>).Copy(img);
-            img.Dispose();
+            imageIOControl1.Image2 = img;
         }
 
         private void myTrackBar1_ValueChanged(object sender, EventArgs e)

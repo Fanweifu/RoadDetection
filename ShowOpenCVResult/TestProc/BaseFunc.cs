@@ -13,9 +13,16 @@ using System.Diagnostics;
 
 namespace ShowOpenCVResult
 {
-    static class  BaseFunc
+    public enum RoadObjectType{
+        FullLine,
+        PartOfDottedLine,
+        SignInLoad,
+        Unkown,
+    }
+
+    static class BaseFunc
     {
-        public static void AnchorTransformat<TColor, TDepth>(Image<TColor, TDepth> inputimg, ref Image<TColor, TDepth> Outimg, float xk, float yk, float ltk, int outwidth, int outheight)
+        public static void AnchorTransformat<TColor, TDepth>(Image<TColor, TDepth> inputimg, ref Image<TColor, TDepth> Outimg, float xk, float yk, float ltk, int outwidth, int outheight, Inter way = Inter.Linear)
             where TColor : struct, Emgu.CV.IColor
             where TDepth : new()
         {
@@ -34,7 +41,7 @@ namespace ShowOpenCVResult
             Outimg = new Image<TColor, TDepth>(outwidth, outheight);
             Mat m = CvInvoke.GetPerspectiveTransform(srcTri, dstTri);
             //return inputimg.WarpPerspective<double>(m, Emgu.CV.CvEnum.INTER.CV_INTER_AREA, Emgu.CV.CvEnum.WARP.CV_WARP_FILL_OUTLIERS, new TColor());
-            CvInvoke.WarpPerspective(inputimg, Outimg, m, new Size(outwidth, outheight));
+            CvInvoke.WarpPerspective(inputimg, Outimg, m, new Size(outwidth, outheight), way);
         }
 
         public static bool ArraySmooth(double[] value, int rangeLen, double e, ref double[] value2)
@@ -96,11 +103,11 @@ namespace ShowOpenCVResult
             return true;
         }
 
-        static public IEnumerable<int> GetTopIndexs( params int [] list ) { 
-            int cnt =list.Count();
+        static public IEnumerable<int> GetTopIndexs(params int[] list) {
+            int cnt = list.Count();
             List<int> indexs = new List<int>();
-            for (int i = 1; i <= cnt - 2; i++) 
-                if ((list[i] - list[i - 1]) * (list[i] - list[i + 1]) > 0)     
+            for (int i = 1; i <= cnt - 2; i++)
+                if ((list[i] - list[i - 1]) * (list[i] - list[i + 1]) > 0)
                     indexs.Add(i);
             return indexs;
         }
@@ -111,12 +118,12 @@ namespace ShowOpenCVResult
                 throw new ArgumentException();
             }
             RotatedRect rr = CvInvoke.MinAreaRect(vp);
-            
- 
+
+
         }
 
 
-        static public void DrawRotatedRect(RotatedRect rr, IInputOutputArray backimg) {
+        static public void DrawRotatedRect(RotatedRect rr, IInputOutputArray backimg,int kickness = 2) {
             PointF[] pts = rr.GetVertices();
             Point[] intpts = new Point[4];
             for (int i = 0; i < 4; i++)
@@ -124,7 +131,7 @@ namespace ShowOpenCVResult
                 intpts[i] = new Point((int)pts[i].X, (int)pts[i].Y);
             }
             for (int i = 0; i < 4; i++) {
-                CvInvoke.Line(backimg, intpts[i % 4], intpts[(i + 1) % 4],new MCvScalar(255,0,0));
+                CvInvoke.Line(backimg, intpts[i % 4], intpts[(i + 1) % 4], new MCvScalar(255, 0, 0),2);
             }
         }
 
@@ -136,8 +143,8 @@ namespace ShowOpenCVResult
             VectorOfVectorOfPoint vvp = new VectorOfVectorOfPoint();
             vvp.Push(vp);
             CvInvoke.DrawContours(gray, vvp, 0, new MCvScalar(255), -1, LineType.AntiAlias);
-            
-            Mat inmat = new Mat(gray.Mat,vpr);
+
+            Mat inmat = new Mat(gray.Mat, vpr);
 
             int w = inmat.Width, h = inmat.Height;
             Mat r;
@@ -156,31 +163,32 @@ namespace ShowOpenCVResult
                 inmat.CopyTo(roi, null);
 
             }
+            vvp.Dispose();
             CvInvoke.Resize(r, r, Setting.ExampleSize);
             return r;
         }
 
-        static public void CreatAnglesImg(string filepath , params double[] angles)
+        static public void CreatAnglesImg(string filepath, params double[] angles)
         {
 
             Image<Bgr, byte> img = new Image<Bgr, byte>(filepath);
-            foreach(double angle in angles){
+            foreach (double angle in angles) {
                 Image<Bgr, byte> rotate = img.Rotate(angle, new Bgr(0, 0, 0), true);
                 rotate.Save(string.Format("{0}\\{1}_{2}{3}", Path.GetDirectoryName(filepath), Path.GetFileNameWithoutExtension(filepath), angle, Path.GetExtension(filepath)));
             }
         }
 
-        static Image<Bgr, Byte>  GetImgPart(Image<Bgr, Byte> Img, Point[] pts )
+        static Image<Bgr, Byte> GetImgPart(Image<Bgr, Byte> Img, Point[] pts)
         {
-                Image<Gray, Byte> ImgMask = new Image<Gray, byte>(Img.Size);
-                VectorOfPoint vp = new VectorOfPoint(pts);
-                VectorOfVectorOfPoint vvp = new VectorOfVectorOfPoint();
-                vvp.Push(vp);
-                CvInvoke.DrawContours(ImgMask, vvp, -1, new MCvScalar(255), -1);
-                vp.Dispose();
-                vvp.Dispose();
-                Image<Bgr, Byte> result = Img.Copy(ImgMask);
-                return result;
+            Image<Gray, Byte> ImgMask = new Image<Gray, byte>(Img.Size);
+            VectorOfPoint vp = new VectorOfPoint(pts);
+            VectorOfVectorOfPoint vvp = new VectorOfVectorOfPoint();
+            vvp.Push(vp);
+            CvInvoke.DrawContours(ImgMask, vvp, -1, new MCvScalar(255), -1);
+            vp.Dispose();
+            vvp.Dispose();
+            Image<Bgr, Byte> result = Img.Copy(ImgMask);
+            return result;
         }
 
         static public Image<Gray, float> GetOneLineVector(Image<Gray, float> inputimg)
@@ -193,21 +201,96 @@ namespace ShowOpenCVResult
                 int w = inputimg.Width, h = inputimg.Height, instep = inputimg.Mat.Step;
 
                 for (int hidx = 0; hidx < h; hidx++)
-                    for (int widx = 0; widx < w ; widx++)
+                    for (int widx = 0; widx < w; widx++)
                     {
-                        *(outputhead + hidx * w + widx) = *(inputhead + hidx * w  + widx);
+                        *(outputhead + hidx * w + widx) = *(inputhead + hidx * w + widx);
                     }
             }
-                   
+
             return outimg;
         }
-        static public void  GetSplitRoadImg(Image<Gray, byte> inputimg, ref Image<Gray, byte> lineimg, ref Image<Gray, byte> blindness, int thresholdup = 170, int thresholdlow = 180) {
+        static public void GetSplitRoadImg(Image<Gray, byte> inputimg, ref Image<Gray, byte> lineimg, ref Image<Gray, byte> blindness, int thresholdup = 170, int thresholdlow = 10) {
             CvInvoke.Normalize(inputimg, inputimg, 0, 255, Emgu.CV.CvEnum.NormType.MinMax);
             Gray g = new Gray(thresholdup);
             if (lineimg != null) lineimg.Dispose();
-            lineimg = inputimg.ThresholdBinary(g, new Gray(255));
-            if (blindness != null) lineimg.Dispose();
-            blindness = inputimg.ThresholdBinaryInv(new Gray(20), new Gray(100));
+            lineimg = new Image<Gray, byte>(inputimg.Size);
+            CvInvoke.AdaptiveThreshold(inputimg, lineimg, 255, AdaptiveThresholdType.MeanC, ThresholdType.Binary, 2*(inputimg.Size.Width /10)+1, -10);
+                //= inputimg.ThresholdBinary(g, new Gray(255));
+            if (blindness != null) blindness.Dispose();
+            blindness = inputimg.ThresholdBinaryInv(new Gray(thresholdlow), new Gray(100));
+
+        }
+
+        
+        static public RoadObjectType JugdeLineShape(VectorOfPoint vp,Size imgsize)
+        {
+            double imgarea = imgsize.Height * imgsize.Width;
+            double max = 0.25, min = 0.0005;
+            double conarea = CvInvoke.ContourArea(vp);
+            double length = CvInvoke.ArcLength(vp, true);
+            double width = conarea / length * 2;
+            double rate = conarea / imgarea;
+            if (rate > max || rate < min) return RoadObjectType.Unkown;
+
+            if (length > imgsize.Height) {
+                if (width < imgsize.Width * 0.05) 
+                    return RoadObjectType.FullLine;
+                else
+                    return RoadObjectType.Unkown;
+            } 
+            RotatedRect rr = CvInvoke.MinAreaRect(vp);
+            double w_h = rr.Size.Width / rr.Size.Height;
+            double k = w_h > 1 ? w_h : 1 / w_h;
+
+
+
+            double rectrate = conarea / (rr.Size.Width * rr.Size.Height);
+            if (rectrate > 0.8&&k>5) return RoadObjectType.PartOfDottedLine;
+            else return RoadObjectType.SignInLoad;
+
+        }
+
+        static public Mat JugdeTest(VectorOfVectorOfPoint cons,Mat back,ref long time) {
+            Mat test = back.Clone();
+            time = 0;
+            Stopwatch sw = new Stopwatch();
+            for (int i = 0; i < cons.Size; i++)
+            {
+
+                var vp = cons[i];
+                if (vp == null||vp.Size==0) continue;
+
+                sw.Start();
+                var type = BaseFunc.JugdeLineShape(vp, back.Size);
+                sw.Stop();
+                time += sw.ElapsedMilliseconds;
+
+                MCvScalar ms = new MCvScalar();
+                switch (type)
+                {
+                    case RoadObjectType.FullLine:
+                        ms = new MCvScalar(255, 255, 0);
+                        break;
+                    case RoadObjectType.PartOfDottedLine:
+                        ms = new MCvScalar(0, 255, 0);
+                        break;
+                    case RoadObjectType.SignInLoad:
+                        ms = new MCvScalar(255, 0, 0);
+                        break;
+                    case RoadObjectType.Unkown:
+                        ms = new MCvScalar(0, 0, 255);
+                        break;
+                    default:
+                        break;
+                }
+
+                var vvp = new VectorOfVectorOfPoint();
+                vvp.Push(vp);
+                CvInvoke.DrawContours(test, vvp, -1, ms, -1);
+                vvp.Dispose();
+            }
+            return test;
+          
         }
 
         #region PtrTest
