@@ -65,7 +65,7 @@
             this.imageIO1.Image2 = null;
             this.imageIO1.Location = new System.Drawing.Point(0, 111);
             this.imageIO1.Name = "imageIO1";
-            this.imageIO1.Size = new System.Drawing.Size(810, 327);
+            this.imageIO1.Size = new System.Drawing.Size(841, 352);
             this.imageIO1.SpOrientation = System.Windows.Forms.Orientation.Vertical;
             this.imageIO1.TabIndex = 2;
             this.imageIO1.DoImgChange += new System.EventHandler(this.imageIO1_DoImgChange);
@@ -88,7 +88,7 @@
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox1.Location = new System.Drawing.Point(0, 25);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(810, 86);
+            this.groupBox1.Size = new System.Drawing.Size(841, 86);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Params";
@@ -281,7 +281,7 @@
             this.toolStripButton1});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(810, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(841, 25);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -299,7 +299,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(810, 438);
+            this.ClientSize = new System.Drawing.Size(841, 463);
             this.Controls.Add(this.imageIO1);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.toolStrip1);

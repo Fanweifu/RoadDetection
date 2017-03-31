@@ -53,6 +53,7 @@
             this.tsbtnWeightCentre = new System.Windows.Forms.ToolStripButton();
             this.tsbtnFitLine = new System.Windows.Forms.ToolStripButton();
             this.tsbtnLookWhenSelect = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel5 = new System.Windows.Forms.ToolStripStatusLabel();
             this.tsslblRectAngle = new System.Windows.Forms.ToolStripStatusLabel();
@@ -68,7 +69,7 @@
             this.i3ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.i2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.i1ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.groupBox3.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -273,7 +274,8 @@
             this.tsbtnWeightCentre,
             this.tsbtnFitLine,
             this.tsbtnLookWhenSelect,
-            this.toolStripButton1});
+            this.toolStripButton1,
+            this.toolStripButton2});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(726, 25);
@@ -355,6 +357,15 @@
             this.tsbtnLookWhenSelect.Size = new System.Drawing.Size(52, 22);
             this.tsbtnLookWhenSelect.Text = "Review";
             // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(100, 22);
+            this.toolStripButton1.Text = "计算分类结果";
+            this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click_1);
+            // 
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -403,7 +414,7 @@
             // 
             this.toolStripStatusLabel4.BackColor = System.Drawing.SystemColors.Control;
             this.toolStripStatusLabel4.Name = "toolStripStatusLabel4";
-            this.toolStripStatusLabel4.Size = new System.Drawing.Size(203, 18);
+            this.toolStripStatusLabel4.Size = new System.Drawing.Size(234, 18);
             this.toolStripStatusLabel4.Spring = true;
             // 
             // toolStripStatusLabel2
@@ -469,14 +480,14 @@
             this.i1ToolStripMenuItem.Text = "I1";
             this.i1ToolStripMenuItem.Click += new System.EventHandler(this.i1ToolStripMenuItem_Click);
             // 
-            // toolStripButton1
+            // toolStripButton2
             // 
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(100, 22);
-            this.toolStripButton1.Text = "计算分类结果";
-            this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click_1);
+            this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
+            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton2.Name = "toolStripButton2";
+            this.toolStripButton2.Size = new System.Drawing.Size(88, 21);
+            this.toolStripButton2.Text = "人行道检测";
+            this.toolStripButton2.Click += new System.EventHandler(this.toolStripButton2_Click_1);
             // 
             // BitmapFindCon
             // 
@@ -548,5 +559,6 @@
         private System.Windows.Forms.ToolStripButton tsbtnWeightCentre;
         private System.Windows.Forms.ToolStripButton tsbtnFitLine;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripButton toolStripButton2;
     }
 }

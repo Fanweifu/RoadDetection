@@ -125,7 +125,7 @@ namespace ShowOpenCVResult
                 imageIOControl1.Image2.Dispose();
              }
             Image<Bgr, Byte> img = imageIOControl1.Image2 as Image<Bgr, Byte>;
-            BaseFunc.AnchorTransformat<Bgr, Byte>(imageIOControl1.Image1 as Image<Bgr, Byte>, ref img, (float)nudAX.Value / 100, (float)nudAY.Value / 100, (float)nudLT.Value / 100, (int)nudOW.Value, (int)nudOH.Value, (Emgu.CV.CvEnum.Inter)comboBox1.SelectedItem);
+            OpencvMath.AnchorTransformat<Bgr, Byte>(imageIOControl1.Image1 as Image<Bgr, Byte>, ref img, (float)nudAX.Value / 100, (float)nudAY.Value / 100, (float)nudLT.Value / 100, (int)nudOW.Value, (int)nudOH.Value, (Emgu.CV.CvEnum.Inter)comboBox1.SelectedItem);
                 //imageIOControl1.OutputImage = GclrOpencvProces.BitmapTransformation(imageIOControl1.InputImage as Bitmap, TDepth, (double)nudAX.Value / 100, (double)nudAY.Value / 100, (int)nudOW.Value, (int)nudOH.Value);
              imageIOControl1.Image2 = img;
         }

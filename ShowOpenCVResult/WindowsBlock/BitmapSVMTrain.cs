@@ -147,7 +147,7 @@ namespace ShowOpenCVResult
             if (_img == null) return;
             Image<Gray, float> img = (_img as Image<Bgr, Byte>).Convert<Gray, float>();
             //if (img.Size != BaseFunc.ExampleSize) return;
-            Image<Gray, float> example = BaseFunc.GetOneLineVector(img);
+            Image<Gray, float> example = OpencvMath.GetOneLineVector(img);
             double result = svm.Predict(example);
             tslblSVMResult.Text = result.ToString();
         }

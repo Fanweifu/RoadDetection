@@ -218,7 +218,7 @@ namespace ShowOpenCVResult
             if (tsbtnRotateRect.Checked)
             {
                 var rr = CvInvoke.MinAreaRect(cons[index]);
-                BaseFunc.DrawRotatedRect(rr, img);
+                OpencvMath.DrawRotatedRect(rr, img);
                 tsslblRectAngle.Text = rr.Angle.ToString("0.00");
                 tsslblRectSize.Text = rr.Size.ToString();
             }
@@ -253,7 +253,7 @@ namespace ShowOpenCVResult
 
             if (tsbtnLookWhenSelect.Checked)
             {
-                Mat a = BaseFunc.GetSquareExampleImg(cons[index], filesrc.Size);
+                Mat a = OpencvMath.GetSquareExampleImg(cons[index], filesrc.Size);
 
                 new Thread(() =>
                 {
@@ -416,7 +416,7 @@ namespace ShowOpenCVResult
                     sf.Filter = "(PNG)*.png|*.png";
                     if (sf.ShowDialog() != System.Windows.Forms.DialogResult.OK) return;
 
-                    Mat result = BaseFunc.GetSquareExampleImg(cons[selectIndex], filesrc.Size);
+                    Mat result = OpencvMath.GetSquareExampleImg(cons[selectIndex], filesrc.Size);
                     result.ToImage<Bgr, Byte>().Save(sf.FileName);
                 }
             }
@@ -433,12 +433,31 @@ namespace ShowOpenCVResult
             long time = 0;
             Stopwatch sw = new Stopwatch();
             sw.Start();
-            Mat result = BaseFunc.JugdeTest(cons, filesrc.Mat, ref time);
+            Mat result = OpencvMath.JugdeTest(cons, filesrc.Mat, ref time);
             sw.Stop();
             MessageBox.Show(string.Format("耗时{0}毫秒", sw.ElapsedMilliseconds));
 
             if (imageIOControl1.Image1 != null) imageIOControl1.Image1.Dispose();
             imageIOControl1.Image1 = result;
+        }
+
+        private void toolStripButton2_Click_1(object sender, EventArgs e)
+        {
+            if (filesrc == null) return;
+            Image<Gray, Byte> gray = filesrc.Convert<Gray, Byte>();
+
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+            VectorOfVectorOfPoint vvp = OpencvMath.WalkRoadImg(gray,4,2,20,5 ,0.5,1.5);
+            for (int i = 0; i < vvp.Size; i++)
+            {
+                gray.DrawPolyline(vvp[i].ToArray(), true, new Gray(100), 2);
+                OpencvMath.DrawRotatedRect(CvInvoke.MinAreaRect(vvp[i]), gray);
+            }
+        
+            sw.Stop();
+            MessageBox.Show(string.Format("耗时:{0}", sw.ElapsedMilliseconds));
+            imageIOControl1.Image2 = gray;
         }
     }
 }

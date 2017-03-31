@@ -20,8 +20,9 @@ namespace ShowOpenCVResult
         Unkown,
     }
 
-    static class BaseFunc
+    static class OpencvMath
     {
+
         public static void AnchorTransformat<TColor, TDepth>(Image<TColor, TDepth> inputimg, ref Image<TColor, TDepth> Outimg, float xk, float yk, float ltk, int outwidth, int outheight, Inter way = Inter.Linear)
             where TColor : struct, Emgu.CV.IColor
             where TDepth : new()
@@ -112,18 +113,7 @@ namespace ShowOpenCVResult
             return indexs;
         }
 
-        static public void GetVPImg(VectorOfPoint vp)
-        {
-            if (vp == null) {
-                throw new ArgumentException();
-            }
-            RotatedRect rr = CvInvoke.MinAreaRect(vp);
-
-
-        }
-
-
-        static public void DrawRotatedRect(RotatedRect rr, IInputOutputArray backimg,int kickness = 2) {
+        static public void DrawRotatedRect(RotatedRect rr, IInputOutputArray backimg, int kickness = 2) {
             PointF[] pts = rr.GetVertices();
             Point[] intpts = new Point[4];
             for (int i = 0; i < 4; i++)
@@ -131,7 +121,7 @@ namespace ShowOpenCVResult
                 intpts[i] = new Point((int)pts[i].X, (int)pts[i].Y);
             }
             for (int i = 0; i < 4; i++) {
-                CvInvoke.Line(backimg, intpts[i % 4], intpts[(i + 1) % 4], new MCvScalar(255, 0, 0),2);
+                CvInvoke.Line(backimg, intpts[i % 4], intpts[(i + 1) % 4], new MCvScalar(255, 0, 0), 2);
             }
         }
 
@@ -178,6 +168,17 @@ namespace ShowOpenCVResult
             }
         }
 
+        static public Image<Bgr, byte>[] CreatAnglesImg(Image<Bgr, byte> img, params double[] angles)
+        {
+            int cnt = angles.Count();
+            var imgs = new Image<Bgr, byte>[cnt];
+            for (int i = 0; i < cnt; i++)
+            {
+                imgs[i] = img.Rotate(angles[i], new Bgr(0, 0, 0), true);
+            }
+            return imgs;
+        }
+
         static Image<Bgr, Byte> GetImgPart(Image<Bgr, Byte> Img, Point[] pts)
         {
             Image<Gray, Byte> ImgMask = new Image<Gray, byte>(Img.Size);
@@ -209,19 +210,26 @@ namespace ShowOpenCVResult
 
             return outimg;
         }
-        static public void GetSplitRoadImg(Image<Gray, byte> inputimg, ref Image<Gray, byte> lineimg, ref Image<Gray, byte> blindness, int thresholdup = 170, int thresholdlow = 10) {
-            CvInvoke.Normalize(inputimg, inputimg, 0, 255, Emgu.CV.CvEnum.NormType.MinMax);
-            Gray g = new Gray(thresholdup);
-            if (lineimg != null) lineimg.Dispose();
-            lineimg = new Image<Gray, byte>(inputimg.Size);
-            CvInvoke.AdaptiveThreshold(inputimg, lineimg, 255, AdaptiveThresholdType.MeanC, ThresholdType.Binary, 2*(inputimg.Size.Width /10)+1, -10);
-                //= inputimg.ThresholdBinary(g, new Gray(255));
-            if (blindness != null) blindness.Dispose();
-            blindness = inputimg.ThresholdBinaryInv(new Gray(thresholdlow), new Gray(100));
 
+        static public Image<Gray, byte> GetBlindnessMask(Image<Gray, byte> inputimg, int thresholdlow = 10) {
+           return inputimg.ThresholdBinary(new Gray(thresholdlow), new Gray(255)); ;
         }
 
-        
+        static public Image<Gray, byte> RoadPreProcess(Image<Gray, byte> inputimg, Image<Gray, byte> mask = null , int openSize = 1, int meadinSize = 2) {
+            CvInvoke.MedianBlur(inputimg, inputimg, meadinSize*2+1);
+            Image<Gray, byte> result = new Image<Gray, byte>(inputimg.Size);
+            CvInvoke.MorphologyEx(inputimg, result, MorphOp.Close, CvInvoke.GetStructuringElement(ElementShape.Cross, new Size(openSize*2+1, openSize * 2 + 1), new Point(-1, -1)), new Point(-1, -1), 1, BorderType.Default, new MCvScalar(0));
+            CvInvoke.Normalize(result, result, 0, 255, Emgu.CV.CvEnum.NormType.MinMax, Emgu.CV.CvEnum.DepthType.Default, mask);
+           // CvInvoke.MorphologyEx(result, result, MorphOp.Open, CvInvoke.GetStructuringElement(ElementShape.Cross, new Size(3, 3), new Point(-1, -1)), new Point(-1, -1), 1, BorderType.Default, new MCvScalar(0));
+            return result;
+        }
+
+        static public Image<Gray, byte> GetLine(Image<Gray, byte> inputimg) {
+            var lineimg = new Image<Gray, byte>(inputimg.Size);
+            CvInvoke.AdaptiveThreshold(inputimg, lineimg, 255, AdaptiveThresholdType.MeanC, ThresholdType.Binary, 2 * (inputimg.Size.Width / 15) + 1, -20);
+            return lineimg;
+        }
+   
         static public RoadObjectType JugdeLineShape(VectorOfPoint vp,Size imgsize)
         {
             double imgarea = imgsize.Height * imgsize.Width;
@@ -251,6 +259,7 @@ namespace ShowOpenCVResult
         }
 
         static public Mat JugdeTest(VectorOfVectorOfPoint cons,Mat back,ref long time) {
+
             Mat test = back.Clone();
             time = 0;
             Stopwatch sw = new Stopwatch();
@@ -261,7 +270,7 @@ namespace ShowOpenCVResult
                 if (vp == null||vp.Size==0) continue;
 
                 sw.Start();
-                var type = BaseFunc.JugdeLineShape(vp, back.Size);
+                var type = OpencvMath.JugdeLineShape(vp, back.Size);
                 sw.Stop();
                 time += sw.ElapsedMilliseconds;
 
@@ -293,6 +302,148 @@ namespace ShowOpenCVResult
           
         }
 
+        static public Point FindSeedPointToFill(Image<Gray, Byte> img, double upos = 0.5, double vpos = 0.95)
+        {
+            Point p = new Point((int)(img.Size.Width * upos), (int)(img.Size.Height * vpos));
+            int distance = img.Size.Width / 20, tims = 0;
+            while (img[p.Y, p.X].Intensity > 150)
+            {
+                tims++;
+                p.X += (tims % 2 == 1 ? -1 : 1) * distance;
+                distance += 5;
+            }
+            return p;
+        }
+
+        static public VectorOfVectorOfPoint WalkRoadImg(Image<Gray, byte> binaryimg, int rowstep = 4, int maxdetectnum = 2, int minrownums = 20, int changePointsNumThreshold = 5 ,double minwritertoblack = 0.5,double maxwritertoblack = 1.5) {
+            VectorOfVectorOfPoint vvp = new VectorOfVectorOfPoint();
+            List<Point> left = new List<Point>();
+            List<Point> right = new List<Point>();
+            int rows = binaryimg.Rows, colums = binaryimg.Cols;
+            CvInvoke.Threshold(binaryimg, binaryimg, 100, 255, ThresholdType.Binary);
+            unsafe
+            {
+                byte* ptr = (byte*) binaryimg.Mat.DataPointer;
+                List<int> rowIndex = new List<int>();
+                int beginRowIndex = 0, endRowIndex = 0, maxerrorrownum = 2, curlostnum = 0;
+                bool find = false;
+
+                for (int i = 0; i < rows; i += rowstep)
+                {
+                    byte* rowhead = (ptr + i * colums);
+                    bool isBeginAtBlack = *rowhead == 0;
+
+                    int blackwidthsum = 0, writewidthsum = 0, blacknum = 0, writenum = 0;
+                    int lastchangeindex = 0;
+                    int beginIndex = 0, endIndex = 0;
+
+                    for (int j = 1; j < colums; j++)
+                    {
+                        byte curvalue = *(rowhead + j), prevvalue = *(rowhead + j - 1); ;
+                        if (curvalue * prevvalue == 0 && curvalue != prevvalue)
+                        {
+                            if (curvalue > 0)
+                            {
+                                if (lastchangeindex > 0)
+                                {
+                                    int backdis = (j - lastchangeindex);
+                                    //黑块在占前面绝大部分时候
+                                    //if (backdis>writewidthsum+ blackwidthsum && blacknum + writenum < changePointsNumThreshold) {
+                                    //    blackwidthsum = 0; writewidthsum = 0 ; blacknum = 0; writenum = 0;
+                                    //    beginIndex = 0;
+                                    //    lastchangeindex = 0;
+                                    //}
+                                    ////黑块在后面占绝大部分的时候
+                                    //if (blacknum + writenum>changePointsNumThreshold&& backdis> blackwidthsum/blacknum) {
+                                    //    endIndex = lastchangeindex;
+                                    //    break;
+                                    //}
+                                    
+                                    blackwidthsum += (j - lastchangeindex);
+                                    blacknum++;
+                                }
+                                else
+                                {
+                                    beginIndex = j;
+                                }
+
+                                lastchangeindex = j;
+                            }
+                            else
+                            {
+                                 
+                                writewidthsum += (j - lastchangeindex);
+                                writenum++;
+                                lastchangeindex = j;
+                            }
+                        }
+                        if (j == colums - 1)
+                        {
+                            endIndex = curvalue > 0 ? colums - 1 : lastchangeindex;
+                        }
+                    }
+                    bool isleagal = false;
+                    if (writenum != 0 && blacknum != 0)
+                    {
+                        double rate = ((double)writewidthsum / writenum) / ((double)blackwidthsum / blacknum);
+                        if (rate > minwritertoblack && rate < maxwritertoblack && blacknum + writenum > changePointsNumThreshold)
+                        {
+                            isleagal = true;
+                            if (!find)
+                            {
+                                beginRowIndex = i;
+                                find = true;
+                            }
+                            else
+                            {
+                                endRowIndex = i;
+                            }
+
+                            Point p1 = new Point(beginIndex, i);
+                            left.Add(p1);
+                            Point p2 = new Point(endIndex, i);
+                            right.Add(p2);
+
+                        }
+                    }
+
+                    if(!isleagal)
+                    {
+                        //到达不满足条件的行时
+                        if (endRowIndex > 0)
+                        {
+                            //累加误行数量
+                            curlostnum++;
+                        }
+
+                        //误行达到一定数量时被认为一个人行道对象识别结束
+                        if (curlostnum >= maxerrorrownum)
+                        {
+                            //如果行数达到要求 则该对象加入到结果中
+                            if (endRowIndex - beginRowIndex > minrownums) {
+                                VectorOfPoint vp = new VectorOfPoint(left.ToArray());
+                                right.Reverse();
+                                vp.Push(right.ToArray());
+                                vvp.Push(vp);
+                            }
+
+                            beginRowIndex = 0; endRowIndex = 0;
+                            curlostnum = 0;
+                            find = false;
+                            right.Clear();
+                            left.Clear();
+                        }
+
+                    }
+                }
+
+            }
+
+            
+
+            return vvp;
+        }
+
         #region PtrTest
         static public void PtrTest() {
 
@@ -317,7 +468,7 @@ namespace ShowOpenCVResult
 
             Stopwatch Watch2 = new Stopwatch();
             Watch2.Start();
-            var result = BaseFunc.GetOneLineVector(img2);
+            var result = OpencvMath.GetOneLineVector(img2);
             Watch2.Stop();
             long time3 = Watch2.ElapsedMilliseconds;
 

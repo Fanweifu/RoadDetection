@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Diagnostics;
+using Emgu.CV.CvEnum;
 
 namespace ShowOpenCVResult
 {
@@ -20,45 +21,53 @@ namespace ShowOpenCVResult
         }
 
 
-
-        public Point FindLoadSeedPoint(Image<Gray, Byte> img ,double xscale =0.5, double yscale = 0.95) {
-            Point p = new Point((int)(img.Size.Width * xscale), (int)(img.Size.Height * yscale));
-            int distance = img.Size.Width / 20, tims = 0;
-            while (img[p.Y,p.X].Intensity>150) {
-                tims++;
-                p.X += (tims % 2 == 1 ? -1 : 1) * distance;
-                distance += 5;
-            }
-            return p;
-        }
             
         private void imageIO1_DoImgChange(object sender, EventArgs e)
         {
             if (imageIO1.Image1 == null) return;
 
             var img = imageIO1.Image1 as Image<Bgr, Byte>;
-            var imggray = img.Convert<Gray, byte>();
-
+            var imggray = img.Convert<Hsv, byte>().Split()[2];
+            
             Stopwatch sw = new Stopwatch();
             sw.Start();
-            var imgblur = imggray.SmoothMedian(9);
-            Image<Gray, Byte> line =null , unroad =null;
-            BaseFunc.GetSplitRoadImg(imgblur,ref line,ref unroad);
+
+            var unroad = OpencvMath.GetBlindnessMask(imggray);
+            var processimg = OpencvMath.RoadPreProcess(imggray, unroad,2);
+            var line = OpencvMath.GetLine(processimg);
+
             Rectangle rect = new Rectangle(100,100,100,100);
-            int nums = CvInvoke.FloodFill(imgblur, null, FindLoadSeedPoint(imgblur), new MCvScalar(0), out rect, new MCvScalar(3), new MCvScalar(2), Emgu.CV.CvEnum.Connectivity.FourConnected, Emgu.CV.CvEnum.FloodFillType.Default);
-            if (nums < imgblur.Size.Width * imgblur.Size.Height / 10) {
-                nums = CvInvoke.FloodFill(imgblur, null, FindLoadSeedPoint(imgblur,0.3), new MCvScalar(0), out rect, new MCvScalar(3), new MCvScalar(2));
+            var processclone = processimg.Clone();
+            int nums = CvInvoke.FloodFill(processclone, null,  OpencvMath.FindSeedPointToFill(processimg), new MCvScalar(0), out rect, new MCvScalar(3), new MCvScalar(2), Emgu.CV.CvEnum.Connectivity.FourConnected, Emgu.CV.CvEnum.FloodFillType.Default);
+            if (nums < processimg.Size.Width * processimg.Size.Height / 10)
+            {
+                processclone.Dispose();
+                nums = CvInvoke.FloodFill(processimg, null, OpencvMath.FindSeedPointToFill(processimg, 0.3), new MCvScalar(0), out rect, new MCvScalar(3), new MCvScalar(2));
+            }
+            else {
+                processimg.Dispose();
+                processimg = processclone;
             }
 
-            if (imageIO1.Image2!=null)
+            var result = line & processimg;
+            line.Dispose();
+            processimg.Dispose();
+            CvInvoke.Threshold(result, result, 135, 255, ThresholdType.Binary);
+            CvInvoke.Threshold(result, result,140, 255, Emgu.CV.CvEnum.ThresholdType.Binary);
+            CvInvoke.MorphologyEx(result, result, MorphOp.Close, CvInvoke.GetStructuringElement(ElementShape.Cross, new Size(5, 5), new Point(-1, -1)), new Point(-1, -1), 1, BorderType.Default, new MCvScalar(0));
+            var imgresult = new Image<Bgr, byte>(img.Size);
+            img.Copy(imgresult, result);
+            result.Dispose();
+
+
+            sw.Stop();
+
+            if (imageIO1.Image2 != null)
             {
                 imageIO1.Image2.Dispose();
             }
-            var result = line & imgblur;
-            CvInvoke.Threshold(result, result,150, 255, Emgu.CV.CvEnum.ThresholdType.Binary);
-            sw.Stop();
 
-            imageIO1.Image2 = result;
+            imageIO1.Image2 = imgresult;
 
             MessageBox.Show(string.Format("耗时{0}毫秒", sw.ElapsedMilliseconds));
         }

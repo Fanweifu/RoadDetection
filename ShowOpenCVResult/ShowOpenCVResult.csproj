@@ -386,7 +386,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="AcroodSvm\" />
+    <Folder Include="AccordSvm\" />
     <Folder Include="TestImgSrc\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
