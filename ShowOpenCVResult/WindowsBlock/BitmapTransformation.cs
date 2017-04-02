@@ -48,6 +48,12 @@ namespace ShowOpenCVResult
             lbLT.Tag = nudLT.Value;
             lbLT.Text = string.Format("LT:{0}", lbLT.Tag);
             tsbtnMultyDeal.Enabled = true;
+
+            Setting.AX = (float)nudAX.Value/100;
+            Setting.AY = (float)nudAY.Value/100;
+            Setting.OW = (int)nudOW.Value;
+            Setting.OH = (int)nudOH.Value;
+            Setting.LT = (float)nudLT.Value/100;
         }
 
         private void tsbtnMultyDeal_Click(object sender, EventArgs e)
@@ -124,10 +130,9 @@ namespace ShowOpenCVResult
             if (imageIOControl1.Image2 != null) {
                 imageIOControl1.Image2.Dispose();
              }
-            Image<Bgr, Byte> img = imageIOControl1.Image2 as Image<Bgr, Byte>;
-            OpencvMath.AnchorTransformat<Bgr, Byte>(imageIOControl1.Image1 as Image<Bgr, Byte>, ref img, (float)nudAX.Value / 100, (float)nudAY.Value / 100, (float)nudLT.Value / 100, (int)nudOW.Value, (int)nudOH.Value, (Emgu.CV.CvEnum.Inter)comboBox1.SelectedItem);
+            Mat img = OpencvMath.AnchorTransformat((imageIOControl1.Image1 as Image<Bgr, Byte>).Mat, (float)nudAX.Value / 100, (float)nudAY.Value / 100, (float)nudLT.Value / 100, (int)nudOW.Value, (int)nudOH.Value, (Emgu.CV.CvEnum.Inter)comboBox1.SelectedItem);
                 //imageIOControl1.OutputImage = GclrOpencvProces.BitmapTransformation(imageIOControl1.InputImage as Bitmap, TDepth, (double)nudAX.Value / 100, (double)nudAY.Value / 100, (int)nudOW.Value, (int)nudOH.Value);
-             imageIOControl1.Image2 = img;
+            imageIOControl1.Image2 = img;
         }
 
         private void imageIOControl1_AfterImgLoaded(object sender, EventArgs e)

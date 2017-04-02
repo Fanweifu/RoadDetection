@@ -84,17 +84,14 @@ namespace ShowOpenCVResult
                    ////extract features from the object image
                    //surfCPU.DetectAndCompute(uModelImage, null, modelKeyPoints, modelDescriptors, false);
                    watch = Stopwatch.StartNew();
-                   ORBDetector od = new ORBDetector();
-                   SIFT sf = new SIFT();//hessianThresh
+                   SURF sf = new SURF(hessianThresh);
                    //od.DetectAndCompute(uModelImage, null, modelKeyPoints, modelDescriptors, false);
-                   modelKeyPoints = new VectorOfKeyPoint(od.Detect(uModelImage, null));
-                   sf.Compute(uModelImage, modelKeyPoints, modelDescriptors);
+                   sf.DetectAndCompute(uModelImage,null, modelKeyPoints, modelDescriptors,false);
 
 
                    // extract features from the observed image
                    UMat observedDescriptors = new UMat();
-                   observedKeyPoints = new VectorOfKeyPoint(od.Detect(uObservedImage, null));
-                   sf.Compute(uObservedImage, observedKeyPoints, observedDescriptors);
+                   sf.DetectAndCompute(uObservedImage, null, observedKeyPoints , observedDescriptors, false);
                    BFMatcher matcher = new BFMatcher(DistanceType.L2);
                    matcher.Add(modelDescriptors);
 

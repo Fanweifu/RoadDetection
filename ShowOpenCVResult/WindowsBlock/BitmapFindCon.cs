@@ -448,11 +448,17 @@ namespace ShowOpenCVResult
 
             Stopwatch sw = new Stopwatch();
             sw.Start();
-            VectorOfVectorOfPoint vvp = OpencvMath.WalkRoadImg(gray,4,2,20,5 ,0.5,1.5);
+            VectorOfVectorOfPoint vvp = OpencvMath.WalkRoadImg(gray.Mat, gray.Height/256 ,2,20,5 ,0.4,2,10);
             for (int i = 0; i < vvp.Size; i++)
             {
-                gray.DrawPolyline(vvp[i].ToArray(), true, new Gray(100), 2);
+                Point[] pts = vvp[i].ToArray();
+                int cnt = pts.Count();
                 OpencvMath.DrawRotatedRect(CvInvoke.MinAreaRect(vvp[i]), gray);
+                for (int j = 0; j < cnt; j++)
+                {
+                    CvInvoke.Circle(gray, pts[j], 3, new MCvScalar(127), 3);
+                }
+
             }
         
             sw.Stop();

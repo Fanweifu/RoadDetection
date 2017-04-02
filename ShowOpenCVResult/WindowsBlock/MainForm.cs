@@ -142,7 +142,7 @@ namespace ShowOpenCVResult
 
         private void 颜色阈值ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            new BitmapHSV().Show(this.dockPanel1, DockState.Document);
+            new BitmapRoadDetectShow().Show(this.dockPanel1, DockState.Document);
         }
 
         private void 特征点检测ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -163,6 +163,11 @@ namespace ShowOpenCVResult
         private void 填充测试ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             new FillTest().Show(this.dockPanel1, DockState.Document);
+        }
+
+        private void 机床定位ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new VideoFindMechine().Show(this.dockPanel1, DockState.Document);
         }
     }
 

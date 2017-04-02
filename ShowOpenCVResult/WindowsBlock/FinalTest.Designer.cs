@@ -32,7 +32,7 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.imageIO1 = new ShowOpenCVResult.ImageIO();
-            this.myTrackBar1 = new ShowOpenCVResult.MyTrackBar();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -61,27 +61,21 @@
             this.imageIO1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.imageIO1.Image1 = null;
             this.imageIO1.Image2 = null;
-            this.imageIO1.Location = new System.Drawing.Point(0, 76);
+            this.imageIO1.Location = new System.Drawing.Point(0, 67);
             this.imageIO1.Name = "imageIO1";
-            this.imageIO1.Size = new System.Drawing.Size(723, 368);
+            this.imageIO1.Size = new System.Drawing.Size(723, 377);
             this.imageIO1.SpOrientation = System.Windows.Forms.Orientation.Vertical;
             this.imageIO1.TabIndex = 1;
             this.imageIO1.DoImgChange += new System.EventHandler(this.imageIO1_DoImgChange);
             this.imageIO1.AfterImgLoaded += new System.EventHandler(this.imageIO1_AfterImgLoaded);
             // 
-            // myTrackBar1
+            // panel1
             // 
-            this.myTrackBar1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.myTrackBar1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.myTrackBar1.Location = new System.Drawing.Point(0, 25);
-            this.myTrackBar1.Maximum = 100;
-            this.myTrackBar1.Minimum = 0;
-            this.myTrackBar1.Name = "myTrackBar1";
-            this.myTrackBar1.Size = new System.Drawing.Size(723, 51);
-            this.myTrackBar1.TabIndex = 2;
-            this.myTrackBar1.Title = "Threshold";
-            this.myTrackBar1.Value = 0;
-            this.myTrackBar1.ValueChanged += new System.EventHandler(this.myTrackBar1_ValueChanged);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel1.Location = new System.Drawing.Point(0, 25);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(723, 42);
+            this.panel1.TabIndex = 2;
             // 
             // FinalTest
             // 
@@ -89,7 +83,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(723, 444);
             this.Controls.Add(this.imageIO1);
-            this.Controls.Add(this.myTrackBar1);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.toolStrip1);
             this.Name = "FinalTest";
             this.Text = "Form1";
@@ -105,6 +99,6 @@
         private System.Windows.Forms.ToolStrip toolStrip1;
         private ImageIO imageIO1;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
-        private MyTrackBar myTrackBar1;
+        private System.Windows.Forms.Panel panel1;
     }
 }

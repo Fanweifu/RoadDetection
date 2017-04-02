@@ -57,6 +57,8 @@
     <PlatformTarget>x86</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <DocumentationFile>
+    </DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <OutputPath>bin\x86\Release\</OutputPath>
@@ -68,7 +70,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>false</SignManifests>
+    <SignManifests>true</SignManifests>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Emgu.CV, Version=2.4.10.1939, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
@@ -130,6 +132,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="VideoFindMechine.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VideoFindMechine.Designer.cs">
+      <DependentUpon>VideoFindMechine.cs</DependentUpon>
+    </Compile>
     <Compile Include="WindowsBlock\BitmapSVMTrain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -173,11 +181,11 @@
     <Compile Include="WindowsBlock\BitmapHis.Designer.cs">
       <DependentUpon>BitmapHis.cs</DependentUpon>
     </Compile>
-    <Compile Include="WindowsBlock\BitmapHSV.cs">
+    <Compile Include="WindowsBlock\BitmapRoadDetectShow.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WindowsBlock\BitmapHSV.Designer.cs">
-      <DependentUpon>BitmapHSV.cs</DependentUpon>
+    <Compile Include="WindowsBlock\BitmapRoadDetectShow.Designer.cs">
+      <DependentUpon>BitmapRoadDetectShow.cs</DependentUpon>
     </Compile>
     <Compile Include="WindowsBlock\BitmapHuoghTest.cs">
       <SubType>Form</SubType>
@@ -270,6 +278,9 @@
     <Compile Include="WindowsBlock\BitmapSuftDetect.Designer.cs">
       <DependentUpon>BitmapSuftDetect.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="VideoFindMechine.resx">
+      <DependentUpon>VideoFindMechine.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="WindowsBlock\BitmapSVMTrain.resx">
       <DependentUpon>BitmapSVMTrain.cs</DependentUpon>
     </EmbeddedResource>
@@ -291,8 +302,8 @@
     <EmbeddedResource Include="WindowsBlock\BitmapHis.resx">
       <DependentUpon>BitmapHis.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WindowsBlock\BitmapHSV.resx">
-      <DependentUpon>BitmapHSV.cs</DependentUpon>
+    <EmbeddedResource Include="WindowsBlock\BitmapRoadDetectShow.resx">
+      <DependentUpon>BitmapRoadDetectShow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WindowsBlock\BitmapHuoghTest.resx">
       <DependentUpon>BitmapHuoghTest.cs</DependentUpon>

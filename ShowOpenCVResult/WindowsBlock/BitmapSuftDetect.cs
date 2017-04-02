@@ -57,34 +57,34 @@ namespace ShowOpenCVResult
 
             #region POVIMGCREAT
 
-            double radius = 20;
-            int offset = 100;
-            Image<Bgr, Byte> img1 = new Image<Bgr, byte>(2000, 1000);
-            Image<Bgr, Byte> img2 = new Image<Bgr, byte>(2000, 1000);
-            Image<Bgr, Byte> img3 = new Image<Bgr, byte>(2000, 1000);
-            CvInvoke.Circle(img1, new Point(750, 500), (int)(radius / Math.Sqrt(2)), new MCvScalar(255, 255, 255), -1);
-            CvInvoke.Circle(img1, new Point(1250, 500), (int)(radius / Math.Sqrt(2)), new MCvScalar(255, 0, 255), -1);
-            CvInvoke.Circle(img2, new Point(500, 500), (int)radius, new MCvScalar(255, 255, 255), -1);
-            CvInvoke.Circle(img2, new Point(1500, 500), (int)radius, new MCvScalar(255, 0, 255), -1);
-            CvInvoke.Circle(img3, new Point(250, 500), (int)(radius / Math.Sqrt(2)), new MCvScalar(255, 255, 255), -1);
-            CvInvoke.Circle(img3, new Point(1750, 500), (int)(radius / Math.Sqrt(2)), new MCvScalar(255, 0, 255), -1);
-            for (int i = 0; i <= 10; i++) {
-                CvInvoke.Line(img1, new Point(0, i * offset), new Point(2000, i * offset), new MCvScalar(0, 255, 255));
-                CvInvoke.Line(img2, new Point(0, i * offset), new Point(2000, i * offset), new MCvScalar(0, 255, 255));
-                CvInvoke.Line(img3, new Point(0, i * offset), new Point(2000, i * offset), new MCvScalar(0, 255, 255));
-            }
-            offset = 9;
-            for (int i = 0; i < 10; i++) {
-                if (i == 5) continue;
-                CvInvoke.Line(img1, new Point(0, 500 + (i - 5) * offset), new Point(2000, 500 + (i - 5) * offset), new MCvScalar(255, 0, 255));
-                CvInvoke.Line(img2, new Point(0, 500 + (i - 5) * offset), new Point(2000, 500 + (i - 5) * offset), new MCvScalar(255, 0, 255));
-                CvInvoke.Line(img3, new Point(0, 500 + (i - 5) * offset), new Point(2000, 500 + (i - 5) * offset), new MCvScalar(255, 0, 255));
+            //double radius = 20;
+            //int offset = 100;
+            //Image<Bgr, Byte> img1 = new Image<Bgr, byte>(2000, 1000);
+            //Image<Bgr, Byte> img2 = new Image<Bgr, byte>(2000, 1000);
+            //Image<Bgr, Byte> img3 = new Image<Bgr, byte>(2000, 1000);
+            //CvInvoke.Circle(img1, new Point(750, 500), (int)(radius / Math.Sqrt(2)), new MCvScalar(255, 255, 255), -1);
+            //CvInvoke.Circle(img1, new Point(1250, 500), (int)(radius / Math.Sqrt(2)), new MCvScalar(255, 0, 255), -1);
+            //CvInvoke.Circle(img2, new Point(500, 500), (int)radius, new MCvScalar(255, 255, 255), -1);
+            //CvInvoke.Circle(img2, new Point(1500, 500), (int)radius, new MCvScalar(255, 0, 255), -1);
+            //CvInvoke.Circle(img3, new Point(250, 500), (int)(radius / Math.Sqrt(2)), new MCvScalar(255, 255, 255), -1);
+            //CvInvoke.Circle(img3, new Point(1750, 500), (int)(radius / Math.Sqrt(2)), new MCvScalar(255, 0, 255), -1);
+            //for (int i = 0; i <= 10; i++) {
+            //    CvInvoke.Line(img1, new Point(0, i * offset), new Point(2000, i * offset), new MCvScalar(0, 255, 255));
+            //    CvInvoke.Line(img2, new Point(0, i * offset), new Point(2000, i * offset), new MCvScalar(0, 255, 255));
+            //    CvInvoke.Line(img3, new Point(0, i * offset), new Point(2000, i * offset), new MCvScalar(0, 255, 255));
+            //}
+            //offset = 9;
+            //for (int i = 0; i < 10; i++) {
+            //    if (i == 5) continue;
+            //    CvInvoke.Line(img1, new Point(0, 500 + (i - 5) * offset), new Point(2000, 500 + (i - 5) * offset), new MCvScalar(255, 0, 255));
+            //    CvInvoke.Line(img2, new Point(0, 500 + (i - 5) * offset), new Point(2000, 500 + (i - 5) * offset), new MCvScalar(255, 0, 255));
+            //    CvInvoke.Line(img3, new Point(0, 500 + (i - 5) * offset), new Point(2000, 500 + (i - 5) * offset), new MCvScalar(255, 0, 255));
 
-            }
+            //}
 
-                img1.Save(@"E:\Users\fwf\Desktop\全景测量数据\全景测试材料\Img\ladybug_Panoramic_3500x1750_00000000.jpg");
-            img2.Save(@"E:\Users\fwf\Desktop\全景测量数据\全景测试材料\Img\ladybug_Panoramic_3500x1750_00000001.jpg");
-            img3.Save(@"E:\Users\fwf\Desktop\全景测量数据\全景测试材料\Img\ladybug_Panoramic_3500x1750_00000002.jpg");
+            //    img1.Save(@"E:\Users\fwf\Desktop\全景测量数据\全景测试材料\Img\ladybug_Panoramic_3500x1750_00000000.jpg");
+            //img2.Save(@"E:\Users\fwf\Desktop\全景测量数据\全景测试材料\Img\ladybug_Panoramic_3500x1750_00000001.jpg");
+            //img3.Save(@"E:\Users\fwf\Desktop\全景测量数据\全景测试材料\Img\ladybug_Panoramic_3500x1750_00000002.jpg");
             #endregion
 
             
