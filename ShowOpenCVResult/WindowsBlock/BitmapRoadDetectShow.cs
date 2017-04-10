@@ -11,25 +11,29 @@ using System.Windows.Forms;
 using System.Threading;
 using System.IO;
 using Emgu.CV.CvEnum;
+using System.Threading.Tasks;
 
 namespace ShowOpenCVResult
 {
     public partial class BitmapRoadDetectShow : MoveBlock
     {
-        Thread playthead = null ;
+        Task playthead = null ;
         long timesum=0;
         int playcnt = 0;
+        int curplayindex = 0;
         string [] exs = new string[] { ".jpg",".png",".bmp","jpeg"};
 
         public BitmapRoadDetectShow()
         {
+            initTimer();
+            initPlay();
             InitializeComponent();
         }
 
         List<string> imgspath = new List<string>();
-        List<Mat> mats = new List<Mat>();
-        ManualResetEvent mr = new ManualResetEvent(false);
-        
+        bool isinplay = true;
+        System.Timers.Timer m_timer = new System.Timers.Timer();
+        ManualResetEvent mr = new ManualResetEvent(true);
 
         private void tsbtnOpenImg_Click(object sender, EventArgs e)
         {
@@ -44,19 +48,25 @@ namespace ShowOpenCVResult
                 toolStripProgressBar1.Maximum = imgspath.Count;
                 toolStripProgressBar1.Value = 0;
                 toolStripButton2.Enabled = true;
-                InitPlay();
+                initPlay();
             }
 
         }
 
 
-        void InitPlay()
+        void initPlay()
         {
-            playthead = new Thread(() =>
+            playthead = new Task(() =>
             {
+                
 
                 foreach (var path in imgspath)
                 {
+                    if (!isinplay)
+                    {
+                        mr.WaitOne();
+                    }
+
                     Mat matimg = new Mat(path, LoadImageType.Unchanged);
                     if (imageIOControl1.Image1 != null)
                         imageIOControl1.Image1.Dispose();
@@ -74,21 +84,57 @@ namespace ShowOpenCVResult
                     imageIOControl1.Image2 = result;
                     playcnt++;
                     timesum += time;
-
-                    Thread.Sleep(1000);
-
-
                     Invoke(new Action(() => {
-                        toolStripStatusLabel2.Text = string.Format("总体耗时:{0}ms,播放帧数{1},平均耗时{2}", timesum, playcnt, timesum / playcnt);
+                        toolStripStatusLabel4.Text = path;           
+                        toolStripStatusLabel2.Text = string.Format("当前耗时:{0}ms,播放帧数{1},平均耗时{2}", time, playcnt, timesum / playcnt);
                     }));
+                    Thread.Sleep(1000);
                 }
 
             });
+            playthead.Start();
+        }
+        void initTimer() {
+            m_timer.Elapsed+= M_timer_Tick;
+            m_timer.Interval = 500;
 
+        }
 
+        private void M_timer_Tick(object sender, EventArgs e)
+        {
+            if (curplayindex >= imgspath.Count) {
+                m_timer.Stop();
+            }
+            mr.WaitOne();
+            mr.Reset();
+            Mat matimg = new Mat(imgspath[curplayindex++], LoadImageType.Unchanged);
+            if (imageIOControl1.Image1 != null)
+                imageIOControl1.Image1.Dispose();
+            imageIOControl1.Image1 = matimg;
+            long time = 0;
+            Mat road = null;
+            Mat result = OpencvMath.FinalLineProcess(matimg, out time, out road, true);
+            var vpp = OpencvMath.WalkRoadImg(result);
+            for (int i = 0; i < vpp.Size; i++)
+            {
+                OpencvMath.DrawRotatedRect(CvInvoke.MinAreaRect(vpp[i]), result);
+            }
 
-            
+            road.Dispose();
 
+            if (imageIOControl1.Image2 != null)
+                imageIOControl1.Image2.Dispose();
+            imageIOControl1.Image2 = result;
+
+            playcnt++;
+            timesum += time;
+
+            Thread.Sleep(1000);
+            Invoke(new Action(() => {
+                toolStripStatusLabel2.Text = string.Format("总体耗时:{0}ms,播放帧数{1},平均耗时{2}", timesum, playcnt, timesum / playcnt);
+
+            }));
+            mr.Set();
         }
 
         private void myTrackBar1_ValueChanged(object sender, EventArgs e)
@@ -117,9 +163,27 @@ namespace ShowOpenCVResult
 
         private void toolStripButton2_Click(object sender, EventArgs e)
         {
-            playthead.Start();
+            //if (m_timer.Enabled)
+            //{
+            //    m_timer.Stop();
+            //}
+            //else {
+            //    if (curplayindex == imgspath.Count) {
+            //        curplayindex = 0;
+            //    }
+            //    m_timer.Start();
 
-
+            //}
+            if (isinplay) {
+                isinplay = false;
+                mr.Reset();
+            }
+            else
+            {
+                isinplay = true;
+                mr.Set();
+            }
+            
         }
 
         }

@@ -63,5 +63,10 @@ namespace ShowOpenCVResult
         {
             imageIO1.DoChange();
         }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
+        }
     }
 }

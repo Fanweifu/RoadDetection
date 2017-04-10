@@ -132,6 +132,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="WindowsBlock\HSVRangeTest.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WindowsBlock\HSVRangeTest.Designer.cs">
+      <DependentUpon>HSVRangeTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="VideoFindMechine.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -278,6 +284,9 @@
     <Compile Include="WindowsBlock\BitmapSuftDetect.Designer.cs">
       <DependentUpon>BitmapSuftDetect.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="WindowsBlock\HSVRangeTest.resx">
+      <DependentUpon>HSVRangeTest.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="VideoFindMechine.resx">
       <DependentUpon>VideoFindMechine.cs</DependentUpon>
     </EmbeddedResource>

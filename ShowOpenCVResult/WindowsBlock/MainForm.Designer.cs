@@ -28,21 +28,21 @@
         /// </summary>
         private void InitializeComponent()
         {
-            WeifenLuo.WinFormsUI.Docking.DockPanelSkin dockPanelSkin2 = new WeifenLuo.WinFormsUI.Docking.DockPanelSkin();
-            WeifenLuo.WinFormsUI.Docking.AutoHideStripSkin autoHideStripSkin2 = new WeifenLuo.WinFormsUI.Docking.AutoHideStripSkin();
-            WeifenLuo.WinFormsUI.Docking.DockPanelGradient dockPanelGradient4 = new WeifenLuo.WinFormsUI.Docking.DockPanelGradient();
-            WeifenLuo.WinFormsUI.Docking.TabGradient tabGradient8 = new WeifenLuo.WinFormsUI.Docking.TabGradient();
-            WeifenLuo.WinFormsUI.Docking.DockPaneStripSkin dockPaneStripSkin2 = new WeifenLuo.WinFormsUI.Docking.DockPaneStripSkin();
-            WeifenLuo.WinFormsUI.Docking.DockPaneStripGradient dockPaneStripGradient2 = new WeifenLuo.WinFormsUI.Docking.DockPaneStripGradient();
-            WeifenLuo.WinFormsUI.Docking.TabGradient tabGradient9 = new WeifenLuo.WinFormsUI.Docking.TabGradient();
-            WeifenLuo.WinFormsUI.Docking.DockPanelGradient dockPanelGradient5 = new WeifenLuo.WinFormsUI.Docking.DockPanelGradient();
-            WeifenLuo.WinFormsUI.Docking.TabGradient tabGradient10 = new WeifenLuo.WinFormsUI.Docking.TabGradient();
-            WeifenLuo.WinFormsUI.Docking.DockPaneStripToolWindowGradient dockPaneStripToolWindowGradient2 = new WeifenLuo.WinFormsUI.Docking.DockPaneStripToolWindowGradient();
-            WeifenLuo.WinFormsUI.Docking.TabGradient tabGradient11 = new WeifenLuo.WinFormsUI.Docking.TabGradient();
-            WeifenLuo.WinFormsUI.Docking.TabGradient tabGradient12 = new WeifenLuo.WinFormsUI.Docking.TabGradient();
-            WeifenLuo.WinFormsUI.Docking.DockPanelGradient dockPanelGradient6 = new WeifenLuo.WinFormsUI.Docking.DockPanelGradient();
-            WeifenLuo.WinFormsUI.Docking.TabGradient tabGradient13 = new WeifenLuo.WinFormsUI.Docking.TabGradient();
-            WeifenLuo.WinFormsUI.Docking.TabGradient tabGradient14 = new WeifenLuo.WinFormsUI.Docking.TabGradient();
+            WeifenLuo.WinFormsUI.Docking.DockPanelSkin dockPanelSkin1 = new WeifenLuo.WinFormsUI.Docking.DockPanelSkin();
+            WeifenLuo.WinFormsUI.Docking.AutoHideStripSkin autoHideStripSkin1 = new WeifenLuo.WinFormsUI.Docking.AutoHideStripSkin();
+            WeifenLuo.WinFormsUI.Docking.DockPanelGradient dockPanelGradient1 = new WeifenLuo.WinFormsUI.Docking.DockPanelGradient();
+            WeifenLuo.WinFormsUI.Docking.TabGradient tabGradient1 = new WeifenLuo.WinFormsUI.Docking.TabGradient();
+            WeifenLuo.WinFormsUI.Docking.DockPaneStripSkin dockPaneStripSkin1 = new WeifenLuo.WinFormsUI.Docking.DockPaneStripSkin();
+            WeifenLuo.WinFormsUI.Docking.DockPaneStripGradient dockPaneStripGradient1 = new WeifenLuo.WinFormsUI.Docking.DockPaneStripGradient();
+            WeifenLuo.WinFormsUI.Docking.TabGradient tabGradient2 = new WeifenLuo.WinFormsUI.Docking.TabGradient();
+            WeifenLuo.WinFormsUI.Docking.DockPanelGradient dockPanelGradient2 = new WeifenLuo.WinFormsUI.Docking.DockPanelGradient();
+            WeifenLuo.WinFormsUI.Docking.TabGradient tabGradient3 = new WeifenLuo.WinFormsUI.Docking.TabGradient();
+            WeifenLuo.WinFormsUI.Docking.DockPaneStripToolWindowGradient dockPaneStripToolWindowGradient1 = new WeifenLuo.WinFormsUI.Docking.DockPaneStripToolWindowGradient();
+            WeifenLuo.WinFormsUI.Docking.TabGradient tabGradient4 = new WeifenLuo.WinFormsUI.Docking.TabGradient();
+            WeifenLuo.WinFormsUI.Docking.TabGradient tabGradient5 = new WeifenLuo.WinFormsUI.Docking.TabGradient();
+            WeifenLuo.WinFormsUI.Docking.DockPanelGradient dockPanelGradient3 = new WeifenLuo.WinFormsUI.Docking.DockPanelGradient();
+            WeifenLuo.WinFormsUI.Docking.TabGradient tabGradient6 = new WeifenLuo.WinFormsUI.Docking.TabGradient();
+            WeifenLuo.WinFormsUI.Docking.TabGradient tabGradient7 = new WeifenLuo.WinFormsUI.Docking.TabGradient();
             this.msMenus = new System.Windows.Forms.MenuStrip();
             this.预处理ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.滤波ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -63,10 +63,11 @@
             this.svm训练ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.其他ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.图像拼接ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.dockPanel1 = new WeifenLuo.WinFormsUI.Docking.DockPanel();
             this.个体项目ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.机床定位ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.石块检测ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dockPanel1 = new WeifenLuo.WinFormsUI.Docking.DockPanel();
+            this.hSV测试ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.msMenus.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -93,7 +94,8 @@
             this.直方图ToolStripMenuItem1,
             this.逆转换ToolStripMenuItem,
             this.膨胀腐蚀ToolStripMenuItem,
-            this.颜色阈值ToolStripMenuItem});
+            this.颜色阈值ToolStripMenuItem,
+            this.hSV测试ToolStripMenuItem});
             this.预处理ToolStripMenuItem.Name = "预处理ToolStripMenuItem";
             this.预处理ToolStripMenuItem.Size = new System.Drawing.Size(56, 21);
             this.预处理ToolStripMenuItem.Text = "预处理";
@@ -101,43 +103,43 @@
             // 滤波ToolStripMenuItem
             // 
             this.滤波ToolStripMenuItem.Name = "滤波ToolStripMenuItem";
-            this.滤波ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.滤波ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.滤波ToolStripMenuItem.Text = "滤波";
             this.滤波ToolStripMenuItem.Click += new System.EventHandler(this.滤波ToolStripMenuItem_Click);
             // 
             // 局部阈值ToolStripMenuItem1
             // 
             this.局部阈值ToolStripMenuItem1.Name = "局部阈值ToolStripMenuItem1";
-            this.局部阈值ToolStripMenuItem1.Size = new System.Drawing.Size(124, 22);
+            this.局部阈值ToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
             this.局部阈值ToolStripMenuItem1.Text = "局部阈值";
             this.局部阈值ToolStripMenuItem1.Click += new System.EventHandler(this.局部阈值ToolStripMenuItem1_Click);
             // 
             // 直方图ToolStripMenuItem1
             // 
             this.直方图ToolStripMenuItem1.Name = "直方图ToolStripMenuItem1";
-            this.直方图ToolStripMenuItem1.Size = new System.Drawing.Size(124, 22);
+            this.直方图ToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
             this.直方图ToolStripMenuItem1.Text = "直方图";
             this.直方图ToolStripMenuItem1.Click += new System.EventHandler(this.直方图ToolStripMenuItem1_Click);
             // 
             // 逆转换ToolStripMenuItem
             // 
             this.逆转换ToolStripMenuItem.Name = "逆转换ToolStripMenuItem";
-            this.逆转换ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.逆转换ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.逆转换ToolStripMenuItem.Text = "逆转换";
             this.逆转换ToolStripMenuItem.Click += new System.EventHandler(this.逆转换ToolStripMenuItem_Click);
             // 
             // 膨胀腐蚀ToolStripMenuItem
             // 
             this.膨胀腐蚀ToolStripMenuItem.Name = "膨胀腐蚀ToolStripMenuItem";
-            this.膨胀腐蚀ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.膨胀腐蚀ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.膨胀腐蚀ToolStripMenuItem.Text = "膨胀腐蚀";
             this.膨胀腐蚀ToolStripMenuItem.Click += new System.EventHandler(this.膨胀腐蚀ToolStripMenuItem_Click);
             // 
             // 颜色阈值ToolStripMenuItem
             // 
             this.颜色阈值ToolStripMenuItem.Name = "颜色阈值ToolStripMenuItem";
-            this.颜色阈值ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
-            this.颜色阈值ToolStripMenuItem.Text = "颜色阈值";
+            this.颜色阈值ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.颜色阈值ToolStripMenuItem.Text = "路面展示";
             this.颜色阈值ToolStripMenuItem.Click += new System.EventHandler(this.颜色阈值ToolStripMenuItem_Click);
             // 
             // 特征提取ToolStripMenuItem
@@ -228,65 +230,9 @@
             // 图像拼接ToolStripMenuItem1
             // 
             this.图像拼接ToolStripMenuItem1.Name = "图像拼接ToolStripMenuItem1";
-            this.图像拼接ToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.图像拼接ToolStripMenuItem1.Size = new System.Drawing.Size(124, 22);
             this.图像拼接ToolStripMenuItem1.Text = "图像拼接";
             this.图像拼接ToolStripMenuItem1.Click += new System.EventHandler(this.图像拼接ToolStripMenuItem1_Click);
-            // 
-            // dockPanel1
-            // 
-            this.dockPanel1.ActiveAutoHideContent = null;
-            this.dockPanel1.AutoSize = true;
-            this.dockPanel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.dockPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dockPanel1.DockBackColor = System.Drawing.SystemColors.Control;
-            this.dockPanel1.Location = new System.Drawing.Point(0, 25);
-            this.dockPanel1.Name = "dockPanel1";
-            this.dockPanel1.Size = new System.Drawing.Size(1184, 736);
-            dockPanelGradient4.EndColor = System.Drawing.SystemColors.ControlLight;
-            dockPanelGradient4.StartColor = System.Drawing.SystemColors.ControlLight;
-            autoHideStripSkin2.DockStripGradient = dockPanelGradient4;
-            tabGradient8.EndColor = System.Drawing.SystemColors.Control;
-            tabGradient8.StartColor = System.Drawing.SystemColors.Control;
-            tabGradient8.TextColor = System.Drawing.SystemColors.ControlDarkDark;
-            autoHideStripSkin2.TabGradient = tabGradient8;
-            dockPanelSkin2.AutoHideStripSkin = autoHideStripSkin2;
-            tabGradient9.EndColor = System.Drawing.SystemColors.ControlLightLight;
-            tabGradient9.StartColor = System.Drawing.SystemColors.ControlLightLight;
-            tabGradient9.TextColor = System.Drawing.SystemColors.ControlText;
-            dockPaneStripGradient2.ActiveTabGradient = tabGradient9;
-            dockPanelGradient5.EndColor = System.Drawing.SystemColors.Control;
-            dockPanelGradient5.StartColor = System.Drawing.SystemColors.Control;
-            dockPaneStripGradient2.DockStripGradient = dockPanelGradient5;
-            tabGradient10.EndColor = System.Drawing.SystemColors.ControlLight;
-            tabGradient10.StartColor = System.Drawing.SystemColors.ControlLight;
-            tabGradient10.TextColor = System.Drawing.SystemColors.ControlText;
-            dockPaneStripGradient2.InactiveTabGradient = tabGradient10;
-            dockPaneStripSkin2.DocumentGradient = dockPaneStripGradient2;
-            tabGradient11.EndColor = System.Drawing.SystemColors.ActiveCaption;
-            tabGradient11.LinearGradientMode = System.Drawing.Drawing2D.LinearGradientMode.Vertical;
-            tabGradient11.StartColor = System.Drawing.SystemColors.GradientActiveCaption;
-            tabGradient11.TextColor = System.Drawing.SystemColors.ActiveCaptionText;
-            dockPaneStripToolWindowGradient2.ActiveCaptionGradient = tabGradient11;
-            tabGradient12.EndColor = System.Drawing.SystemColors.Control;
-            tabGradient12.StartColor = System.Drawing.SystemColors.Control;
-            tabGradient12.TextColor = System.Drawing.SystemColors.ControlText;
-            dockPaneStripToolWindowGradient2.ActiveTabGradient = tabGradient12;
-            dockPanelGradient6.EndColor = System.Drawing.SystemColors.ControlLight;
-            dockPanelGradient6.StartColor = System.Drawing.SystemColors.ControlLight;
-            dockPaneStripToolWindowGradient2.DockStripGradient = dockPanelGradient6;
-            tabGradient13.EndColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            tabGradient13.LinearGradientMode = System.Drawing.Drawing2D.LinearGradientMode.Vertical;
-            tabGradient13.StartColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            tabGradient13.TextColor = System.Drawing.SystemColors.ControlText;
-            dockPaneStripToolWindowGradient2.InactiveCaptionGradient = tabGradient13;
-            tabGradient14.EndColor = System.Drawing.Color.Transparent;
-            tabGradient14.StartColor = System.Drawing.Color.Transparent;
-            tabGradient14.TextColor = System.Drawing.SystemColors.ControlDarkDark;
-            dockPaneStripToolWindowGradient2.InactiveTabGradient = tabGradient14;
-            dockPaneStripSkin2.ToolWindowGradient = dockPaneStripToolWindowGradient2;
-            dockPanelSkin2.DockPaneStripSkin = dockPaneStripSkin2;
-            this.dockPanel1.Skin = dockPanelSkin2;
-            this.dockPanel1.TabIndex = 3;
             // 
             // 个体项目ToolStripMenuItem
             // 
@@ -300,15 +246,78 @@
             // 机床定位ToolStripMenuItem
             // 
             this.机床定位ToolStripMenuItem.Name = "机床定位ToolStripMenuItem";
-            this.机床定位ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.机床定位ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.机床定位ToolStripMenuItem.Text = "机床定位";
             this.机床定位ToolStripMenuItem.Click += new System.EventHandler(this.机床定位ToolStripMenuItem_Click);
             // 
             // 石块检测ToolStripMenuItem
             // 
             this.石块检测ToolStripMenuItem.Name = "石块检测ToolStripMenuItem";
-            this.石块检测ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.石块检测ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.石块检测ToolStripMenuItem.Text = "石块检测";
+            // 
+            // dockPanel1
+            // 
+            this.dockPanel1.ActiveAutoHideContent = null;
+            this.dockPanel1.AutoSize = true;
+            this.dockPanel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.dockPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dockPanel1.DockBackColor = System.Drawing.SystemColors.Control;
+            this.dockPanel1.Location = new System.Drawing.Point(0, 25);
+            this.dockPanel1.Name = "dockPanel1";
+            this.dockPanel1.Size = new System.Drawing.Size(1184, 736);
+            dockPanelGradient1.EndColor = System.Drawing.SystemColors.ControlLight;
+            dockPanelGradient1.StartColor = System.Drawing.SystemColors.ControlLight;
+            autoHideStripSkin1.DockStripGradient = dockPanelGradient1;
+            tabGradient1.EndColor = System.Drawing.SystemColors.Control;
+            tabGradient1.StartColor = System.Drawing.SystemColors.Control;
+            tabGradient1.TextColor = System.Drawing.SystemColors.ControlDarkDark;
+            autoHideStripSkin1.TabGradient = tabGradient1;
+            dockPanelSkin1.AutoHideStripSkin = autoHideStripSkin1;
+            tabGradient2.EndColor = System.Drawing.SystemColors.ControlLightLight;
+            tabGradient2.StartColor = System.Drawing.SystemColors.ControlLightLight;
+            tabGradient2.TextColor = System.Drawing.SystemColors.ControlText;
+            dockPaneStripGradient1.ActiveTabGradient = tabGradient2;
+            dockPanelGradient2.EndColor = System.Drawing.SystemColors.Control;
+            dockPanelGradient2.StartColor = System.Drawing.SystemColors.Control;
+            dockPaneStripGradient1.DockStripGradient = dockPanelGradient2;
+            tabGradient3.EndColor = System.Drawing.SystemColors.ControlLight;
+            tabGradient3.StartColor = System.Drawing.SystemColors.ControlLight;
+            tabGradient3.TextColor = System.Drawing.SystemColors.ControlText;
+            dockPaneStripGradient1.InactiveTabGradient = tabGradient3;
+            dockPaneStripSkin1.DocumentGradient = dockPaneStripGradient1;
+            tabGradient4.EndColor = System.Drawing.SystemColors.ActiveCaption;
+            tabGradient4.LinearGradientMode = System.Drawing.Drawing2D.LinearGradientMode.Vertical;
+            tabGradient4.StartColor = System.Drawing.SystemColors.GradientActiveCaption;
+            tabGradient4.TextColor = System.Drawing.SystemColors.ActiveCaptionText;
+            dockPaneStripToolWindowGradient1.ActiveCaptionGradient = tabGradient4;
+            tabGradient5.EndColor = System.Drawing.SystemColors.Control;
+            tabGradient5.StartColor = System.Drawing.SystemColors.Control;
+            tabGradient5.TextColor = System.Drawing.SystemColors.ControlText;
+            dockPaneStripToolWindowGradient1.ActiveTabGradient = tabGradient5;
+            dockPanelGradient3.EndColor = System.Drawing.SystemColors.ControlLight;
+            dockPanelGradient3.StartColor = System.Drawing.SystemColors.ControlLight;
+            dockPaneStripToolWindowGradient1.DockStripGradient = dockPanelGradient3;
+            tabGradient6.EndColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            tabGradient6.LinearGradientMode = System.Drawing.Drawing2D.LinearGradientMode.Vertical;
+            tabGradient6.StartColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            tabGradient6.TextColor = System.Drawing.SystemColors.ControlText;
+            dockPaneStripToolWindowGradient1.InactiveCaptionGradient = tabGradient6;
+            tabGradient7.EndColor = System.Drawing.Color.Transparent;
+            tabGradient7.StartColor = System.Drawing.Color.Transparent;
+            tabGradient7.TextColor = System.Drawing.SystemColors.ControlDarkDark;
+            dockPaneStripToolWindowGradient1.InactiveTabGradient = tabGradient7;
+            dockPaneStripSkin1.ToolWindowGradient = dockPaneStripToolWindowGradient1;
+            dockPanelSkin1.DockPaneStripSkin = dockPaneStripSkin1;
+            this.dockPanel1.Skin = dockPanelSkin1;
+            this.dockPanel1.TabIndex = 3;
+            // 
+            // hSV测试ToolStripMenuItem
+            // 
+            this.hSV测试ToolStripMenuItem.Name = "hSV测试ToolStripMenuItem";
+            this.hSV测试ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.hSV测试ToolStripMenuItem.Text = "HSV测试";
+            this.hSV测试ToolStripMenuItem.Click += new System.EventHandler(this.hSV测试ToolStripMenuItem_Click);
             // 
             // OpencvForm
             // 
@@ -356,6 +365,7 @@
         private System.Windows.Forms.ToolStripMenuItem 个体项目ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 机床定位ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 石块检测ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem hSV测试ToolStripMenuItem;
     }
 }
 

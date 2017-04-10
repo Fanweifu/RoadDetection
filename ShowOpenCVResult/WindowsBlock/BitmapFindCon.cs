@@ -68,18 +68,19 @@ namespace ShowOpenCVResult
         /// <param name="image">灰度图</param>
         /// <param name="b">表达树状数据的数组</param>
         /// <returns>VectorOfVectorOfPoint类型的轮廓数据</returns>
-        VectorOfVectorOfPoint GetTreeData(Image<Gray, Byte> image, ref int[] b, int minpts, int maxpts, double apppar = -1)
+        VectorOfVectorOfPoint GetTreeData(Image<Gray, Byte> image, ref int[] b, int minarea, int maxarea, double apppar = -1)
         {
             Mat he = new Mat();
             VectorOfVectorOfPoint cons = new VectorOfVectorOfPoint();
-            CvInvoke.FindContours(image, cons, he, Emgu.CV.CvEnum.RetrType.Tree, Emgu.CV.CvEnum.ChainApproxMethod.ChainApproxSimple);
+            CvInvoke.FindContours(image, cons, he, Emgu.CV.CvEnum.RetrType.Tree, ChainApproxMethod.ChainApproxSimple);
             b = new int[he.Cols * 4];
             he.CopyTo(b);
             int ccnt = cons.Size;
             List<int> dels = new List<int>();
             for (int i = 0; i < ccnt; i++)
             {
-                if (cons[i].Size < minpts || cons[i].Size > maxpts)
+                double area = CvInvoke.ContourArea(cons[i]);
+                if (area < minarea || area > maxarea)
                 {
                     cons[i].Clear();
                     dels.Add(i);
@@ -128,7 +129,7 @@ namespace ShowOpenCVResult
             if (path == null) return;
             filesrc = new Image<Bgr, byte>(path);
             filegray = new Image<Gray, byte>(filesrc.Size);
-            CvInvoke.Threshold(filesrc.Convert<Gray, Byte>(), filegray, 100,255, Emgu.CV.CvEnum.ThresholdType.Otsu);
+            CvInvoke.Threshold(filesrc.Convert<Gray, byte>(), filegray,10 ,255, ThresholdType.Otsu);
             imageIOControl1.DoChange();
         }
 
@@ -377,7 +378,7 @@ namespace ShowOpenCVResult
                         }
                     }
                 break;
-                case Emgu.CV.CvEnum.ContoursMatchType.I2:
+                case ContoursMatchType.I2:
                 for (int i = 0; i < cons.Size; i++)
                 {
                     if (m_i2[i] < (double)myTrackBar6.Value / 100)
@@ -386,7 +387,7 @@ namespace ShowOpenCVResult
                     }
                 }
                 break;
-                case Emgu.CV.CvEnum.ContoursMatchType.I3:
+                case ContoursMatchType.I3:
                 for (int i = 0; i < cons.Size; i++)
                 {
                     if (m_i3[i] < (double)myTrackBar6.Value / 100)
@@ -404,8 +405,11 @@ namespace ShowOpenCVResult
 
         private void imageIOControl1_AfterImgLoaded(object sender, EventArgs e)
         {
-            filesrc = (imageIOControl1.Image1 as Image<Bgr, Byte>).Clone();
-            filegray = filesrc.Convert<Gray, Byte>();
+            filesrc = (imageIOControl1.Image1 as Image<Bgr, byte>).Clone();
+            filegray = filesrc.Convert<Gray, byte>();
+            myTrackBar4.Maximum = filesrc.Width * filesrc.Height;
+            myTrackBar5.Maximum = filesrc.Width * filesrc.Height;
+
         }
 
         private void toolStripButton3_Click(object sender, EventArgs e)
@@ -414,10 +418,10 @@ namespace ShowOpenCVResult
                 using(SaveFileDialog sf = new SaveFileDialog()){
                     sf.Title = "生成轮廓像素图";
                     sf.Filter = "(PNG)*.png|*.png";
-                    if (sf.ShowDialog() != System.Windows.Forms.DialogResult.OK) return;
+                    if (sf.ShowDialog() != DialogResult.OK) return;
 
                     Mat result = OpencvMath.GetSquareExampleImg(cons[selectIndex], filesrc.Size);
-                    result.ToImage<Bgr, Byte>().Save(sf.FileName);
+                    result.ToImage<Bgr, byte>().Save(sf.FileName);
                 }
             }
         }
@@ -444,11 +448,11 @@ namespace ShowOpenCVResult
         private void toolStripButton2_Click_1(object sender, EventArgs e)
         {
             if (filesrc == null) return;
-            Image<Gray, Byte> gray = filesrc.Convert<Gray, Byte>();
+            Image<Gray, byte> gray = filesrc.Convert<Gray, byte>();
 
             Stopwatch sw = new Stopwatch();
             sw.Start();
-            VectorOfVectorOfPoint vvp = OpencvMath.WalkRoadImg(gray.Mat, gray.Height/256 ,2,20,5 ,0.4,2,10);
+            VectorOfVectorOfPoint vvp = OpencvMath.WalkRoadImg(gray.Mat);
             for (int i = 0; i < vvp.Size; i++)
             {
                 Point[] pts = vvp[i].ToArray();

@@ -116,7 +116,7 @@
             this.myTrackBar1.Size = new System.Drawing.Size(585, 43);
             this.myTrackBar1.TabIndex = 0;
             this.myTrackBar1.Title = "redThreshold";
-            this.myTrackBar1.Value = 170;
+            this.myTrackBar1.Value = 5;
             this.myTrackBar1.ValueChanged += new System.EventHandler(this.myTrackBar1_ValueChanged);
             // 
             // VideoFindMechine

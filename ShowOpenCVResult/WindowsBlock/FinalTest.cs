@@ -21,14 +21,6 @@ namespace ShowOpenCVResult
         }
 
 
-
-
-
-
-
-
-
-
         private void imageIO1_DoImgChange(object sender, EventArgs e)
         {
             if (imageIO1.Image1 == null) return;
@@ -36,7 +28,7 @@ namespace ShowOpenCVResult
             var img = (imageIO1.Image1 as Image<Bgr, Byte>).Mat;
             long time = 0;
             Mat road = null;
-            var result = OpencvMath.FinalLineProcess(img, out time,out road,  true);
+            var result = OpencvMath.FinalLineProcess(img, out time,out road,toolStripButton2.Checked);
 
             if (imageIO1.Image2 != null)
             {
@@ -66,6 +58,11 @@ namespace ShowOpenCVResult
         private void imageIO1_AfterImgLoaded(object sender, EventArgs e)
         {
            
+        }
+
+        private void toolStripButton2_CheckedChanged(object sender, EventArgs e)
+        {
+            imageIO1.DoChange();
         }
     }
 }

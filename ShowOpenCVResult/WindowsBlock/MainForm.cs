@@ -169,6 +169,11 @@ namespace ShowOpenCVResult
         {
             new VideoFindMechine().Show(this.dockPanel1, DockState.Document);
         }
+
+        private void hSV测试ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new  HSVRangeTest().Show(this.dockPanel1, DockState.Document);
+        }
     }
 
 

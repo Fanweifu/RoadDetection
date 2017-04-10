@@ -32,7 +32,8 @@ namespace ShowOpenCVResult
         double fps = 0;
         int count = 0;
         Thread video = null;
-
+        Image<Bgr, byte> fileimg = null;
+            
         public VideoFindMechine()
         {
             InitializeComponent();
@@ -56,8 +57,9 @@ namespace ShowOpenCVResult
 
         private void imageIO1_DoImgChange(object sender, EventArgs e)
         {
-            Mat img = null;
+            if (imageIO1.Image1 == null) return;
 
+            Mat img = null;
             if (isvideo)
             {
                 if (m_cp == null) return;
@@ -94,66 +96,160 @@ namespace ShowOpenCVResult
                     video = null;
                 }
 
-                img = (imageIO1.Image1 as Image<Bgr, byte>).Mat;
-                dothing(img);
-
+                img = fileimg.Mat.Clone();
+                process(img);
 
             }
        
         }
 
-        void dothing( Mat img ) {
+        void process(Mat img) {
+            RotatedRect rr = new RotatedRect();
 
-            if (img == null) return;
-        
-            Mat mask = new Mat();
-            Rectangle rect = new Rectangle();
-            var imgresult = img.Clone();
-            CvInvoke.CvtColor(imgresult , mask, ColorConversion.Bgr2Gray);
-            CvInvoke.FloodFill(mask, null, new Point(1, 1), new MCvScalar(0),out rect,new MCvScalar(2),new MCvScalar(30));
-            CvInvoke.Threshold(mask, mask, 0, 255, ThresholdType.Binary);
-
-
-            // Hsv
-            CvInvoke.CvtColor(imgresult, imgresult, ColorConversion.Bgr2Hsv);
-            Mat hsv = new Mat();
-            imgresult.CopyTo(hsv, mask);
-
-            VectorOfMat bgr = OpencvMath.NormolizeHsvImg(hsv, mask);
-
-            Mat resultv = new Mat();
-            //CvInvoke.MorphologyEx(bgr[1], resultv, MorphOp.Open, CvInvoke.GetStructuringElement(ElementShape.Rectangle, new Size(21, 21), new Point(-1, -1)), new Point(-1, -1), 1, BorderType.Default, new MCvScalar(0));
-            //Mat redmask = new Mat();
-            //Mat redmask1 = new Mat();
-            //Mat redmask2 = new Mat();
-            //CvInvoke.Threshold(bgr[0], redmask1, (int)myTrackBar1.Value, 255, ThresholdType.Binary);
-            //CvInvoke.Threshold(bgr[0], redmask2, (int)myTrackBar2.Value, 255, ThresholdType.BinaryInv);
-            //CvInvoke.Add(redmask1, redmask2, redmask);
-            //Mat hsand = new Mat();
-            //CvInvoke.BitwiseAnd(redmask, bgr[1], hsand);
-
-            Mat result = new Mat();
-            CvInvoke.Merge(bgr, result);
-            CvInvoke.CvtColor(result, result, ColorConversion.Hsv2Bgr);
+            Mat result = FindObjectRect(img, out rr);
+            OpencvMath.DrawRotatedRect(rr, img);
+            if (imageIO1.Image1 != null)
+                imageIO1.Image1.Dispose();
+            imageIO1.Image1 = img;
 
             if (imageIO1.Image2 != null)
                 imageIO1.Image2.Dispose();
-            imageIO1.Image2 = bgr[1];
+            imageIO1.Image2 = result;
+        }
 
 
-            
-            CvInvoke.CvtColor(imgresult, imgresult, ColorConversion.Bgr2Gray);
-            CvInvoke.Normalize(imgresult, imgresult, 0, 255, NormType.MinMax, DepthType.Default, mask);
+        void preDo(Mat binary,int blackgap,int writebanrch) {
+            if (binary == null || binary.NumberOfChannels != 1||binary.Depth!= DepthType.Cv8U) return;
+            unsafe {
+                byte* ptrhead = (byte*)binary.DataPointer;
+                int rows = binary.Rows, cols = binary.Cols;
+                for (int i = 0; i < rows; i++)
+                {
+                    byte* rowhead = ptrhead + cols * i;
+                    int lastindex = 0;
+                    for (int j = 1; j < cols; j++)
+                    {
+                        byte curvalue = *(rowhead + j), lastvalue = *(rowhead + j - 1);
+                        if (curvalue * lastvalue == 0 && curvalue != lastvalue) {
+                            if (curvalue > 0)
+                            {
+                                if (lastindex == 0)
+                                {
+                                    lastindex = j;
+                                }
+                                else
+                                {
+                                    if (j - lastindex < blackgap)
+                                    {
+                                        for (int p = lastindex; p < j; p++)
+                                        {
+                                            *(rowhead + p) = 255;
+                                        }
+                                    }
+                                }
+                            }
+                            else {
+                                if (lastindex == 0)
+                                {
+                                    lastindex = j;
+                                }
+                                else
+                                {
+                                    if (j - lastindex < writebanrch)
+                                    {
+                                        for (int p = lastindex; p < j; p++)
+                                        {
+                                            *(rowhead + p) = 0 ;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    } 
+                }
 
+
+                for (int i = 0; i < cols; i++)
+                {
+                    byte* rowhead = ptrhead +  i;
+                    int lastindex = 0;
+                    for (int j = 1; j < rows; j++)
+                    {
+                        byte curvalue = *(rowhead + j*cols), lastvalue = *(rowhead + (j - 1)*cols);
+                        if (curvalue * lastvalue == 0 && curvalue != lastvalue)
+                        {
+                            if (curvalue > 0)
+                            {
+                                if (lastindex == 0)
+                                {
+                                    lastindex = j;
+                                }
+                                else
+                                {
+                                    if (j - lastindex < blackgap)
+                                    {
+                                        for (int p = lastindex; p < j; p++)
+                                        {
+                                            *(rowhead + p*cols) = 255;
+                                        }
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                if (lastindex == 0)
+                                {
+                                    lastindex = j;
+                                }
+                                else
+                                {
+                                    if (j - lastindex < writebanrch)
+                                    {
+                                        for (int p = lastindex; p < j; p++)
+                                        {
+                                            *(rowhead + p * cols) = 0;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        Mat FindObjectRect( Mat img,out RotatedRect rect ) {
+        
+            Mat mask = new Mat();
+            Rectangle rectempty = new Rectangle();
+            var imgresult = img.Clone();
+            CvInvoke.CvtColor(imgresult , mask, ColorConversion.Bgr2Gray);
+            CvInvoke.FloodFill(mask, null, new Point(1, 1), new MCvScalar(0),out rectempty, new MCvScalar(2),new MCvScalar(30));
+            CvInvoke.Threshold(mask, mask, 0, 255, ThresholdType.Binary);
+
+            CvInvoke.CvtColor(imgresult, imgresult, ColorConversion.Bgr2Hsv);
+            Mat hsv = new Mat();
+            imgresult.CopyTo(hsv, mask);
+            VectorOfMat bgr = OpencvMath.NormolizeHsvImg(hsv, mask);
+            hsv.Dispose();
             mask.Dispose();
-            imgresult.Dispose();
-            //redmask.Dispose();
-            //redmask1.Dispose();
-            //redmask2.Dispose();
-            //bgr.Dispose();
 
+            CvInvoke.Threshold(bgr[1], bgr[1], 100, 255, ThresholdType.Otsu);
+            int maxindex = 0;
+            VectorOfVectorOfPoint vvp = OpencvMath.FindMaxAreaIndexCon(bgr[1], out maxindex);
 
+            Mat black = bgr[1].Clone();
+            black.SetTo(new MCvScalar(0));
+            CvInvoke.DrawContours(black, vvp, maxindex, new MCvScalar(255), -1);
+            preDo(black, myTrackBar1.Value, myTrackBar2.Value);
+            int maxindex2 = 0;
+            VectorOfVectorOfPoint vvp2 = OpencvMath.FindMaxAreaIndexCon(black, out maxindex2);
+            var roterect = CvInvoke.MinAreaRect(vvp2[maxindex2]);
 
+            OpencvMath.DrawRotatedRect(roterect, img);
+
+            rect = roterect;
+            return black;
         }
 
         private void toolStripButton2_Click(object sender, EventArgs e)
@@ -162,7 +258,8 @@ namespace ShowOpenCVResult
             if (img == null) return;
 
             isvideo = false;
-            imageIO1.SetInput(img);
+            fileimg = img as Image<Bgr, byte>;
+            imageIO1.SetInput(fileimg.Clone());
 
 
         }
