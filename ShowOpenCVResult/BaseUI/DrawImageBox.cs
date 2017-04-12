@@ -21,6 +21,8 @@ namespace ShowOpenCVResult
             get;
             set;
         }
+
+       
         Rectangle m_Rectangle;
         public DrawImageBox()
         {
@@ -70,7 +72,7 @@ namespace ShowOpenCVResult
 
                     Object item = (Bitmap)e.Data.GetData(DataFormats.Bitmap);
                     if (item == null) return;
-                    this.Image = new Emgu.CV.Image<Bgr,Byte>(item as Bitmap);
+                    Image = new Emgu.CV.Image<Bgr,Byte>(item as Bitmap);
                     this.Focus();
                 }
 

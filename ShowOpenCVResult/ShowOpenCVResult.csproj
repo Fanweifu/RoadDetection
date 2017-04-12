@@ -73,6 +73,26 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Accord, Version=2.15.0.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>AccordSvm\Accord.dll</HintPath>
+    </Reference>
+    <Reference Include="Accord.MachineLearning, Version=2.15.0.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>AccordSvm\Accord.MachineLearning.dll</HintPath>
+    </Reference>
+    <Reference Include="Accord.Math, Version=2.15.0.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>AccordSvm\Accord.Math.dll</HintPath>
+    </Reference>
+    <Reference Include="Accord.Statistics, Version=2.15.0.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>AccordSvm\Accord.Statistics.dll</HintPath>
+    </Reference>
+    <Reference Include="AForge, Version=2.2.5.0, Culture=neutral, PublicKeyToken=c1db6ff4eaa06aeb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>AccordSvm\AForge.dll</HintPath>
+    </Reference>
     <Reference Include="Emgu.CV, Version=2.4.10.1939, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Emgu\emgucv-windows-universal 3.0.0.2157\bin\Emgu.CV.dll</HintPath>
@@ -132,90 +152,102 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseUI\AccordSVMPramasInput.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="BaseUI\AccordSVMPramasInput.Designer.cs">
+      <DependentUpon>AccordSVMPramasInput.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WindowsBlock\AccordSvmTrain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WindowsBlock\AccordSvmTrain.Designer.cs">
+      <DependentUpon>AccordSvmTrain.cs</DependentUpon>
+    </Compile>
     <Compile Include="WindowsBlock\HSVRangeTest.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="WindowsBlock\HSVRangeTest.Designer.cs">
       <DependentUpon>HSVRangeTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="VideoFindMechine.cs">
+    <Compile Include="WindowsBlock\VideoFindMechine.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="VideoFindMechine.Designer.cs">
+    <Compile Include="WindowsBlock\VideoFindMechine.Designer.cs">
       <DependentUpon>VideoFindMechine.cs</DependentUpon>
     </Compile>
-    <Compile Include="WindowsBlock\BitmapSVMTrain.cs">
+    <Compile Include="WindowsBlock\EmguSVMTrain.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WindowsBlock\BitmapSVMTrain.designer.cs">
-      <DependentUpon>BitmapSVMTrain.cs</DependentUpon>
+    <Compile Include="WindowsBlock\EmguSVMTrain.designer.cs">
+      <DependentUpon>EmguSVMTrain.cs</DependentUpon>
     </Compile>
-    <Compile Include="TestProc\BaseFunc.cs" />
-    <Compile Include="WindowsBlock\BitmapAdaptiveThreshold.cs">
+    <Compile Include="ImgProcess\BaseFunc.cs" />
+    <Compile Include="WindowsBlock\AdaptiveThreshold.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WindowsBlock\BitmapAdaptiveThreshold.Designer.cs">
-      <DependentUpon>BitmapAdaptiveThreshold.cs</DependentUpon>
+    <Compile Include="WindowsBlock\AdaptiveThreshold.Designer.cs">
+      <DependentUpon>AdaptiveThreshold.cs</DependentUpon>
     </Compile>
-    <Compile Include="WindowsBlock\BitmapBlur.cs">
+    <Compile Include="WindowsBlock\Blur.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WindowsBlock\BitmapBlur.Designer.cs">
-      <DependentUpon>BitmapBlur.cs</DependentUpon>
+    <Compile Include="WindowsBlock\Blur.Designer.cs">
+      <DependentUpon>Blur.cs</DependentUpon>
     </Compile>
-    <Compile Include="WindowsBlock\BitmapWlakerTest.cs">
+    <Compile Include="WindowsBlock\WalkerDetect.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WindowsBlock\BitmapWlakerTest.Designer.cs">
-      <DependentUpon>BitmapWlakerTest.cs</DependentUpon>
+    <Compile Include="WindowsBlock\WalkerDetect.Designer.cs">
+      <DependentUpon>WalkerDetect.cs</DependentUpon>
     </Compile>
-    <Compile Include="WindowsBlock\BitmapSVM.cs">
+    <Compile Include="WindowsBlock\TempTest.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WindowsBlock\BitmapSVM.Designer.cs">
-      <DependentUpon>BitmapSVM.cs</DependentUpon>
+    <Compile Include="WindowsBlock\TempTest.Designer.cs">
+      <DependentUpon>TempTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="WindowsBlock\BitmapFindCon.cs">
+    <Compile Include="WindowsBlock\FindContours.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WindowsBlock\BitmapFindCon.Designer.cs">
-      <DependentUpon>BitmapFindCon.cs</DependentUpon>
+    <Compile Include="WindowsBlock\FindContours.Designer.cs">
+      <DependentUpon>FindContours.cs</DependentUpon>
     </Compile>
-    <Compile Include="WindowsBlock\BitmapHis.cs">
+    <Compile Include="WindowsBlock\Harris.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WindowsBlock\BitmapHis.Designer.cs">
-      <DependentUpon>BitmapHis.cs</DependentUpon>
+    <Compile Include="WindowsBlock\Harris.Designer.cs">
+      <DependentUpon>Harris.cs</DependentUpon>
     </Compile>
-    <Compile Include="WindowsBlock\BitmapRoadDetectShow.cs">
+    <Compile Include="WindowsBlock\RoadDetectShow.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WindowsBlock\BitmapRoadDetectShow.Designer.cs">
-      <DependentUpon>BitmapRoadDetectShow.cs</DependentUpon>
+    <Compile Include="WindowsBlock\RoadDetectShow.Designer.cs">
+      <DependentUpon>RoadDetectShow.cs</DependentUpon>
     </Compile>
-    <Compile Include="WindowsBlock\BitmapHuoghTest.cs">
+    <Compile Include="WindowsBlock\HuoghLine.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WindowsBlock\BitmapHuoghTest.Designer.cs">
-      <DependentUpon>BitmapHuoghTest.cs</DependentUpon>
+    <Compile Include="WindowsBlock\HuoghLine.Designer.cs">
+      <DependentUpon>HuoghLine.cs</DependentUpon>
     </Compile>
-    <Compile Include="WindowsBlock\BitmapOpenClose.cs">
+    <Compile Include="WindowsBlock\MorphologyEx.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WindowsBlock\BitmapOpenClose.Designer.cs">
-      <DependentUpon>BitmapOpenClose.cs</DependentUpon>
+    <Compile Include="WindowsBlock\MorphologyEx.Designer.cs">
+      <DependentUpon>MorphologyEx.cs</DependentUpon>
     </Compile>
-    <Compile Include="WindowsBlock\BitmapStitching.cs">
+    <Compile Include="WindowsBlock\Stitching.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WindowsBlock\BitmapStitching.Designer.cs">
-      <DependentUpon>BitmapStitching.cs</DependentUpon>
+    <Compile Include="WindowsBlock\Stitching.Designer.cs">
+      <DependentUpon>Stitching.cs</DependentUpon>
     </Compile>
-    <Compile Include="WindowsBlock\BitmapTransformation.cs">
+    <Compile Include="WindowsBlock\WarpPerspective.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WindowsBlock\BitmapTransformation.Designer.cs">
-      <DependentUpon>BitmapTransformation.cs</DependentUpon>
+    <Compile Include="WindowsBlock\WarpPerspective.Designer.cs">
+      <DependentUpon>WarpPerspective.cs</DependentUpon>
     </Compile>
     <Compile Include="WindowsBlock\CompareTest.cs">
       <SubType>Form</SubType>
@@ -229,20 +261,20 @@
     <Compile Include="BaseUI\DrawImageBox.Designer.cs">
       <DependentUpon>DrawImageBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="TestProc\DrawMatches.cs" />
-    <Compile Include="TestProc\FinderDetect.cs" />
-    <Compile Include="TestProc\FindPedestrian.cs" />
-    <Compile Include="WindowsBlock\BitmapCreatAngles.cs">
+    <Compile Include="ImgProcess\DrawMatches.cs" />
+    <Compile Include="ImgProcess\FinderDetect.cs" />
+    <Compile Include="ImgProcess\FindPedestrian.cs" />
+    <Compile Include="WindowsBlock\CreatAnglesImg.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WindowsBlock\BitmapCreatAngles.Designer.cs">
-      <DependentUpon>BitmapCreatAngles.cs</DependentUpon>
+    <Compile Include="WindowsBlock\CreatAnglesImg.Designer.cs">
+      <DependentUpon>CreatAnglesImg.cs</DependentUpon>
     </Compile>
-    <Compile Include="WindowsBlock\FillTest.cs">
+    <Compile Include="WindowsBlock\FloodFill.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WindowsBlock\FillTest.Designer.cs">
-      <DependentUpon>FillTest.cs</DependentUpon>
+    <Compile Include="WindowsBlock\FloodFill.Designer.cs">
+      <DependentUpon>FloodFill.cs</DependentUpon>
     </Compile>
     <Compile Include="WindowsBlock\FinalTest.cs">
       <SubType>Form</SubType>
@@ -250,17 +282,17 @@
     <Compile Include="WindowsBlock\FinalTest.Designer.cs">
       <DependentUpon>FinalTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="TestProc\HarrisTest.cs" />
+    <Compile Include="ImgProcess\HarrisTest.cs" />
     <Compile Include="BaseUI\ImageIO.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="BaseUI\ImageIO.Designer.cs">
       <DependentUpon>ImageIO.cs</DependentUpon>
     </Compile>
-    <Compile Include="WindowsBlock\MainForm.cs">
+    <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WindowsBlock\MainForm.Designer.cs">
+    <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="MathOp\MinTwoMulity.cs" />
@@ -278,62 +310,68 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WindowsBlock\BitmapSuftDetect.cs">
+    <Compile Include="WindowsBlock\SurfDetect.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WindowsBlock\BitmapSuftDetect.Designer.cs">
-      <DependentUpon>BitmapSuftDetect.cs</DependentUpon>
+    <Compile Include="WindowsBlock\SurfDetect.Designer.cs">
+      <DependentUpon>SurfDetect.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="BaseUI\AccordSVMPramasInput.resx">
+      <DependentUpon>AccordSVMPramasInput.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WindowsBlock\AccordSvmTrain.resx">
+      <DependentUpon>AccordSvmTrain.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="WindowsBlock\HSVRangeTest.resx">
       <DependentUpon>HSVRangeTest.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="VideoFindMechine.resx">
+    <EmbeddedResource Include="WindowsBlock\VideoFindMechine.resx">
       <DependentUpon>VideoFindMechine.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WindowsBlock\BitmapSVMTrain.resx">
-      <DependentUpon>BitmapSVMTrain.cs</DependentUpon>
+    <EmbeddedResource Include="WindowsBlock\EmguSVMTrain.resx">
+      <DependentUpon>EmguSVMTrain.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WindowsBlock\BitmapAdaptiveThreshold.resx">
-      <DependentUpon>BitmapAdaptiveThreshold.cs</DependentUpon>
+    <EmbeddedResource Include="WindowsBlock\AdaptiveThreshold.resx">
+      <DependentUpon>AdaptiveThreshold.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WindowsBlock\BitmapBlur.resx">
-      <DependentUpon>BitmapBlur.cs</DependentUpon>
+    <EmbeddedResource Include="WindowsBlock\Blur.resx">
+      <DependentUpon>Blur.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WindowsBlock\BitmapWlakerTest.resx">
-      <DependentUpon>BitmapWlakerTest.cs</DependentUpon>
+    <EmbeddedResource Include="WindowsBlock\WalkerDetect.resx">
+      <DependentUpon>WalkerDetect.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WindowsBlock\BitmapSVM.resx">
-      <DependentUpon>BitmapSVM.cs</DependentUpon>
+    <EmbeddedResource Include="WindowsBlock\TempTest.resx">
+      <DependentUpon>TempTest.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WindowsBlock\BitmapFindCon.resx">
-      <DependentUpon>BitmapFindCon.cs</DependentUpon>
+    <EmbeddedResource Include="WindowsBlock\FindContours.resx">
+      <DependentUpon>FindContours.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WindowsBlock\BitmapHis.resx">
-      <DependentUpon>BitmapHis.cs</DependentUpon>
+    <EmbeddedResource Include="WindowsBlock\Harris.resx">
+      <DependentUpon>Harris.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WindowsBlock\BitmapRoadDetectShow.resx">
-      <DependentUpon>BitmapRoadDetectShow.cs</DependentUpon>
+    <EmbeddedResource Include="WindowsBlock\RoadDetectShow.resx">
+      <DependentUpon>RoadDetectShow.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WindowsBlock\BitmapHuoghTest.resx">
-      <DependentUpon>BitmapHuoghTest.cs</DependentUpon>
+    <EmbeddedResource Include="WindowsBlock\HuoghLine.resx">
+      <DependentUpon>HuoghLine.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WindowsBlock\BitmapOpenClose.resx">
-      <DependentUpon>BitmapOpenClose.cs</DependentUpon>
+    <EmbeddedResource Include="WindowsBlock\MorphologyEx.resx">
+      <DependentUpon>MorphologyEx.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WindowsBlock\BitmapStitching.resx">
-      <DependentUpon>BitmapStitching.cs</DependentUpon>
+    <EmbeddedResource Include="WindowsBlock\Stitching.resx">
+      <DependentUpon>Stitching.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WindowsBlock\BitmapTransformation.resx">
-      <DependentUpon>BitmapTransformation.cs</DependentUpon>
+    <EmbeddedResource Include="WindowsBlock\WarpPerspective.resx">
+      <DependentUpon>WarpPerspective.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WindowsBlock\BitmapCreatAngles.resx">
-      <DependentUpon>BitmapCreatAngles.cs</DependentUpon>
+    <EmbeddedResource Include="WindowsBlock\CreatAnglesImg.resx">
+      <DependentUpon>CreatAnglesImg.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WindowsBlock\CompareTest.resx">
       <DependentUpon>CompareTest.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WindowsBlock\FillTest.resx">
-      <DependentUpon>FillTest.cs</DependentUpon>
+    <EmbeddedResource Include="WindowsBlock\FloodFill.resx">
+      <DependentUpon>FloodFill.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WindowsBlock\FinalTest.resx">
       <DependentUpon>FinalTest.cs</DependentUpon>
@@ -341,7 +379,7 @@
     <EmbeddedResource Include="BaseUI\ImageIO.resx">
       <DependentUpon>ImageIO.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WindowsBlock\MainForm.resx">
+    <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="BaseUI\MoveBlock.resx">
@@ -360,8 +398,8 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="WindowsBlock\BitmapSuftDetect.resx">
-      <DependentUpon>BitmapSuftDetect.cs</DependentUpon>
+    <EmbeddedResource Include="WindowsBlock\SurfDetect.resx">
+      <DependentUpon>SurfDetect.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -401,12 +439,26 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AccordSvm\Accord.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="AccordSvm\Accord.MachineLearning.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="AccordSvm\Accord.Math.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="AccordSvm\Accord.Statistics.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="AccordSvm\AForge.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="pedestrian.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="AccordSvm\" />
     <Folder Include="TestImgSrc\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

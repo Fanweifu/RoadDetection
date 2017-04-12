@@ -1,6 +1,6 @@
 ﻿namespace ShowOpenCVResult
 {
-    partial class FinalTest
+    partial class WalkerDetect
     {
         /// <summary>
         /// Required designer variable.
@@ -28,31 +28,31 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FinalTest));
-            this.panel1 = new System.Windows.Forms.Panel();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WalkerDetect));
+            this.imageIO1 = new ShowOpenCVResult.ImageIO();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
-            this.imageIO1 = new ShowOpenCVResult.ImageIO();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // panel1
+            // imageIO1
             // 
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(0, 25);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(726, 42);
-            this.panel1.TabIndex = 2;
+            this.imageIO1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.imageIO1.Image1 = null;
+            this.imageIO1.Image2 = null;
+            this.imageIO1.Location = new System.Drawing.Point(0, 25);
+            this.imageIO1.Name = "imageIO1";
+            this.imageIO1.Size = new System.Drawing.Size(723, 419);
+            this.imageIO1.SpOrientation = System.Windows.Forms.Orientation.Vertical;
+            this.imageIO1.TabIndex = 1;
             // 
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButton1,
-            this.toolStripButton2});
+            this.toolStripButton1});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(726, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(723, 25);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -66,39 +66,15 @@
             this.toolStripButton1.Text = "toolStripButton1";
             this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
-            // toolStripButton2
-            // 
-            this.toolStripButton2.CheckOnClick = true;
-            this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
-            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(110, 22);
-            this.toolStripButton2.Text = "UseTransform";
-            this.toolStripButton2.CheckedChanged += new System.EventHandler(this.toolStripButton2_CheckedChanged);
-            // 
-            // imageIO1
-            // 
-            this.imageIO1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.imageIO1.Image1 = null;
-            this.imageIO1.Image2 = null;
-            this.imageIO1.Location = new System.Drawing.Point(0, 67);
-            this.imageIO1.Name = "imageIO1";
-            this.imageIO1.Size = new System.Drawing.Size(726, 377);
-            this.imageIO1.SpOrientation = System.Windows.Forms.Orientation.Vertical;
-            this.imageIO1.TabIndex = 1;
-            this.imageIO1.DoImgChange += new System.EventHandler(this.imageIO1_DoImgChange);
-            this.imageIO1.AfterImgLoaded += new System.EventHandler(this.imageIO1_AfterImgLoaded);
-            // 
-            // FinalTest
+            // BitmapWlakerTest
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(726, 444);
+            this.ClientSize = new System.Drawing.Size(723, 444);
             this.Controls.Add(this.imageIO1);
-            this.Controls.Add(this.panel1);
             this.Controls.Add(this.toolStrip1);
-            this.Name = "FinalTest";
-            this.Text = "Form1";
+            this.Name = "BitmapWlakerTest";
+            this.Text = "BitmapWalkerFind";
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -109,9 +85,7 @@
         #endregion
 
         private System.Windows.Forms.ToolStrip toolStrip1;
-        private ImageIO imageIO1;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.ToolStripButton toolStripButton2;
+        private ImageIO imageIO1;
     }
 }
