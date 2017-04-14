@@ -39,6 +39,8 @@
             this.lbAY = new System.Windows.Forms.Label();
             this.lbAX = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.comboBox3 = new System.Windows.Forms.ComboBox();
+            this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.btnSaveData = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
@@ -94,7 +96,6 @@
             this.imageIOControl1.SpOrientation = System.Windows.Forms.Orientation.Vertical;
             this.imageIOControl1.TabIndex = 6;
             this.imageIOControl1.DoImgChange += new System.EventHandler(this.imageIOControl1_DoImgChange);
-            this.imageIOControl1.AfterImgLoaded += new System.EventHandler(this.imageIOControl1_AfterImgLoaded);
             // 
             // panel1
             // 
@@ -122,7 +123,6 @@
             this.groupBox2.TabIndex = 3;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "保存参数";
-            this.groupBox2.Enter += new System.EventHandler(this.groupBox2_Enter);
             // 
             // lbOH
             // 
@@ -172,6 +172,8 @@
             // groupBox1
             // 
             this.groupBox1.BackColor = System.Drawing.Color.White;
+            this.groupBox1.Controls.Add(this.comboBox3);
+            this.groupBox1.Controls.Add(this.comboBox2);
             this.groupBox1.Controls.Add(this.comboBox1);
             this.groupBox1.Controls.Add(this.btnSaveData);
             this.groupBox1.Controls.Add(this.label5);
@@ -192,19 +194,37 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "调试参数";
             // 
+            // comboBox3
+            // 
+            this.comboBox3.FormattingEnabled = true;
+            this.comboBox3.Location = new System.Drawing.Point(316, 73);
+            this.comboBox3.Name = "comboBox3";
+            this.comboBox3.Size = new System.Drawing.Size(63, 20);
+            this.comboBox3.TabIndex = 15;
+            this.comboBox3.SelectedIndexChanged += new System.EventHandler(this.comboBox3_SelectedIndexChanged);
+            // 
+            // comboBox2
+            // 
+            this.comboBox2.FormattingEnabled = true;
+            this.comboBox2.Location = new System.Drawing.Point(247, 73);
+            this.comboBox2.Name = "comboBox2";
+            this.comboBox2.Size = new System.Drawing.Size(63, 20);
+            this.comboBox2.TabIndex = 14;
+            this.comboBox2.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
+            // 
             // comboBox1
             // 
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Location = new System.Drawing.Point(178, 73);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 20);
+            this.comboBox1.Size = new System.Drawing.Size(63, 20);
             this.comboBox1.TabIndex = 13;
             this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // btnSaveData
             // 
             this.btnSaveData.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btnSaveData.Location = new System.Drawing.Point(322, 72);
+            this.btnSaveData.Location = new System.Drawing.Point(382, 20);
             this.btnSaveData.Name = "btnSaveData";
             this.btnSaveData.Size = new System.Drawing.Size(70, 23);
             this.btnSaveData.TabIndex = 12;
@@ -215,7 +235,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(190, 51);
+            this.label5.Location = new System.Drawing.Point(176, 51);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(83, 12);
             this.label5.TabIndex = 11;
@@ -233,7 +253,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(220, 24);
+            this.label3.Location = new System.Drawing.Point(176, 25);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(53, 12);
             this.label3.TabIndex = 9;
@@ -259,7 +279,7 @@
             // 
             // nudOH
             // 
-            this.nudOH.Location = new System.Drawing.Point(279, 49);
+            this.nudOH.Location = new System.Drawing.Point(265, 46);
             this.nudOH.Maximum = new decimal(new int[] {
             2000,
             0,
@@ -305,7 +325,7 @@
             // 
             // nudAY
             // 
-            this.nudAY.Location = new System.Drawing.Point(279, 22);
+            this.nudAY.Location = new System.Drawing.Point(265, 22);
             this.nudAY.Name = "nudAY";
             this.nudAY.Size = new System.Drawing.Size(70, 21);
             this.nudAY.TabIndex = 5;
@@ -407,7 +427,7 @@
             this.toolStripProgressBar1.Size = new System.Drawing.Size(100, 16);
             this.toolStripProgressBar1.Visible = false;
             // 
-            // BitmapTransformation
+            // WarpPerspective
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -416,7 +436,7 @@
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.statusStrip1);
-            this.Name = "BitmapTransformation";
+            this.Name = "WarpPerspective";
             this.Text = "投影转换";
             this.Load += new System.EventHandler(this.BitmapTransformation_Load);
             this.panel2.ResumeLayout(false);
@@ -470,5 +490,7 @@
         private ImageIO imageIOControl1;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox comboBox3;
+        private System.Windows.Forms.ComboBox comboBox2;
     }
 }

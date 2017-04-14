@@ -20,11 +20,13 @@ namespace ShowOpenCVResult
     {
         int selectIndex = -1;
         VectorOfVectorOfPoint cons = new VectorOfVectorOfPoint();
+        VectorOfVectorOfPoint vvp = new VectorOfVectorOfPoint();
+        List<int> dels = new List<int>();
         VectorOfPoint m_modeLine ;
-        Image<Bgr, Byte> filesrc;
-        Image<Gray, Byte> filegray;
-        Image<Gray, Byte> modeFile;
-        private Emgu.CV.CvEnum.ContoursMatchType m_matchType = Emgu.CV.CvEnum.ContoursMatchType.I1;
+        Image<Bgr, byte> m_filesrc;
+        Image<Gray, byte> m_filegray;
+        Image<Gray, byte> m_modeFile;
+        Mat layerstrcut = null;
         private List<double> m_i1 = new List<double>();
         private List<double> m_i2 = new List<double>();
         private List<double> m_i3 = new List<double>();
@@ -36,29 +38,24 @@ namespace ShowOpenCVResult
 
         private void imageIOControl1_DoImgChange(object sender, EventArgs e)
         {
-            if (filesrc == null) return;
+            if (m_filesrc == null) return;
+
+            Image<Gray, byte> imgcan = m_filegray.Clone();
+            Image<Bgr, byte> imgback = m_filesrc.Clone();
+            CvInvoke.Threshold(imgcan, imgcan, 240, 255, ThresholdType.Binary);
+            cons = GetTreeData(imgcan,out layerstrcut, (double)myTrackBar3.Value / 100);
+            doSelect();
+            imgcan.Dispose();
+
+            CvInvoke.DrawContours(imgback, cons, -1, new MCvScalar(0, 0, 255), 2, LineType.FourConnected);
+
             if (imageIOControl1.Image1 != null)
             {
                 imageIOControl1.Image1.Dispose();
             }
-            Image<Gray, Byte> imgcan = new Image<Gray, Byte>(filesrc .Size);
-            Image<Gray, Byte> gary = filesrc.Convert<Gray, Byte>();
-            if (checkBox1.Checked)
-            {
-                CvInvoke.Canny(gary, imgcan, myTrackBar1.Value, myTrackBar2.Value);
-            }
-            else {
-                imgcan = filegray;
-            }
-            Image<Bgr, Byte> img2 = filesrc.Clone();
-            
-           
 
-            int[] b = null;
-            cons = GetTreeData(imgcan, ref b,myTrackBar4.Value,myTrackBar5.Value, (double)myTrackBar3.Value / 100);
-            EditNode(b,treeView1);
-            imageIOControl1.Image1 = img2;
-            img2.DrawPolyline(cons.ToArrayOfArray(), true, new Bgr(0,0,255));
+            imageIOControl1.Image1 = imgback;
+            
             myTrackBar6.Enabled = false;
         }
 
@@ -68,68 +65,101 @@ namespace ShowOpenCVResult
         /// <param name="image">灰度图</param>
         /// <param name="b">表达树状数据的数组</param>
         /// <returns>VectorOfVectorOfPoint类型的轮廓数据</returns>
-        VectorOfVectorOfPoint GetTreeData(Image<Gray, Byte> image, ref int[] b, int minarea, int maxarea, double apppar = -1)
+        VectorOfVectorOfPoint GetTreeData(Image<Gray, byte> image, out Mat hirerarchy, double apppar = -1)
         {
-            Mat he = new Mat();
-            VectorOfVectorOfPoint cons = new VectorOfVectorOfPoint();
-            CvInvoke.FindContours(image, cons, he, Emgu.CV.CvEnum.RetrType.Tree, ChainApproxMethod.ChainApproxSimple);
-            b = new int[he.Cols * 4];
-            he.CopyTo(b);
-            int ccnt = cons.Size;
-            List<int> dels = new List<int>();
-            for (int i = 0; i < ccnt; i++)
+            hirerarchy = new Mat();
+            VectorOfVectorOfPoint contours = new VectorOfVectorOfPoint();
+            CvInvoke.FindContours(image, contours, hirerarchy, RetrType.Tree, ChainApproxMethod.ChainApproxSimple);
+            if (apppar != -1)
             {
-                double area = CvInvoke.ContourArea(cons[i]);
-                if (area < minarea || area > maxarea)
+                for (int i = 0; i <contours.Size ; i++)
                 {
-                    cons[i].Clear();
+                    if (contours[i].Size > 0)
+                        CvInvoke.ApproxPolyDP(contours[i], contours[i], apppar, true);
+                }
+            }
+            return contours;
+        }
+
+        void selectCons(VectorOfVectorOfPoint vvp, Mat hirerarchy ,int minarea ,int maxarea,int minlength,int maxlength,double minarearate, ref int[] array) {
+            if (vvp == null || vvp.Size == 0) return;
+            if (hirerarchy == null || hirerarchy.IsEmpty) return;
+            int [] resultarray  = new int[hirerarchy.Cols * 4];
+            hirerarchy.CopyTo(resultarray);
+            dels.Clear();
+
+            for (int i = 0; i < vvp.Size; i++)
+            {
+                double area = CvInvoke.ContourArea(vvp[i]);
+                double length = CvInvoke.ArcLength(vvp[i], true);
+                var rect = CvInvoke.MinAreaRect(vvp[i]);
+                double rate = area / (rect.Size.Width * rect.Size.Height);
+                bool isneed = area >= minarea && area <= maxarea && length >= minlength && length <= maxlength && rate >= minarearate;
+
+                if (!isneed)
+                {
                     dels.Add(i);
                 }
             }
-            for (int i = 0; i < b.Count(); i++)
+
+            int bcnt = resultarray.Count();
+            for (int i = 0; i < bcnt; i++)
             {
                 if (dels.Contains(i / 4))
                 {
-                    b[i] = -2;
+                    resultarray[i] = -2;
                 }
-                if (dels.Contains(b[i]))
+                if (dels.Contains(resultarray[i]))
                 {
-                    b[i] = -1;
+                    resultarray[i] = -1;
                 }
             }
+            array = resultarray;
+        }
+
+        void doSelect() {
+            if (cons == null || cons.Size == 0) return;
+            int[] result = null;
+            selectCons(cons, layerstrcut, myTrackBar4.Value, myTrackBar5.Value, myTrackBar1.Value, myTrackBar2.Value, (double)myTrackBar7.Value/100, ref result);
+            editNode(result, treeView1);
+            var img = m_filesrc.Clone();
 
 
+        }
 
-            if (apppar == -1)
-                return cons;
-            else
+        private void myTrackBarEpsilon_ValueChanged(object sender, EventArgs e)
+        {
+            if (m_filesrc == null || cons == null || cons.Size == 0) return;
+
+            vvp = new VectorOfVectorOfPoint();
+            for (int i = 0; i < cons.Size; i++)
             {
-                VectorOfVectorOfPoint apcons = new VectorOfVectorOfPoint();
-                for (int i = 0; i <= cons.Size - 1; i++)
+                if (cons[i].Size > 0)
                 {
                     VectorOfPoint vp = new VectorOfPoint();
-                    if (cons[i].Size > 0)
-                        CvInvoke.ApproxPolyDP(cons[i], vp, apppar, true);
-                    apcons.Push(vp);
+                    CvInvoke.ApproxPolyDP(cons[i], vp, (double)myTrackBar3.Value / 100, true);
+                    vvp.Push(vp);
                 }
-                cons.Dispose();
-                return apcons;
             }
-        }
+            var imgback = m_filesrc.Clone();
 
-        private void myTrackBar1_ValueChanged(object sender, EventArgs e)
-        {
-            imageIOControl1.DoChange();
-        }
+            CvInvoke.DrawContours(imgback, vvp, -1, new MCvScalar(0, 0, 255), 2, LineType.FourConnected);
 
+            if (imageIOControl1.Image1 != null)
+            {
+                imageIOControl1.Image1.Dispose();
+            }
+
+            imageIOControl1.Image1 = imgback;
+        }
 
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
             string path = OpencvForm.SelectImg();
             if (path == null) return;
-            filesrc = new Image<Bgr, byte>(path);
-            filegray = new Image<Gray, byte>(filesrc.Size);
-            CvInvoke.Threshold(filesrc.Convert<Gray, byte>(), filegray,10 ,255, ThresholdType.Otsu);
+            m_filesrc = new Image<Bgr, byte>(path);
+            m_filegray = new Image<Gray, byte>(m_filesrc.Size);
+            CvInvoke.Threshold(m_filegray, m_filegray,10 ,255, ThresholdType.Otsu);
             imageIOControl1.DoChange();
         }
 
@@ -138,7 +168,7 @@ namespace ShowOpenCVResult
         /// </summary>
         /// <param name="a">数组</param>
         /// <param name="treeView1">控件</param>
-        void EditNode(int[] a, TreeView treeView1)
+        void editNode(int[] a, TreeView treeView1)
         {
             treeView1.Nodes.Clear();
             int cnt = a.Count() / 4;
@@ -149,6 +179,7 @@ namespace ShowOpenCVResult
             for (int i = 0; i < cnt; i++) {
                 if (a[i * 4 + 3] == -1){
                         treeView1.Nodes.Add(s[i]);
+                    
                 }
                     
                 else {
@@ -210,11 +241,11 @@ namespace ShowOpenCVResult
 
         private void treeView1_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
         {
-            int index = int.Parse(e.Node.Text);
+            int index = 0;
+            if (!int.TryParse(e.Node.Text, out index)) return;
             
-            var img = filesrc.Clone();
-            Point[] pts = cons.ToArrayOfArray()[index];
-            img.DrawPolyline(pts, true, new Bgr(0, 255, 0), 2);
+            var img = m_filesrc.Clone();
+            CvInvoke.DrawContours(img, cons, index, new MCvScalar(0, 255, 0), 2);
 
             if (tsbtnRotateRect.Checked)
             {
@@ -254,7 +285,7 @@ namespace ShowOpenCVResult
 
             if (tsbtnLookWhenSelect.Checked)
             {
-                Mat a = OpencvMath.GetSquareExampleImg(cons[index], filesrc.Size);
+                Mat a = OpencvMath.GetSquareExampleImg(cons[index], m_filesrc.Size);
 
                 new Thread(() =>
                 {
@@ -270,7 +301,7 @@ namespace ShowOpenCVResult
         private void Calfam(VectorOfPoint vp) {
             if (m_modeLine != null && m_modeLine.Size > 0)
             {
-                double val = CvInvoke.MatchShapes(vp, m_modeLine, m_matchType);
+                double val = CvInvoke.MatchShapes(vp, m_modeLine, (ContoursMatchType)comboBox1.SelectedItem) ;
                 tslblFm.Text = val.ToString("0.000");
    
             }
@@ -280,24 +311,24 @@ namespace ShowOpenCVResult
         private void toolStripButton2_Click(object sender, EventArgs e)
         {
             string path = OpencvForm.SelectImg();
-            if(path==null) return;
-            modeFile =ExtensionImg( new Image<Gray, byte>(path));
-            VectorOfPoint vp = GetModelLine(modeFile);
+            if (path == null) return;
+            m_modeFile = extensionImg(new Image<Gray, byte>(path));
+            VectorOfPoint vp = getModelLine(m_modeFile);
             if (vp == null) return;
             m_modeLine = new VectorOfPoint();
-            CvInvoke.ApproxPolyDP(vp, m_modeLine, (double)myTrackBar3.Value /100, true);
+            CvInvoke.ApproxPolyDP(vp, m_modeLine, (double)myTrackBar3.Value / 100, true);
             tslblModeFilePath.Text = path;
-             Image<Bgr, byte> draw = modeFile.Clone().Convert<Bgr,byte>() ;
-             draw.DrawPolyline(m_modeLine.ToArray(), true, new Bgr(0,0,255),3);
-             imageIOControl1.Image2 = draw;
-             groupBox1.Enabled = true;
+            Image<Bgr, byte> draw = m_modeFile.Clone().Convert<Bgr, byte>();
+            draw.DrawPolyline(m_modeLine.ToArray(), true, new Bgr(0, 0, 255), 3);
+            imageIOControl1.Image2 = draw;
+            groupBox1.Enabled = true;
         }
 
-        public VectorOfPoint GetModelLine(Image<Gray,Byte> input, int minpts =10,int maxpts = 3000) {
-            Image<Gray, Byte> bin = input.ThresholdBinary(new Gray(100), new Gray(255));
+        VectorOfPoint getModelLine(Image<Gray,byte> input, int minpts =10,int maxpts = 3000) {
+            Image<Gray, byte> bin = input.ThresholdBinary(new Gray(100), new Gray(255));
             VectorOfVectorOfPoint lines = new VectorOfVectorOfPoint();
 
-            CvInvoke.FindContours(bin, lines, null, Emgu.CV.CvEnum.RetrType.List, Emgu.CV.CvEnum.ChainApproxMethod.ChainApproxSimple);
+            CvInvoke.FindContours(bin, lines, null, RetrType.List, ChainApproxMethod.ChainApproxSimple);
 
             for (int i = 0; i < lines.Size; i++) {
                 int cnt = lines[i].Size;
@@ -308,8 +339,8 @@ namespace ShowOpenCVResult
             return null;
         }
 
-        public Image<Gray, Byte> ExtensionImg( Image<Gray, Byte> inputImg,int exsize = 10) {
-            Image<Gray, Byte> eximg = new Image<Gray, byte>(inputImg.Width + exsize * 2, inputImg.Height + exsize * 2);
+        Image<Gray, byte> extensionImg( Image<Gray, byte> inputImg,int exsize = 10) {
+            Image<Gray, byte> eximg = new Image<Gray, byte>(inputImg.Width + exsize * 2, inputImg.Height + exsize * 2);
             for (int i = 0; i < inputImg.Height; i++)
                 for (int j = 0; j < inputImg.Width; j++)
                 {
@@ -318,50 +349,34 @@ namespace ShowOpenCVResult
             return eximg;
         }
 
-        private void i1ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            m_matchType = Emgu.CV.CvEnum.ContoursMatchType.I1;
-            toolStripSplitButton1.Text = "I1";
-            Calfam(cons[selectIndex]);
-        }
-
-        private void i2ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            m_matchType = Emgu.CV.CvEnum.ContoursMatchType.I2;
-            toolStripSplitButton1.Text = "I2";
-            Calfam(cons[selectIndex]);
-        }
-
-        private void i3ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            m_matchType = Emgu.CV.CvEnum.ContoursMatchType.I3;
-            toolStripSplitButton1.Text = "I3";
-            Calfam(cons[selectIndex]);
-        }
-
         private void button1_Click(object sender, EventArgs e)
         {
             if(cons==null||cons.Size==0) return;
             if(m_modeLine==null||m_modeLine.Size ==0) return;
-            switch (m_matchType) {
-                case Emgu.CV.CvEnum.ContoursMatchType.I1:
+
+            switch ((ContoursMatchType)comboBox1.SelectedItem) {
+
+                case ContoursMatchType.I1:
                     m_i1.Clear();
                     for (int i = 0; i < cons.Size; i++) {
-                        m_i1.Add(CvInvoke.MatchShapes(cons[i], m_modeLine, m_matchType));
+                        m_i1.Add(CvInvoke.MatchShapes(cons[i], m_modeLine, ContoursMatchType.I1));
                     }
+                    myTrackBar6.Maximum = (int)(m_i1.Max() * 100);
                     break;
-                case Emgu.CV.CvEnum.ContoursMatchType.I2:
+                case ContoursMatchType.I2:
                       m_i2.Clear();
                     for (int i = 0; i < cons.Size; i++) {
-                        m_i2.Add(CvInvoke.MatchShapes(cons[i], m_modeLine, m_matchType));
+                        m_i2.Add(CvInvoke.MatchShapes(cons[i], m_modeLine, ContoursMatchType.I2));
                     }
+                    myTrackBar6.Maximum = (int)(m_i2.Max() * 100);
                     break;
-                case Emgu.CV.CvEnum.ContoursMatchType.I3:
+                case ContoursMatchType.I3:
                     m_i3.Clear();
                     for (int i = 0; i < cons.Size; i++)
                     {
-                        m_i3.Add(CvInvoke.MatchShapes(cons[i], m_modeLine, m_matchType));
+                        m_i3.Add(CvInvoke.MatchShapes(cons[i], m_modeLine, ContoursMatchType.I3));
                     }
+                    myTrackBar6.Maximum = (int)(m_i3.Max() * 100);
                     break;
             }
             myTrackBar6.Enabled = true;
@@ -369,9 +384,9 @@ namespace ShowOpenCVResult
 
         private void myTrackBar6_ValueChanged(object sender, EventArgs e)
         {
-            Image<Bgr, Byte> selectimg = filesrc.Clone();
-            switch(m_matchType){
-                case Emgu.CV.CvEnum.ContoursMatchType.I1:
+            Image<Bgr, byte> selectimg = m_filesrc.Clone();
+            switch((ContoursMatchType)comboBox1.SelectedItem){
+                case ContoursMatchType.I1:
                     for (int i = 0; i < cons.Size; i++) {
                         if (m_i1[i] < (double)myTrackBar6.Value / 100) {
                             selectimg.DrawPolyline(cons[i].ToArray(), true, new Bgr(0, 255, 255), 2);
@@ -405,35 +420,27 @@ namespace ShowOpenCVResult
 
         private void imageIOControl1_AfterImgLoaded(object sender, EventArgs e)
         {
-            filesrc = (imageIOControl1.Image1 as Image<Bgr, byte>).Clone();
-            filegray = filesrc.Convert<Gray, byte>();
-            myTrackBar4.Maximum = filesrc.Width * filesrc.Height;
-            myTrackBar5.Maximum = filesrc.Width * filesrc.Height;
-
+            m_filesrc = (imageIOControl1.Image1 as Image<Bgr, byte>).Clone();
+            m_filegray = m_filesrc.Convert<Gray, byte>();
+            myTrackBar4.Maximum = m_filesrc.Width * m_filesrc.Height/2;
+            myTrackBar4.Value = 0;
+            myTrackBar5.Maximum = m_filesrc.Width * m_filesrc.Height;
+            myTrackBar5.Value = m_filesrc.Width * m_filesrc.Height;
+            myTrackBar1.Maximum = 100;
+            myTrackBar1.Value = 0;
+            myTrackBar2.Maximum = (m_filesrc.Width + m_filesrc.Height)*2;
+            myTrackBar2.Value = (m_filesrc.Width + m_filesrc.Height) * 2;
+            myTrackBar7.Maximum = 100;
+            myTrackBar7.Value = 0;
         }
 
         private void toolStripButton3_Click(object sender, EventArgs e)
         {
-            //if (cons != null && selectIndex < cons.Size) { 
-            //    using(SaveFileDialog sf = new SaveFileDialog()){
-            //        sf.Title = "生成轮廓像素图";
-            //        sf.Filter = "(PNG)*.png|*.png";
-            //        if (sf.ShowDialog() != DialogResult.OK) return;
-
-            //        Mat result = OpencvMath.GetSquareExampleImg(cons[selectIndex], filesrc.Size);
-            //        result.ToImage<Bgr, byte>().Save(sf.FileName);
-            //    }
-            //}
             if (cons != null && selectIndex < cons.Size)
             {
-                Mat result = OpencvMath.GetSquareExampleImg(cons[selectIndex], filesrc.Size);
+                Mat result = OpencvMath.GetSquareExampleImg(cons[selectIndex], m_filesrc.Size);
                 imageIOControl1.Image2 = result;
             }
-        }
-
-        private void myTrackBar2_Load(object sender, EventArgs e)
-        {
-
         }
 
         private void toolStripButton1_Click_1(object sender, EventArgs e)
@@ -442,7 +449,7 @@ namespace ShowOpenCVResult
             long time = 0;
             Stopwatch sw = new Stopwatch();
             sw.Start();
-            Mat result = OpencvMath.JugdeTest(cons, filesrc.Mat, ref time);
+            Mat result = OpencvMath.JugdeTest(cons, m_filesrc.Mat, ref time);
             sw.Stop();
             MessageBox.Show(string.Format("耗时{0}毫秒", sw.ElapsedMilliseconds));
 
@@ -452,8 +459,8 @@ namespace ShowOpenCVResult
 
         private void toolStripButton2_Click_1(object sender, EventArgs e)
         {
-            if (filesrc == null) return;
-            Image<Gray, byte> gray = filesrc.Convert<Gray, byte>();
+            if (m_filesrc == null) return;
+            Image<Gray, byte> gray = m_filesrc.Convert<Gray, byte>();
 
             Stopwatch sw = new Stopwatch();
             sw.Start();
@@ -465,7 +472,7 @@ namespace ShowOpenCVResult
                 OpencvMath.DrawRotatedRect(CvInvoke.MinAreaRect(vvp[i]), gray);
                 for (int j = 0; j < cnt; j++)
                 {
-                    CvInvoke.Circle(gray, pts[j], 3, new MCvScalar(127), 3);
+                    CvInvoke.Circle(gray, pts[j], 3, new MCvScalar(200), 3);
                 }
 
             }
@@ -474,5 +481,30 @@ namespace ShowOpenCVResult
             MessageBox.Show(string.Format("耗时:{0}", sw.ElapsedMilliseconds));
             imageIOControl1.Image2 = gray;
         }
+
+        private void FindContours_Load(object sender, EventArgs e)
+        {
+            comboBox1.DataSource = Enum.GetValues(typeof(ContoursMatchType));
+        }
+
+        private void myTrackBar5_ValueChanged(object sender, EventArgs e)
+        {
+            if (cons == null) return;
+            var img = m_filesrc.Clone();
+
+            doSelect();
+            for (int i = 0; i < cons.Size; i++)
+            {
+                if (dels != null && dels.Contains(i)) continue;
+                CvInvoke.DrawContours(img, vvp , i, new MCvScalar(0, 0, 255), 2);
+       
+            }
+            if (imageIOControl1.Image1!=null)
+            {
+                imageIOControl1.Image1.Dispose();   
+            }
+            imageIOControl1.Image1 = img;
+        }
+
     }
 }

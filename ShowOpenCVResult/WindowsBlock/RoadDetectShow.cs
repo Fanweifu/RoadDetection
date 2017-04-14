@@ -73,7 +73,7 @@ namespace ShowOpenCVResult
                     imageIOControl1.Image1 = matimg;
                     long time = 0;
                     Mat road = null;
-                    Mat result = OpencvMath.FinalLineProcess(matimg, out time ,out road , true);
+                    Mat result = OpencvMath.FinalLineProcess(matimg, out time  , true);
                     var vpp = OpencvMath.WalkRoadImg(result);
                     for (int i = 0; i < vpp.Size; i++)
                     {
@@ -113,7 +113,7 @@ namespace ShowOpenCVResult
             imageIOControl1.Image1 = matimg;
             long time = 0;
             Mat road = null;
-            Mat result = OpencvMath.FinalLineProcess(matimg, out time, out road, true);
+            Mat result = OpencvMath.FinalLineProcess(matimg, out time , true);
             var vpp = OpencvMath.WalkRoadImg(result);
             for (int i = 0; i < vpp.Size; i++)
             {

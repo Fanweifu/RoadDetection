@@ -41,9 +41,6 @@ namespace ShowOpenCVResult
                 imageBox1.Image = value;
             }
         }
-
-
-
         public IImage Image2
         {
             get
@@ -55,8 +52,6 @@ namespace ShowOpenCVResult
                 imageBox2.Image = value;
             }
         }
-
-
         public event EventHandler DoImgChange;
         public event EventHandler AfterImgLoaded;
         private void splitContainer1_Resize(object sender, EventArgs e)
@@ -68,7 +63,6 @@ namespace ShowOpenCVResult
                 AfterImgLoaded(this,new EventArgs());
             }
         }
-
         private void imageBox1_DragDrop(object sender, DragEventArgs e)
         {
             onAfterImgLoaded();
@@ -81,13 +75,10 @@ namespace ShowOpenCVResult
             imageBox1.Image = img;
             onAfterImgLoaded();
             DoChange();
-
         }
+
         public void DoChange() {
-            if (DoImgChange != null)
-            {
-                DoImgChange(this, null);
-            }
+            DoImgChange?.Invoke(this, null);
         }
 
     }

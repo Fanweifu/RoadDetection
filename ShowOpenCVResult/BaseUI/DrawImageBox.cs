@@ -78,7 +78,7 @@ namespace ShowOpenCVResult
 
                 if (e.Data.GetDataPresent(DataFormats.FileDrop))
                 {
-                    string[] files = e.Data.GetData(DataFormats.FileDrop, false) as String[];
+                    string[] files = e.Data.GetData(DataFormats.FileDrop, false) as string[];
                     string[] exs = new string[4] { ".jpg", ".bmp", ".png",".jpeg" };
                     if (exs.Contains(Path.GetExtension(files[0]))) {
                         Image = new Emgu.CV.Image<Bgr, Byte>(files[0]);

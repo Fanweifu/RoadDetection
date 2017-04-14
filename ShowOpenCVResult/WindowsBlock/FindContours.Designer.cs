@@ -32,6 +32,7 @@
             this.imageIOControl1 = new ShowOpenCVResult.ImageIO();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.myTrackBar6 = new ShowOpenCVResult.MyTrackBar();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.button1 = new System.Windows.Forms.Button();
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.treeView1 = new System.Windows.Forms.TreeView();
@@ -41,9 +42,9 @@
             this.myTrackBar4 = new ShowOpenCVResult.MyTrackBar();
             this.myTrackBar3 = new ShowOpenCVResult.MyTrackBar();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.myTrackBar1 = new ShowOpenCVResult.MyTrackBar();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.myTrackBar7 = new ShowOpenCVResult.MyTrackBar();
             this.myTrackBar2 = new ShowOpenCVResult.MyTrackBar();
+            this.myTrackBar1 = new ShowOpenCVResult.MyTrackBar();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.tsbtnOpenImg = new System.Windows.Forms.ToolStripButton();
             this.tsbtnOpenModelImg = new System.Windows.Forms.ToolStripButton();
@@ -54,6 +55,7 @@
             this.tsbtnFitLine = new System.Windows.Forms.ToolStripButton();
             this.tsbtnLookWhenSelect = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel5 = new System.Windows.Forms.ToolStripStatusLabel();
             this.tsslblRectAngle = new System.Windows.Forms.ToolStripStatusLabel();
@@ -64,12 +66,6 @@
             this.tslblModeFilePath = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.tslblFm = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripSplitButton1 = new System.Windows.Forms.ToolStripSplitButton();
-            this.i3ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.i2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.i1ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.groupBox3.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -85,7 +81,7 @@
             this.imageIOControl1.Image2 = null;
             this.imageIOControl1.Location = new System.Drawing.Point(124, 164);
             this.imageIOControl1.Name = "imageIOControl1";
-            this.imageIOControl1.Size = new System.Drawing.Size(602, 198);
+            this.imageIOControl1.Size = new System.Drawing.Size(602, 199);
             this.imageIOControl1.SpOrientation = System.Windows.Forms.Orientation.Vertical;
             this.imageIOControl1.TabIndex = 1;
             this.imageIOControl1.DoImgChange += new System.EventHandler(this.imageIOControl1_DoImgChange);
@@ -94,9 +90,10 @@
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.myTrackBar6);
+            this.groupBox3.Controls.Add(this.comboBox1);
             this.groupBox3.Controls.Add(this.button1);
             this.groupBox3.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.groupBox3.Location = new System.Drawing.Point(124, 362);
+            this.groupBox3.Location = new System.Drawing.Point(124, 363);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(602, 59);
             this.groupBox3.TabIndex = 7;
@@ -117,12 +114,20 @@
             this.myTrackBar6.Value = 180;
             this.myTrackBar6.ValueChanged += new System.EventHandler(this.myTrackBar6_ValueChanged);
             // 
+            // comboBox1
+            // 
+            this.comboBox1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(3, 17);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(60, 20);
+            this.comboBox1.TabIndex = 3;
+            // 
             // button1
             // 
-            this.button1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.button1.Location = new System.Drawing.Point(3, 17);
+            this.button1.Location = new System.Drawing.Point(3, 40);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(60, 39);
+            this.button1.Size = new System.Drawing.Size(60, 19);
             this.button1.TabIndex = 0;
             this.button1.Text = "Clu";
             this.button1.UseVisualStyleBackColor = true;
@@ -132,7 +137,7 @@
             // 
             this.splitter1.Location = new System.Drawing.Point(121, 164);
             this.splitter1.Name = "splitter1";
-            this.splitter1.Size = new System.Drawing.Size(3, 257);
+            this.splitter1.Size = new System.Drawing.Size(3, 258);
             this.splitter1.TabIndex = 5;
             this.splitter1.TabStop = false;
             // 
@@ -141,7 +146,7 @@
             this.treeView1.Dock = System.Windows.Forms.DockStyle.Left;
             this.treeView1.Location = new System.Drawing.Point(0, 164);
             this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(121, 257);
+            this.treeView1.Size = new System.Drawing.Size(121, 258);
             this.treeView1.TabIndex = 4;
             this.treeView1.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseDoubleClick);
             // 
@@ -178,9 +183,9 @@
             this.myTrackBar5.Name = "myTrackBar5";
             this.myTrackBar5.Size = new System.Drawing.Size(361, 40);
             this.myTrackBar5.TabIndex = 3;
-            this.myTrackBar5.Title = "MaxPts";
+            this.myTrackBar5.Title = "MaxArea";
             this.myTrackBar5.Value = 1000;
-            this.myTrackBar5.ValueChanged += new System.EventHandler(this.myTrackBar1_ValueChanged);
+            this.myTrackBar5.ValueChanged += new System.EventHandler(this.myTrackBar5_ValueChanged);
             // 
             // myTrackBar4
             // 
@@ -192,9 +197,9 @@
             this.myTrackBar4.Name = "myTrackBar4";
             this.myTrackBar4.Size = new System.Drawing.Size(361, 40);
             this.myTrackBar4.TabIndex = 2;
-            this.myTrackBar4.Title = "MinPts";
+            this.myTrackBar4.Title = "MinArea";
             this.myTrackBar4.Value = 100;
-            this.myTrackBar4.ValueChanged += new System.EventHandler(this.myTrackBar1_ValueChanged);
+            this.myTrackBar4.ValueChanged += new System.EventHandler(this.myTrackBar5_ValueChanged);
             // 
             // myTrackBar3
             // 
@@ -208,60 +213,62 @@
             this.myTrackBar3.TabIndex = 1;
             this.myTrackBar3.Title = "epsilon";
             this.myTrackBar3.Value = 100;
-            this.myTrackBar3.ValueChanged += new System.EventHandler(this.myTrackBar1_ValueChanged);
+            this.myTrackBar3.ValueChanged += new System.EventHandler(this.myTrackBarEpsilon_ValueChanged);
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.myTrackBar1);
-            this.groupBox1.Controls.Add(this.checkBox1);
+            this.groupBox1.Controls.Add(this.myTrackBar7);
             this.groupBox1.Controls.Add(this.myTrackBar2);
+            this.groupBox1.Controls.Add(this.myTrackBar1);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Left;
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(359, 139);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Canny";
+            this.groupBox1.Text = "Boundary Selection";
             // 
-            // myTrackBar1
+            // myTrackBar7
             // 
-            this.myTrackBar1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.myTrackBar1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.myTrackBar1.Location = new System.Drawing.Point(3, 50);
-            this.myTrackBar1.Maximum = 300;
-            this.myTrackBar1.Minimum = 0;
-            this.myTrackBar1.Name = "myTrackBar1";
-            this.myTrackBar1.Size = new System.Drawing.Size(353, 43);
-            this.myTrackBar1.TabIndex = 0;
-            this.myTrackBar1.Title = "threshold1";
-            this.myTrackBar1.Value = 120;
-            this.myTrackBar1.ValueChanged += new System.EventHandler(this.myTrackBar1_ValueChanged);
-            // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.checkBox1.Location = new System.Drawing.Point(3, 17);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(353, 16);
-            this.checkBox1.TabIndex = 2;
-            this.checkBox1.Text = "use Canny";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.myTrackBar7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.myTrackBar7.Dock = System.Windows.Forms.DockStyle.Top;
+            this.myTrackBar7.Location = new System.Drawing.Point(3, 100);
+            this.myTrackBar7.Maximum = 1000;
+            this.myTrackBar7.Minimum = 0;
+            this.myTrackBar7.Name = "myTrackBar7";
+            this.myTrackBar7.Size = new System.Drawing.Size(353, 39);
+            this.myTrackBar7.TabIndex = 4;
+            this.myTrackBar7.Title = "minAreaRate";
+            this.myTrackBar7.Value = 100;
+            this.myTrackBar7.ValueChanged += new System.EventHandler(this.myTrackBar5_ValueChanged);
             // 
             // myTrackBar2
             // 
             this.myTrackBar2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.myTrackBar2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.myTrackBar2.Location = new System.Drawing.Point(3, 93);
-            this.myTrackBar2.Maximum = 300;
+            this.myTrackBar2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.myTrackBar2.Location = new System.Drawing.Point(3, 60);
+            this.myTrackBar2.Maximum = 1000;
             this.myTrackBar2.Minimum = 0;
             this.myTrackBar2.Name = "myTrackBar2";
-            this.myTrackBar2.Size = new System.Drawing.Size(353, 43);
-            this.myTrackBar2.TabIndex = 1;
-            this.myTrackBar2.Title = "threshold2";
-            this.myTrackBar2.Value = 180;
-            this.myTrackBar2.ValueChanged += new System.EventHandler(this.myTrackBar1_ValueChanged);
-            this.myTrackBar2.Load += new System.EventHandler(this.myTrackBar2_Load);
+            this.myTrackBar2.Size = new System.Drawing.Size(353, 40);
+            this.myTrackBar2.TabIndex = 3;
+            this.myTrackBar2.Title = "MaxLength";
+            this.myTrackBar2.Value = 100;
+            this.myTrackBar2.ValueChanged += new System.EventHandler(this.myTrackBar5_ValueChanged);
+            // 
+            // myTrackBar1
+            // 
+            this.myTrackBar1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.myTrackBar1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.myTrackBar1.Location = new System.Drawing.Point(3, 17);
+            this.myTrackBar1.Maximum = 1000;
+            this.myTrackBar1.Minimum = 0;
+            this.myTrackBar1.Name = "myTrackBar1";
+            this.myTrackBar1.Size = new System.Drawing.Size(353, 43);
+            this.myTrackBar1.TabIndex = 2;
+            this.myTrackBar1.Title = "MinLength";
+            this.myTrackBar1.Value = 100;
+            this.myTrackBar1.ValueChanged += new System.EventHandler(this.myTrackBar5_ValueChanged);
             // 
             // toolStrip1
             // 
@@ -366,6 +373,15 @@
             this.toolStripButton1.Text = "计算分类结果";
             this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click_1);
             // 
+            // toolStripButton2
+            // 
+            this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
+            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton2.Name = "toolStripButton2";
+            this.toolStripButton2.Size = new System.Drawing.Size(88, 21);
+            this.toolStripButton2.Text = "人行道检测";
+            this.toolStripButton2.Click += new System.EventHandler(this.toolStripButton2_Click_1);
+            // 
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -377,119 +393,69 @@
             this.toolStripStatusLabel2,
             this.tslblModeFilePath,
             this.toolStripStatusLabel1,
-            this.tslblFm,
-            this.toolStripStatusLabel3,
-            this.toolStripSplitButton1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 421);
+            this.tslblFm});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 422);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(726, 23);
+            this.statusStrip1.Size = new System.Drawing.Size(726, 22);
             this.statusStrip1.TabIndex = 6;
             this.statusStrip1.Text = "statusStrip1";
             // 
             // toolStripStatusLabel5
             // 
             this.toolStripStatusLabel5.Name = "toolStripStatusLabel5";
-            this.toolStripStatusLabel5.Size = new System.Drawing.Size(68, 18);
+            this.toolStripStatusLabel5.Size = new System.Drawing.Size(68, 17);
             this.toolStripStatusLabel5.Text = "矩形旋转角";
             // 
             // tsslblRectAngle
             // 
             this.tsslblRectAngle.Name = "tsslblRectAngle";
-            this.tsslblRectAngle.Size = new System.Drawing.Size(25, 18);
+            this.tsslblRectAngle.Size = new System.Drawing.Size(25, 17);
             this.tsslblRectAngle.Text = "0.0";
             // 
             // toolStripStatusLabel7
             // 
             this.toolStripStatusLabel7.Name = "toolStripStatusLabel7";
-            this.toolStripStatusLabel7.Size = new System.Drawing.Size(32, 18);
+            this.toolStripStatusLabel7.Size = new System.Drawing.Size(32, 17);
             this.toolStripStatusLabel7.Text = "长宽";
             // 
             // tsslblRectSize
             // 
             this.tsslblRectSize.Name = "tsslblRectSize";
-            this.tsslblRectSize.Size = new System.Drawing.Size(25, 18);
+            this.tsslblRectSize.Size = new System.Drawing.Size(25, 17);
             this.tsslblRectSize.Text = "0,0";
             // 
             // toolStripStatusLabel4
             // 
             this.toolStripStatusLabel4.BackColor = System.Drawing.SystemColors.Control;
             this.toolStripStatusLabel4.Name = "toolStripStatusLabel4";
-            this.toolStripStatusLabel4.Size = new System.Drawing.Size(234, 18);
+            this.toolStripStatusLabel4.Size = new System.Drawing.Size(353, 17);
             this.toolStripStatusLabel4.Spring = true;
             // 
             // toolStripStatusLabel2
             // 
             this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
-            this.toolStripStatusLabel2.Size = new System.Drawing.Size(68, 18);
+            this.toolStripStatusLabel2.Size = new System.Drawing.Size(68, 17);
             this.toolStripStatusLabel2.Text = "模板路径：";
             // 
             // tslblModeFilePath
             // 
             this.tslblModeFilePath.Name = "tslblModeFilePath";
-            this.tslblModeFilePath.Size = new System.Drawing.Size(47, 18);
+            this.tslblModeFilePath.Size = new System.Drawing.Size(47, 17);
             this.tslblModeFilePath.Text = "NULL  ";
             // 
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(68, 18);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(68, 17);
             this.toolStripStatusLabel1.Text = "不相似度：";
             // 
             // tslblFm
             // 
             this.tslblFm.Name = "tslblFm";
-            this.tslblFm.Size = new System.Drawing.Size(25, 18);
+            this.tslblFm.Size = new System.Drawing.Size(25, 17);
             this.tslblFm.Text = "1.0";
             // 
-            // toolStripStatusLabel3
-            // 
-            this.toolStripStatusLabel3.Name = "toolStripStatusLabel3";
-            this.toolStripStatusLabel3.Size = new System.Drawing.Size(68, 18);
-            this.toolStripStatusLabel3.Text = "匹配方式：";
-            // 
-            // toolStripSplitButton1
-            // 
-            this.toolStripSplitButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.i3ToolStripMenuItem,
-            this.i2ToolStripMenuItem,
-            this.i1ToolStripMenuItem});
-            this.toolStripSplitButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripSplitButton1.Image")));
-            this.toolStripSplitButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripSplitButton1.Name = "toolStripSplitButton1";
-            this.toolStripSplitButton1.Size = new System.Drawing.Size(51, 21);
-            this.toolStripSplitButton1.Text = "I1";
-            // 
-            // i3ToolStripMenuItem
-            // 
-            this.i3ToolStripMenuItem.Name = "i3ToolStripMenuItem";
-            this.i3ToolStripMenuItem.Size = new System.Drawing.Size(87, 22);
-            this.i3ToolStripMenuItem.Text = "I3";
-            this.i3ToolStripMenuItem.Click += new System.EventHandler(this.i3ToolStripMenuItem_Click);
-            // 
-            // i2ToolStripMenuItem
-            // 
-            this.i2ToolStripMenuItem.Name = "i2ToolStripMenuItem";
-            this.i2ToolStripMenuItem.Size = new System.Drawing.Size(87, 22);
-            this.i2ToolStripMenuItem.Text = "I2";
-            this.i2ToolStripMenuItem.Click += new System.EventHandler(this.i2ToolStripMenuItem_Click);
-            // 
-            // i1ToolStripMenuItem
-            // 
-            this.i1ToolStripMenuItem.Name = "i1ToolStripMenuItem";
-            this.i1ToolStripMenuItem.Size = new System.Drawing.Size(87, 22);
-            this.i1ToolStripMenuItem.Text = "I1";
-            this.i1ToolStripMenuItem.Click += new System.EventHandler(this.i1ToolStripMenuItem_Click);
-            // 
-            // toolStripButton2
-            // 
-            this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
-            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(88, 21);
-            this.toolStripButton2.Text = "人行道检测";
-            this.toolStripButton2.Click += new System.EventHandler(this.toolStripButton2_Click_1);
-            // 
-            // BitmapFindCon
+            // FindContours
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -501,13 +467,13 @@
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.statusStrip1);
-            this.Name = "BitmapFindCon";
+            this.Name = "FindContours";
             this.Text = "BitmapFindCon";
+            this.Load += new System.EventHandler(this.FindContours_Load);
             this.groupBox3.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
@@ -525,23 +491,16 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.GroupBox groupBox2;
-        private MyTrackBar myTrackBar1;
-        private MyTrackBar myTrackBar2;
         private MyTrackBar myTrackBar3;
         private System.Windows.Forms.TreeView treeView1;
         private System.Windows.Forms.Splitter splitter1;
         private MyTrackBar myTrackBar5;
         private MyTrackBar myTrackBar4;
-        private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.ToolStripButton tsbtnOpenModelImg;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel tslblModeFilePath;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.ToolStripStatusLabel tslblFm;
-        private System.Windows.Forms.ToolStripSplitButton toolStripSplitButton1;
-        private System.Windows.Forms.ToolStripMenuItem i3ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem i2ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem i1ToolStripMenuItem;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Button button1;
         private MyTrackBar myTrackBar6;
@@ -549,7 +508,6 @@
         private System.Windows.Forms.ToolStripStatusLabel tsslblRectAngle;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel4;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel3;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel7;
         private System.Windows.Forms.ToolStripStatusLabel tsslblRectSize;
         private System.Windows.Forms.ToolStripButton tsbtnCreatConImg;
@@ -560,5 +518,9 @@
         private System.Windows.Forms.ToolStripButton tsbtnFitLine;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.ToolStripButton toolStripButton2;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private MyTrackBar myTrackBar7;
+        private MyTrackBar myTrackBar2;
+        private MyTrackBar myTrackBar1;
     }
 }

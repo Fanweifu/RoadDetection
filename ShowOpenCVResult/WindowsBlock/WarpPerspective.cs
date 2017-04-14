@@ -10,6 +10,9 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
+using Accord.Statistics.Kernels;
+using Emgu.CV.CvEnum;
+
 namespace ShowOpenCVResult
 {
     public partial class WarpPerspective :MoveBlock
@@ -48,12 +51,11 @@ namespace ShowOpenCVResult
             lbLT.Tag = nudLT.Value;
             lbLT.Text = string.Format("LT:{0}", lbLT.Tag);
             tsbtnMultyDeal.Enabled = true;
+            if (imageIOControl1.Image1 == null) return;
 
-            Setting.AX = (float)nudAX.Value/100;
-            Setting.AY = (float)nudAY.Value/100;
-            Setting.OW = (int)nudOW.Value;
-            Setting.OH = (int)nudOH.Value;
-            Setting.LT = (float)nudLT.Value/100;
+            Size s = (imageIOControl1.Image1 as Image<Bgr, byte>).Size;
+
+            RoadTransform.SetTransform(s.Width,s.Height, (float)nudAX.Value / 100, (float)nudAY.Value / 100, (float)nudLT.Value / 100, (int)nudOW.Value, (int)nudOH.Value);
         }
 
         private void tsbtnMultyDeal_Click(object sender, EventArgs e)
@@ -98,12 +100,13 @@ namespace ShowOpenCVResult
                 Invoke(new Action(() => { toolStripProgressBar1.Visible = false; }));
             }).Start();
         }
-        
+
 
         private void BitmapTransformation_Load(object sender, EventArgs e)
         {
             comboBox1.DataSource = Enum.GetValues(typeof(Emgu.CV.CvEnum.Inter));
-            
+            comboBox2.DataSource = Enum.GetValues(typeof(Emgu.CV.CvEnum.Warp));
+            comboBox3.DataSource = Enum.GetValues(typeof(Emgu.CV.CvEnum.BorderType));
             //DirectoryInfo di = new DirectoryInfo(@"E:\Users\fwf\Desktop\实习素材\Tran3");
             //FileInfo[] fs = di.GetFiles();
             //int i = 0;
@@ -130,22 +133,28 @@ namespace ShowOpenCVResult
             if (imageIOControl1.Image2 != null) {
                 imageIOControl1.Image2.Dispose();
              }
-            Mat img = OpencvMath.AnchorTransformat((imageIOControl1.Image1 as Image<Bgr, Byte>).Mat, (float)nudAX.Value / 100, (float)nudAY.Value / 100, (float)nudLT.Value / 100, (int)nudOW.Value, (int)nudOH.Value, (Emgu.CV.CvEnum.Inter)comboBox1.SelectedItem);
+            int h = (int)nudOH.Value, w = (int)nudOW.Value;
+            var input = (imageIOControl1.Image1 as Image<Bgr, Byte>).Mat;
+            Mat img = new Mat();
+            Mat transform = OpencvMath.CalTransformatMat(input.Size, (float)nudAX.Value / 100, (float)nudAY.Value / 100, (float)nudLT.Value / 100,w,h);
+            CvInvoke.WarpPerspective(input, img, transform,new Size(w,h), (Inter)comboBox1.SelectedItem,(Warp)comboBox2.SelectedItem,(BorderType)comboBox3.SelectedItem);
                 //imageIOControl1.OutputImage = GclrOpencvProces.BitmapTransformation(imageIOControl1.InputImage as Bitmap, TDepth, (double)nudAX.Value / 100, (double)nudAY.Value / 100, (int)nudOW.Value, (int)nudOH.Value);
             imageIOControl1.Image2 = img;
         }
 
-        private void imageIOControl1_AfterImgLoaded(object sender, EventArgs e)
-        {
-          
-        }
-
-        private void groupBox2_Enter(object sender, EventArgs e)
-        {
-
-        }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            imageIOControl1.DoChange();
+        }
+
+
+        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            imageIOControl1.DoChange();
+        }
+
+        private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)
         {
             imageIOControl1.DoChange();
         }
