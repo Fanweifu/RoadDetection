@@ -42,8 +42,9 @@ namespace ShowOpenCVResult
 
             Image<Gray, byte> imgcan = m_filegray.Clone();
             Image<Bgr, byte> imgback = m_filesrc.Clone();
-            CvInvoke.Threshold(imgcan, imgcan, 240, 255, ThresholdType.Binary);
-            cons = GetTreeData(imgcan,out layerstrcut, (double)myTrackBar3.Value / 100);
+            CvInvoke.Threshold(imgcan, imgcan, 130, 255, ThresholdType.Binary);
+            cons = GetTreeData(imgcan,out layerstrcut);
+            myTrackBarEpsilon_ValueChanged(null,null);
             doSelect();
             imgcan.Dispose();
 
@@ -65,23 +66,16 @@ namespace ShowOpenCVResult
         /// <param name="image">灰度图</param>
         /// <param name="b">表达树状数据的数组</param>
         /// <returns>VectorOfVectorOfPoint类型的轮廓数据</returns>
-        VectorOfVectorOfPoint GetTreeData(Image<Gray, byte> image, out Mat hirerarchy, double apppar = -1)
+        
+        VectorOfVectorOfPoint GetTreeData(Image<Gray, byte> image, out Mat hirerarchy)
         {
             hirerarchy = new Mat();
             VectorOfVectorOfPoint contours = new VectorOfVectorOfPoint();
             CvInvoke.FindContours(image, contours, hirerarchy, RetrType.Tree, ChainApproxMethod.ChainApproxSimple);
-            if (apppar != -1)
-            {
-                for (int i = 0; i <contours.Size ; i++)
-                {
-                    if (contours[i].Size > 0)
-                        CvInvoke.ApproxPolyDP(contours[i], contours[i], apppar, true);
-                }
-            }
             return contours;
         }
 
-        void selectCons(VectorOfVectorOfPoint vvp, Mat hirerarchy ,int minarea ,int maxarea,int minlength,int maxlength,double minarearate, ref int[] array) {
+        void selectCons(VectorOfVectorOfPoint vvp, Mat hirerarchy ,int minarea ,int maxarea,int minlength,int maxlength,double minarearate,double maxAreaToLength,ref int[] array) {
             if (vvp == null || vvp.Size == 0) return;
             if (hirerarchy == null || hirerarchy.IsEmpty) return;
             int [] resultarray  = new int[hirerarchy.Cols * 4];
@@ -94,7 +88,7 @@ namespace ShowOpenCVResult
                 double length = CvInvoke.ArcLength(vvp[i], true);
                 var rect = CvInvoke.MinAreaRect(vvp[i]);
                 double rate = area / (rect.Size.Width * rect.Size.Height);
-                bool isneed = area >= minarea && area <= maxarea && length >= minlength && length <= maxlength && rate >= minarearate;
+                bool isneed = area >= minarea && area <= maxarea && length >= minlength && length <= maxlength && rate >= minarearate && area / length < maxAreaToLength;
 
                 if (!isneed)
                 {
@@ -119,11 +113,9 @@ namespace ShowOpenCVResult
 
         void doSelect() {
             if (cons == null || cons.Size == 0) return;
-            int[] result = null;
-            selectCons(cons, layerstrcut, myTrackBar4.Value, myTrackBar5.Value, myTrackBar1.Value, myTrackBar2.Value, (double)myTrackBar7.Value/100, ref result);
-            editNode(result, treeView1);
-            var img = m_filesrc.Clone();
-
+            int[] layerresult = null;
+            selectCons(cons, layerstrcut, myTrackBar4.Value, myTrackBar5.Value, myTrackBar1.Value, myTrackBar2.Value, (double)myTrackBar7.Value/100,myTrackBar8.Value,ref layerresult);
+            editNode(layerresult, treeView1);
 
         }
 
@@ -158,8 +150,7 @@ namespace ShowOpenCVResult
             string path = OpencvForm.SelectImg();
             if (path == null) return;
             m_filesrc = new Image<Bgr, byte>(path);
-            m_filegray = new Image<Gray, byte>(m_filesrc.Size);
-            CvInvoke.Threshold(m_filegray, m_filegray,10 ,255, ThresholdType.Otsu);
+            m_filegray = m_filesrc.Convert<Gray, byte>();
             imageIOControl1.DoChange();
         }
 
@@ -245,7 +236,7 @@ namespace ShowOpenCVResult
             if (!int.TryParse(e.Node.Text, out index)) return;
             
             var img = m_filesrc.Clone();
-            CvInvoke.DrawContours(img, cons, index, new MCvScalar(0, 255, 0), 2);
+            CvInvoke.DrawContours(img,vvp , index, new MCvScalar(0, 255, 0), 2);
 
             if (tsbtnRotateRect.Checked)
             {
@@ -281,18 +272,19 @@ namespace ShowOpenCVResult
             Calfam(cons[index]);
 
             if (imageIOControl1.Image1 != null) imageIOControl1.Image1.Dispose();
+
             imageIOControl1.Image1 = img;
 
-            if (tsbtnLookWhenSelect.Checked)
-            {
-                Mat a = OpencvMath.GetSquareExampleImg(cons[index], m_filesrc.Size);
+            //if (tsbtnLookWhenSelect.Checked)
+            //{
+            //    Mat a = OpencvMath.GetSquareExampleImg(cons[index], m_filesrc.Size);
 
-                new Thread(() =>
-                {
-                    ImageViewer.Show(a);
-                }
-                ).Start();
-            }
+            //    new Thread(() =>
+            //    {
+            //        ImageViewer.Show(a);
+            //    }
+            //    ).Start();
+            //}
 
 
             
@@ -418,20 +410,28 @@ namespace ShowOpenCVResult
             imageIOControl1.Image1 = selectimg;
         }
 
-        private void imageIOControl1_AfterImgLoaded(object sender, EventArgs e)
+        private void setRange()
         {
-            m_filesrc = (imageIOControl1.Image1 as Image<Bgr, byte>).Clone();
-            m_filegray = m_filesrc.Convert<Gray, byte>();
-            myTrackBar4.Maximum = m_filesrc.Width * m_filesrc.Height/2;
+            if (m_filesrc == null) return;
+
+            myTrackBar4.Maximum = m_filesrc.Width * m_filesrc.Height / 10;
             myTrackBar4.Value = 0;
             myTrackBar5.Maximum = m_filesrc.Width * m_filesrc.Height;
             myTrackBar5.Value = m_filesrc.Width * m_filesrc.Height;
             myTrackBar1.Maximum = 100;
             myTrackBar1.Value = 0;
-            myTrackBar2.Maximum = (m_filesrc.Width + m_filesrc.Height)*2;
+            myTrackBar2.Maximum = (m_filesrc.Width + m_filesrc.Height) * 2;
             myTrackBar2.Value = (m_filesrc.Width + m_filesrc.Height) * 2;
             myTrackBar7.Maximum = 100;
             myTrackBar7.Value = 0;
+
+        }
+
+        private void imageIOControl1_AfterImgLoaded(object sender, EventArgs e)
+        {
+            m_filesrc = (imageIOControl1.Image1 as Image<Bgr, byte>).Clone();
+            m_filegray = m_filesrc.Convert<Gray, byte>();
+            setRange();
         }
 
         private void toolStripButton3_Click(object sender, EventArgs e)

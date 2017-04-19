@@ -42,6 +42,7 @@
             this.myTrackBar4 = new ShowOpenCVResult.MyTrackBar();
             this.myTrackBar3 = new ShowOpenCVResult.MyTrackBar();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.myTrackBar8 = new ShowOpenCVResult.MyTrackBar();
             this.myTrackBar7 = new ShowOpenCVResult.MyTrackBar();
             this.myTrackBar2 = new ShowOpenCVResult.MyTrackBar();
             this.myTrackBar1 = new ShowOpenCVResult.MyTrackBar();
@@ -79,9 +80,9 @@
             this.imageIOControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.imageIOControl1.Image1 = null;
             this.imageIOControl1.Image2 = null;
-            this.imageIOControl1.Location = new System.Drawing.Point(124, 164);
+            this.imageIOControl1.Location = new System.Drawing.Point(124, 202);
             this.imageIOControl1.Name = "imageIOControl1";
-            this.imageIOControl1.Size = new System.Drawing.Size(602, 199);
+            this.imageIOControl1.Size = new System.Drawing.Size(602, 161);
             this.imageIOControl1.SpOrientation = System.Windows.Forms.Orientation.Vertical;
             this.imageIOControl1.TabIndex = 1;
             this.imageIOControl1.DoImgChange += new System.EventHandler(this.imageIOControl1_DoImgChange);
@@ -135,18 +136,18 @@
             // 
             // splitter1
             // 
-            this.splitter1.Location = new System.Drawing.Point(121, 164);
+            this.splitter1.Location = new System.Drawing.Point(121, 202);
             this.splitter1.Name = "splitter1";
-            this.splitter1.Size = new System.Drawing.Size(3, 258);
+            this.splitter1.Size = new System.Drawing.Size(3, 220);
             this.splitter1.TabIndex = 5;
             this.splitter1.TabStop = false;
             // 
             // treeView1
             // 
             this.treeView1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.treeView1.Location = new System.Drawing.Point(0, 164);
+            this.treeView1.Location = new System.Drawing.Point(0, 202);
             this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(121, 258);
+            this.treeView1.Size = new System.Drawing.Size(121, 220);
             this.treeView1.TabIndex = 4;
             this.treeView1.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseDoubleClick);
             // 
@@ -157,7 +158,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 25);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(726, 139);
+            this.panel1.Size = new System.Drawing.Size(726, 177);
             this.panel1.TabIndex = 3;
             // 
             // groupBox2
@@ -168,7 +169,7 @@
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox2.Location = new System.Drawing.Point(359, 0);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(367, 139);
+            this.groupBox2.Size = new System.Drawing.Size(367, 177);
             this.groupBox2.TabIndex = 3;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "ApproxPoly";
@@ -198,7 +199,7 @@
             this.myTrackBar4.Size = new System.Drawing.Size(361, 40);
             this.myTrackBar4.TabIndex = 2;
             this.myTrackBar4.Title = "MinArea";
-            this.myTrackBar4.Value = 100;
+            this.myTrackBar4.Value = 10;
             this.myTrackBar4.ValueChanged += new System.EventHandler(this.myTrackBar5_ValueChanged);
             // 
             // myTrackBar3
@@ -217,29 +218,44 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.myTrackBar8);
             this.groupBox1.Controls.Add(this.myTrackBar7);
             this.groupBox1.Controls.Add(this.myTrackBar2);
             this.groupBox1.Controls.Add(this.myTrackBar1);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Left;
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(359, 139);
+            this.groupBox1.Size = new System.Drawing.Size(359, 177);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Boundary Selection";
+            // 
+            // myTrackBar8
+            // 
+            this.myTrackBar8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.myTrackBar8.Dock = System.Windows.Forms.DockStyle.Top;
+            this.myTrackBar8.Location = new System.Drawing.Point(3, 139);
+            this.myTrackBar8.Maximum = 1000;
+            this.myTrackBar8.Minimum = 0;
+            this.myTrackBar8.Name = "myTrackBar8";
+            this.myTrackBar8.Size = new System.Drawing.Size(353, 39);
+            this.myTrackBar8.TabIndex = 5;
+            this.myTrackBar8.Title = "MaxAreaToLength";
+            this.myTrackBar8.Value = 100;
+            this.myTrackBar8.ValueChanged += new System.EventHandler(this.myTrackBar5_ValueChanged);
             // 
             // myTrackBar7
             // 
             this.myTrackBar7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.myTrackBar7.Dock = System.Windows.Forms.DockStyle.Top;
             this.myTrackBar7.Location = new System.Drawing.Point(3, 100);
-            this.myTrackBar7.Maximum = 1000;
+            this.myTrackBar7.Maximum = 100;
             this.myTrackBar7.Minimum = 0;
             this.myTrackBar7.Name = "myTrackBar7";
             this.myTrackBar7.Size = new System.Drawing.Size(353, 39);
             this.myTrackBar7.TabIndex = 4;
             this.myTrackBar7.Title = "minAreaRate";
-            this.myTrackBar7.Value = 100;
+            this.myTrackBar7.Value = 50;
             this.myTrackBar7.ValueChanged += new System.EventHandler(this.myTrackBar5_ValueChanged);
             // 
             // myTrackBar2
@@ -253,7 +269,7 @@
             this.myTrackBar2.Size = new System.Drawing.Size(353, 40);
             this.myTrackBar2.TabIndex = 3;
             this.myTrackBar2.Title = "MaxLength";
-            this.myTrackBar2.Value = 100;
+            this.myTrackBar2.Value = 1000;
             this.myTrackBar2.ValueChanged += new System.EventHandler(this.myTrackBar5_ValueChanged);
             // 
             // myTrackBar1
@@ -267,7 +283,7 @@
             this.myTrackBar1.Size = new System.Drawing.Size(353, 43);
             this.myTrackBar1.TabIndex = 2;
             this.myTrackBar1.Title = "MinLength";
-            this.myTrackBar1.Value = 100;
+            this.myTrackBar1.Value = 10;
             this.myTrackBar1.ValueChanged += new System.EventHandler(this.myTrackBar5_ValueChanged);
             // 
             // toolStrip1
@@ -288,6 +304,7 @@
             this.toolStrip1.Size = new System.Drawing.Size(726, 25);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
+            
             // 
             // tsbtnOpenImg
             // 
@@ -522,5 +539,6 @@
         private MyTrackBar myTrackBar7;
         private MyTrackBar myTrackBar2;
         private MyTrackBar myTrackBar1;
+        private MyTrackBar myTrackBar8;
     }
 }

@@ -56,6 +56,15 @@ namespace ShowOpenCVResult
             Size s = (imageIOControl1.Image1 as Image<Bgr, byte>).Size;
 
             RoadTransform.SetTransform(s.Width,s.Height, (float)nudAX.Value / 100, (float)nudAY.Value / 100, (float)nudLT.Value / 100, (int)nudOW.Value, (int)nudOH.Value);
+            var config = Properties.Settings.Default;
+            config.InputHeigth = s.Height;
+            config.InputWidth = s.Width;
+            config.AX = (float)nudAX.Value / 100;
+            config.AY = (float)nudAY.Value / 100;
+            config.LT = (float)nudLT.Value / 100;
+            config.OW = (int)nudOW.Value;
+            config.OH = (int)nudOH.Value;
+            config.Save();
         }
 
         private void tsbtnMultyDeal_Click(object sender, EventArgs e)
@@ -107,6 +116,14 @@ namespace ShowOpenCVResult
             comboBox1.DataSource = Enum.GetValues(typeof(Emgu.CV.CvEnum.Inter));
             comboBox2.DataSource = Enum.GetValues(typeof(Emgu.CV.CvEnum.Warp));
             comboBox3.DataSource = Enum.GetValues(typeof(Emgu.CV.CvEnum.BorderType));
+
+            var config = Properties.Settings.Default;
+            nudAX.Value = (decimal)(config.AX*100);
+            nudAY.Value = (decimal)(config.AY * 100);
+            nudLT.Value = (decimal)(config.LT * 100);
+            nudOW.Value = config.OW;
+            nudOH.Value = config.OH;
+
             //DirectoryInfo di = new DirectoryInfo(@"E:\Users\fwf\Desktop\实习素材\Tran3");
             //FileInfo[] fs = di.GetFiles();
             //int i = 0;

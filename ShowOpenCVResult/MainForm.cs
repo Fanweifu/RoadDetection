@@ -13,6 +13,8 @@ using WeifenLuo.WinFormsUI.Docking;
 using System.IO;
 using Emgu.CV;
 using Emgu.CV.Structure;
+using ShowOpenCVResult.Properties;
+
 namespace ShowOpenCVResult
 {
     public partial class OpencvForm : Form
@@ -29,8 +31,10 @@ namespace ShowOpenCVResult
         {
             this.dockPanel1.DocumentStyle = DocumentStyle.DockingMdi;
             this.m_DockPath = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "DockPanel.config");
+            var config = Settings.Default;
+            RoadTransform.SetTransform(config.InputWidth, config.InputHeigth, config.AX, config.AY, config.LT, config.OW, config.OH);
 
-                
+
         }
 
         private void FrmMain_FormClosing(object sender, FormClosingEventArgs e)

@@ -158,6 +158,7 @@
     <Compile Include="BaseUI\AccordSVMPramasInput.Designer.cs">
       <DependentUpon>AccordSVMPramasInput.cs</DependentUpon>
     </Compile>
+    <Compile Include="Settings.cs" />
     <Compile Include="WindowsBlock\AccordSvmTrain.cs">
       <SubType>Form</SubType>
     </Compile>

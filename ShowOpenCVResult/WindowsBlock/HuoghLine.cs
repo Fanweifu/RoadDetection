@@ -29,7 +29,7 @@ namespace ShowOpenCVResult
             if (m_src == null) return;
             Image<Gray, Byte> img = m_src.Convert<Gray, Byte>();
             //Image<Gray, Byte> bw = img.ThresholdBinary(new Gray(100), new Gray(255));
-            CvInvoke.Threshold(img, img, 90, 255, Emgu.CV.CvEnum.ThresholdType.Otsu);
+            CvInvoke.Threshold(img, img, 150, 255, Emgu.CV.CvEnum.ThresholdType.Binary);
             CvInvoke.Canny(img, img, myTrackBar1.Value, myTrackBar2.Value);
             if (imageIOControl1.Image1 != null) imageIOControl1.Image1.Dispose();
             imageIOControl1.Image1 = img;

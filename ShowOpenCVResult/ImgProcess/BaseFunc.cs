@@ -253,13 +253,26 @@ namespace ShowOpenCVResult
             return m;
         }
 
-        static public Mat RoadPreProcess(Mat inputimg, IInputArray mask = null, int openSize = 1, int meadinSize = 2) {
+        static public void RoadPreProcess(Mat inputimg, IInputArray mask = null, int openSize = 1, int meadinSize = 2) {
             Mat result = new Mat();
+            int width = inputimg.Width, height = inputimg.Height;
+
+            Mat intmat = new Mat();
+            inputimg.ConvertTo(intmat, DepthType.Cv32S);
+
+            Mat rect = new Mat(intmat, new Rectangle(new Point(width / 10, height / 10), new Size(width / 10 * 8, height / 10 * 8)));
+            double min = 0, max = 0;
+            int[] maxid = new int[2], minid = new int[2];
+            CvInvoke.MinMaxIdx(rect, out min, out max,minid,maxid );
+            Mat empty = new Mat(intmat.Size, DepthType.Cv32S, 1);
+            CvInvoke.AddWeighted(intmat, 256.0 / (max - min), empty, 0, -256.0 / (max - min) * min,intmat);
+            intmat.ConvertTo(inputimg, DepthType.Cv8U);
+            intmat.Dispose();
+
             CvInvoke.Normalize(inputimg, inputimg, 0, 255, NormType.MinMax, DepthType.Default, mask);
             CvInvoke.MedianBlur(inputimg, inputimg, meadinSize * 2 + 1);
-            CvInvoke.MorphologyEx(inputimg, result, MorphOp.Close, CvInvoke.GetStructuringElement(ElementShape.Cross, new Size(openSize * 2 + 1, openSize * 2 + 1), new Point(-1, -1)), new Point(-1, -1), 1, BorderType.Default, new MCvScalar(0));
-            EdgeEnhancement(result);
-            return result;
+            CvInvoke.MorphologyEx(inputimg, inputimg, MorphOp.Close, CvInvoke.GetStructuringElement(ElementShape.Cross, new Size( 3, openSize * 2 + 1), new Point(-1, -1)), new Point(-1, -1), 1, BorderType.Default, new MCvScalar(0));
+            EdgeEnhancement(inputimg);
         }
 
         static public void EdgeEnhancement(Mat img) {
@@ -279,7 +292,7 @@ namespace ShowOpenCVResult
 
         static public Mat GetLine(IInputArray inputimg, int width) {
             var lineimg = new Mat();
-            CvInvoke.AdaptiveThreshold(inputimg, lineimg, 255, AdaptiveThresholdType.MeanC, ThresholdType.Binary, 2 * (width / 5) + 1, -20);
+            CvInvoke.AdaptiveThreshold(inputimg, lineimg, 255, AdaptiveThresholdType.MeanC, ThresholdType.Binary, 2 * (width / 6) + 1, -20);
             return lineimg;
         }
    
@@ -696,18 +709,17 @@ namespace ShowOpenCVResult
             }
 
     
-            var processimg = RoadPreProcess(tranform, null, 2);
-            tranform.Dispose();
+            RoadPreProcess(tranform, null, 2);
 
-            var line = GetLine(processimg, processimg.Width);
-            FillRoad(ref processimg);
+            var line = GetLine(tranform, tranform.Width);
+            FillRoad(ref tranform);
 
-            CvInvoke.BitwiseAnd(line, processimg, line);
-            CvInvoke.Threshold(processimg, processimg, 5, 127, ThresholdType.BinaryInv);
+            CvInvoke.BitwiseAnd(line, tranform, line);
+            CvInvoke.Threshold(tranform, tranform, 5, 127, ThresholdType.BinaryInv);
             CvInvoke.Threshold(line, line, 140, 255, ThresholdType.Otsu);
-            CvInvoke.Add(line, processimg, line);
-            processimg.Dispose();
-            CvInvoke.MorphologyEx(line, line, MorphOp.Close, CvInvoke.GetStructuringElement(ElementShape.Cross, new Size(5, 5), new Point(-1, -1)), new Point(-1, -1), 1, BorderType.Default, new MCvScalar(0));
+            CvInvoke.Add(line, tranform, line);
+            tranform.Dispose();
+            CvInvoke.MorphologyEx(line, line, MorphOp.Close, CvInvoke.GetStructuringElement(ElementShape.Cross, new Size(1, 5), new Point(-1, -1)), new Point(-1, -1), 1, BorderType.Default, new MCvScalar(0));
             CvInvoke.BitwiseAnd(line, unroad, line);
             sw.Stop();
             time = sw.ElapsedMilliseconds;
@@ -788,11 +800,10 @@ namespace ShowOpenCVResult
         #endregion
 
         #region transfrom
-        //private static float AX = 0.25f;
-        //private static float AY = 0.50f;
-        //private static float LT = 0.50f;
-        //private static int OW = 512;
-        //private static int OH = 1024;
+        private static float m_AX = 0.25f;
+        private static float m_AY = 0.50f;
+        private static float m_LT = 0.50f;
+
         private static Mat transformMat = new Mat();
         private static Mat m_roadmask = new Mat();
         
@@ -826,9 +837,31 @@ namespace ShowOpenCVResult
             }
         }
 
+        public static float AX
+        {
+            get
+            {
+                return m_AX;
+            }
+        }
+
+        public static float AY
+        {
+            get
+            {
+                return m_AY;
+            }
+        }
+
+        public static float LT
+        {
+            get{return m_LT;}
+        }
+
         public static void SetTransform(int iw,int ih,float ax,float ay, float lt,int ow,int oh) {
             InputSize = new Size(iw, ih);
             OutSize = new Size(ow, oh);
+            m_AX = ax; m_AY = ay; m_LT = lt; 
             transformMat = OpencvMath.CalTransformatMat(InputSize, ax, ay, lt, ow, oh);
             if (m_roadmask != null)
             {
@@ -841,7 +874,7 @@ namespace ShowOpenCVResult
 
         public static Mat WarpPerspective(Mat img) {
             Mat result = new Mat();
-            CvInvoke.WarpPerspective(img, result, TransformMat, OutSize, Inter.Linear, Warp.Default, BorderType.Replicate);
+            CvInvoke.WarpPerspective(img, result, TransformMat, OutSize, Inter.Area, Warp.Default, BorderType.Reflect);
             return result;
         }
 
