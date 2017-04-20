@@ -23,8 +23,29 @@
     <Setting Name="OH" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">1024</Value>
     </Setting>
-    <Setting Name="OutputSize" Type="System.Drawing.Size" Scope="User">
+    <Setting Name="SvmOutputSize" Type="System.Drawing.Size" Scope="User">
       <Value Profile="(Default)">32, 32</Value>
+    </Setting>
+    <Setting Name="Epsilon" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="MinLength" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">10</Value>
+    </Setting>
+    <Setting Name="MaxLength" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">1000</Value>
+    </Setting>
+    <Setting Name="MinArea" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">10</Value>
+    </Setting>
+    <Setting Name="MaxArea" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">1000</Value>
+    </Setting>
+    <Setting Name="MinRateToRect" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="MaxAreaToLength" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">100</Value>
     </Setting>
   </Settings>
 </SettingsFile>
