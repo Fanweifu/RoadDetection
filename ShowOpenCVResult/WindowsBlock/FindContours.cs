@@ -114,7 +114,7 @@ namespace ShowOpenCVResult
         void doSelect() {
             if (cons == null || cons.Size == 0) return;
             int[] layerresult = null;
-            selectCons(cons, layerstrcut, myTrackBar4.Value, myTrackBar5.Value, myTrackBar1.Value, myTrackBar2.Value, (double)myTrackBar7.Value/100,myTrackBar8.Value,ref layerresult);
+            selectCons(cons, layerstrcut, minAreabar.Value, maxAreabar.Value, minLengthBar.Value, maxLengthbar.Value, (double)minAreaRatebar.Value/100,maxAreaToLenght.Value,ref layerresult);
             editNode(layerresult, treeView1);
 
         }
@@ -129,7 +129,7 @@ namespace ShowOpenCVResult
                 if (cons[i].Size > 0)
                 {
                     VectorOfPoint vp = new VectorOfPoint();
-                    CvInvoke.ApproxPolyDP(cons[i], vp, (double)myTrackBar3.Value / 100, true);
+                    CvInvoke.ApproxPolyDP(cons[i], vp, (double)epsilonbar.Value / 100, true);
                     vvp.Push(vp);
                 }
             }
@@ -308,7 +308,7 @@ namespace ShowOpenCVResult
             VectorOfPoint vp = getModelLine(m_modeFile);
             if (vp == null) return;
             m_modeLine = new VectorOfPoint();
-            CvInvoke.ApproxPolyDP(vp, m_modeLine, (double)myTrackBar3.Value / 100, true);
+            CvInvoke.ApproxPolyDP(vp, m_modeLine, (double)epsilonbar.Value / 100, true);
             tslblModeFilePath.Text = path;
             Image<Bgr, byte> draw = m_modeFile.Clone().Convert<Bgr, byte>();
             draw.DrawPolyline(m_modeLine.ToArray(), true, new Bgr(0, 0, 255), 3);
@@ -410,20 +410,25 @@ namespace ShowOpenCVResult
             imageIOControl1.Image1 = selectimg;
         }
 
-        private void setRange()
+        private void setRange(bool resetvalue = false)
         {
             if (m_filesrc == null) return;
 
-            myTrackBar4.Maximum = m_filesrc.Width * m_filesrc.Height / 10;
-            myTrackBar4.Value = 0;
-            myTrackBar5.Maximum = m_filesrc.Width * m_filesrc.Height;
-            myTrackBar5.Value = m_filesrc.Width * m_filesrc.Height;
-            myTrackBar1.Maximum = 100;
-            myTrackBar1.Value = 0;
-            myTrackBar2.Maximum = (m_filesrc.Width + m_filesrc.Height) * 2;
-            myTrackBar2.Value = (m_filesrc.Width + m_filesrc.Height) * 2;
-            myTrackBar7.Maximum = 100;
-            myTrackBar7.Value = 0;
+            minAreabar.Maximum = m_filesrc.Width * m_filesrc.Height / 10;        
+            maxAreabar.Maximum = m_filesrc.Width * m_filesrc.Height;
+            minLengthBar.Maximum = 100;
+            maxLengthbar.Maximum = (m_filesrc.Width + m_filesrc.Height) * 2;
+            minAreaRatebar.Maximum = 100;
+
+            if (resetvalue)
+            {
+                minAreabar.Value = 0;
+                maxAreabar.Value = m_filesrc.Width * m_filesrc.Height;
+                minLengthBar.Value = 0;
+                maxLengthbar.Value = (m_filesrc.Width + m_filesrc.Height) * 2;
+                minAreaRatebar.Value = 0;
+
+            }
 
         }
 
@@ -485,11 +490,21 @@ namespace ShowOpenCVResult
         private void FindContours_Load(object sender, EventArgs e)
         {
             comboBox1.DataSource = Enum.GetValues(typeof(ContoursMatchType));
+            var config = ShowOpenCVResult.Properties.Settings.Default;
+
+            maxAreabar.Value = (int)config.MaxArea;
+            minAreabar.Value = (int)config.MinArea;
+            maxAreaToLenght.Value = (int)(config.MaxAreaToLength);
+            minAreaRatebar.Value = (int)(config.MinRateToRect/100);
+            maxLengthbar.Value = (int)config.MaxLength;
+            minLengthBar.Value = (int)config.MinLength;
+            epsilonbar.Value = (int)(config.Epsilon/100);
+
         }
 
         private void myTrackBar5_ValueChanged(object sender, EventArgs e)
         {
-            if (cons == null) return;
+            if (cons == null || m_filesrc==null) return;
             var img = m_filesrc.Clone();
 
             doSelect();
@@ -505,6 +520,20 @@ namespace ShowOpenCVResult
             }
             imageIOControl1.Image1 = img;
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            var config = ShowOpenCVResult.Properties.Settings.Default;
+            config.MaxArea = maxAreabar.Value;
+            config.MinArea = minAreabar.Value;
+            config.MaxAreaToLength = maxAreaToLenght.Value;
+            config.MinRateToRect = (double)minAreaRatebar.Value / 100;
+            config.MaxLength = maxLengthbar.Value;
+            config.MinLength = minLengthBar.Value;
+            config.Epsilon = (double)epsilonbar.Value / 100;
+            config.Save();
+        }
+
 
     }
 }

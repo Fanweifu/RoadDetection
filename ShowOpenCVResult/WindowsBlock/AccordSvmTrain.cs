@@ -281,6 +281,10 @@ namespace ShowOpenCVResult
                 drawImageBox1.Image.Save(path);
                 MessageBox.Show(string.Format("分类：{0}，保存在{1}", key, path));
             }
+            else
+            {
+                MessageBox.Show("不存在此目录");
+            }
         }
 
         private void button3_Click(object sender, EventArgs e)

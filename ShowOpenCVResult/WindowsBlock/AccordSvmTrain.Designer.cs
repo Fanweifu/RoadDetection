@@ -71,12 +71,12 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.button1 = new System.Windows.Forms.Button();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.drawImageBox1 = new ShowOpenCVResult.DrawImageBox();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAnalysisTesting)).BeginInit();
@@ -345,13 +345,13 @@
             // lbStatus
             // 
             this.lbStatus.Name = "lbStatus";
-            this.lbStatus.Size = new System.Drawing.Size(32, 17);
+            this.lbStatus.Size = new System.Drawing.Size(31, 17);
             this.lbStatus.Text = "      ";
             // 
             // tsslbFileInfo
             // 
             this.tsslbFileInfo.Name = "tsslbFileInfo";
-            this.tsslbFileInfo.Size = new System.Drawing.Size(574, 17);
+            this.tsslbFileInfo.Size = new System.Drawing.Size(575, 17);
             this.tsslbFileInfo.Spring = true;
             this.tsslbFileInfo.Text = "                ";
             this.tsslbFileInfo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -380,20 +380,20 @@
             this.toolStripSplitButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripSplitButton1.Image")));
             this.toolStripSplitButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripSplitButton1.Name = "toolStripSplitButton1";
-            this.toolStripSplitButton1.Size = new System.Drawing.Size(64, 22);
+            this.toolStripSplitButton1.Size = new System.Drawing.Size(63, 22);
             this.toolStripSplitButton1.Text = "文件";
             // 
             // 载入训练样本ToolStripMenuItem
             // 
             this.载入训练样本ToolStripMenuItem.Name = "载入训练样本ToolStripMenuItem";
-            this.载入训练样本ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.载入训练样本ToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.载入训练样本ToolStripMenuItem.Text = "载入训练样本";
             this.载入训练样本ToolStripMenuItem.Click += new System.EventHandler(this.载入样本ToolStripMenuItem_Click);
             // 
             // 载入测试样本ToolStripMenuItem1
             // 
             this.载入测试样本ToolStripMenuItem1.Name = "载入测试样本ToolStripMenuItem1";
-            this.载入测试样本ToolStripMenuItem1.Size = new System.Drawing.Size(148, 22);
+            this.载入测试样本ToolStripMenuItem1.Size = new System.Drawing.Size(146, 22);
             this.载入测试样本ToolStripMenuItem1.Text = "载入测试样本";
             this.载入测试样本ToolStripMenuItem1.Click += new System.EventHandler(this.载入测试样本ToolStripMenuItem_Click);
             // 
@@ -405,20 +405,20 @@
             this.toolStripSplitButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripSplitButton2.Image")));
             this.toolStripSplitButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripSplitButton2.Name = "toolStripSplitButton2";
-            this.toolStripSplitButton2.Size = new System.Drawing.Size(64, 22);
+            this.toolStripSplitButton2.Size = new System.Drawing.Size(63, 22);
             this.toolStripSplitButton2.Text = "数据";
             // 
             // 加载batToolStripMenuItem
             // 
             this.加载batToolStripMenuItem.Name = "加载batToolStripMenuItem";
-            this.加载batToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
+            this.加载batToolStripMenuItem.Size = new System.Drawing.Size(120, 22);
             this.加载batToolStripMenuItem.Text = "加载.bat";
             this.加载batToolStripMenuItem.Click += new System.EventHandler(this.载入训练结果ToolStripMenuItem_Click);
             // 
             // 导出batToolStripMenuItem
             // 
             this.导出batToolStripMenuItem.Name = "导出batToolStripMenuItem";
-            this.导出batToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
+            this.导出batToolStripMenuItem.Size = new System.Drawing.Size(120, 22);
             this.导出batToolStripMenuItem.Text = "导出.bat";
             this.导出batToolStripMenuItem.Click += new System.EventHandler(this.导出训练结果ToolStripMenuItem_Click);
             // 
@@ -460,6 +460,16 @@
             this.tabPage2.Text = "图片测试";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // richTextBox1
+            // 
+            this.richTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.richTextBox1.Location = new System.Drawing.Point(442, 3);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.ReadOnly = true;
+            this.richTextBox1.Size = new System.Drawing.Size(270, 365);
+            this.richTextBox1.TabIndex = 4;
+            this.richTextBox1.Text = "";
+            // 
             // flowLayoutPanel1
             // 
             this.flowLayoutPanel1.Controls.Add(this.button2);
@@ -469,14 +479,14 @@
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Left;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(329, 3);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(145, 365);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(113, 365);
             this.flowLayoutPanel1.TabIndex = 6;
             // 
             // button2
             // 
             this.button2.Location = new System.Drawing.Point(3, 3);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(136, 30);
+            this.button2.Size = new System.Drawing.Size(105, 30);
             this.button2.TabIndex = 5;
             this.button2.Text = "打开";
             this.button2.UseVisualStyleBackColor = true;
@@ -486,7 +496,7 @@
             // 
             this.button3.Location = new System.Drawing.Point(3, 39);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(136, 32);
+            this.button3.Size = new System.Drawing.Size(105, 32);
             this.button3.TabIndex = 6;
             this.button3.Text = "计算";
             this.button3.UseVisualStyleBackColor = true;
@@ -501,28 +511,18 @@
             0,
             0});
             this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(136, 21);
+            this.numericUpDown1.Size = new System.Drawing.Size(105, 21);
             this.numericUpDown1.TabIndex = 7;
             // 
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(3, 104);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(136, 35);
+            this.button1.Size = new System.Drawing.Size(105, 35);
             this.button1.TabIndex = 8;
             this.button1.Text = "添加到训练目录";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click_1);
-            // 
-            // richTextBox1
-            // 
-            this.richTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.richTextBox1.Location = new System.Drawing.Point(474, 3);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.ReadOnly = true;
-            this.richTextBox1.Size = new System.Drawing.Size(238, 365);
-            this.richTextBox1.TabIndex = 4;
-            this.richTextBox1.Text = "";
             // 
             // drawImageBox1
             // 

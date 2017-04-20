@@ -72,9 +72,9 @@
             this.imageIOControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.imageIOControl1.Image1 = null;
             this.imageIOControl1.Image2 = null;
-            this.imageIOControl1.Location = new System.Drawing.Point(0, 227);
+            this.imageIOControl1.Location = new System.Drawing.Point(0, 25);
             this.imageIOControl1.Name = "imageIOControl1";
-            this.imageIOControl1.Size = new System.Drawing.Size(723, 217);
+            this.imageIOControl1.Size = new System.Drawing.Size(723, 419);
             this.imageIOControl1.SpOrientation = System.Windows.Forms.Orientation.Vertical;
             this.imageIOControl1.TabIndex = 2;
             this.imageIOControl1.DoImgChange += new System.EventHandler(this.imageIOControl1_DoImgChange);
@@ -200,15 +200,15 @@
             this.myTrackBar3.Value = 100;
             this.myTrackBar3.ValueChanged += new System.EventHandler(this.imageIOControl1_DoImgChange);
             // 
-            // BitmapHuoghTest
+            // HuoghLine
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(723, 444);
-            this.Controls.Add(this.imageIOControl1);
             this.Controls.Add(this.splitContainer1);
+            this.Controls.Add(this.imageIOControl1);
             this.Controls.Add(this.toolStrip1);
-            this.Name = "BitmapHuoghTest";
+            this.Name = "HuoghLine";
             this.Text = "BitmapHuoghTest";
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();

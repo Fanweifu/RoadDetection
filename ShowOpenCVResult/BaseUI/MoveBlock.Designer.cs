@@ -35,11 +35,10 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.ClientSize = new System.Drawing.Size(723, 444);
+            this.ClientSize = new System.Drawing.Size(766, 444);
             this.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Name = "MoveBlock";
-            this.Text = "FrmFunction";
             this.DockStateChanged += new System.EventHandler(this.FrmFunction_DockStateChanged);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmFunction_FormClosing);
             this.Load += new System.EventHandler(this.FrmFunction_Load);

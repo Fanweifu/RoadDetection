@@ -38,14 +38,14 @@
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.panel1 = new System.Windows.Forms.Panel();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.myTrackBar5 = new ShowOpenCVResult.MyTrackBar();
-            this.myTrackBar4 = new ShowOpenCVResult.MyTrackBar();
-            this.myTrackBar3 = new ShowOpenCVResult.MyTrackBar();
+            this.maxAreabar = new ShowOpenCVResult.MyTrackBar();
+            this.minAreabar = new ShowOpenCVResult.MyTrackBar();
+            this.epsilonbar = new ShowOpenCVResult.MyTrackBar();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.myTrackBar8 = new ShowOpenCVResult.MyTrackBar();
-            this.myTrackBar7 = new ShowOpenCVResult.MyTrackBar();
-            this.myTrackBar2 = new ShowOpenCVResult.MyTrackBar();
-            this.myTrackBar1 = new ShowOpenCVResult.MyTrackBar();
+            this.maxAreaToLenght = new ShowOpenCVResult.MyTrackBar();
+            this.minAreaRatebar = new ShowOpenCVResult.MyTrackBar();
+            this.maxLengthbar = new ShowOpenCVResult.MyTrackBar();
+            this.minLengthBar = new ShowOpenCVResult.MyTrackBar();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.tsbtnOpenImg = new System.Windows.Forms.ToolStripButton();
             this.tsbtnOpenModelImg = new System.Windows.Forms.ToolStripButton();
@@ -67,6 +67,7 @@
             this.tslblModeFilePath = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.tslblFm = new System.Windows.Forms.ToolStripStatusLabel();
+            this.button2 = new System.Windows.Forms.Button();
             this.groupBox3.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -163,9 +164,10 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.myTrackBar5);
-            this.groupBox2.Controls.Add(this.myTrackBar4);
-            this.groupBox2.Controls.Add(this.myTrackBar3);
+            this.groupBox2.Controls.Add(this.button2);
+            this.groupBox2.Controls.Add(this.maxAreabar);
+            this.groupBox2.Controls.Add(this.minAreabar);
+            this.groupBox2.Controls.Add(this.epsilonbar);
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox2.Location = new System.Drawing.Point(359, 0);
             this.groupBox2.Name = "groupBox2";
@@ -174,54 +176,54 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "ApproxPoly";
             // 
-            // myTrackBar5
+            // maxAreabar
             // 
-            this.myTrackBar5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.myTrackBar5.Dock = System.Windows.Forms.DockStyle.Top;
-            this.myTrackBar5.Location = new System.Drawing.Point(3, 100);
-            this.myTrackBar5.Maximum = 10000;
-            this.myTrackBar5.Minimum = 0;
-            this.myTrackBar5.Name = "myTrackBar5";
-            this.myTrackBar5.Size = new System.Drawing.Size(361, 40);
-            this.myTrackBar5.TabIndex = 3;
-            this.myTrackBar5.Title = "MaxArea";
-            this.myTrackBar5.Value = 1000;
-            this.myTrackBar5.ValueChanged += new System.EventHandler(this.myTrackBar5_ValueChanged);
+            this.maxAreabar.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.maxAreabar.Dock = System.Windows.Forms.DockStyle.Top;
+            this.maxAreabar.Location = new System.Drawing.Point(3, 91);
+            this.maxAreabar.Maximum = 10000;
+            this.maxAreabar.Minimum = 0;
+            this.maxAreabar.Name = "maxAreabar";
+            this.maxAreabar.Size = new System.Drawing.Size(361, 36);
+            this.maxAreabar.TabIndex = 3;
+            this.maxAreabar.Title = "MaxArea";
+            this.maxAreabar.Value = 1000;
+            this.maxAreabar.ValueChanged += new System.EventHandler(this.myTrackBar5_ValueChanged);
             // 
-            // myTrackBar4
+            // minAreabar
             // 
-            this.myTrackBar4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.myTrackBar4.Dock = System.Windows.Forms.DockStyle.Top;
-            this.myTrackBar4.Location = new System.Drawing.Point(3, 60);
-            this.myTrackBar4.Maximum = 1000;
-            this.myTrackBar4.Minimum = 0;
-            this.myTrackBar4.Name = "myTrackBar4";
-            this.myTrackBar4.Size = new System.Drawing.Size(361, 40);
-            this.myTrackBar4.TabIndex = 2;
-            this.myTrackBar4.Title = "MinArea";
-            this.myTrackBar4.Value = 10;
-            this.myTrackBar4.ValueChanged += new System.EventHandler(this.myTrackBar5_ValueChanged);
+            this.minAreabar.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.minAreabar.Dock = System.Windows.Forms.DockStyle.Top;
+            this.minAreabar.Location = new System.Drawing.Point(3, 54);
+            this.minAreabar.Maximum = 1000;
+            this.minAreabar.Minimum = 0;
+            this.minAreabar.Name = "minAreabar";
+            this.minAreabar.Size = new System.Drawing.Size(361, 37);
+            this.minAreabar.TabIndex = 2;
+            this.minAreabar.Title = "MinArea";
+            this.minAreabar.Value = 10;
+            this.minAreabar.ValueChanged += new System.EventHandler(this.myTrackBar5_ValueChanged);
             // 
-            // myTrackBar3
+            // epsilonbar
             // 
-            this.myTrackBar3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.myTrackBar3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.myTrackBar3.Location = new System.Drawing.Point(3, 17);
-            this.myTrackBar3.Maximum = 1000;
-            this.myTrackBar3.Minimum = 0;
-            this.myTrackBar3.Name = "myTrackBar3";
-            this.myTrackBar3.Size = new System.Drawing.Size(361, 43);
-            this.myTrackBar3.TabIndex = 1;
-            this.myTrackBar3.Title = "epsilon";
-            this.myTrackBar3.Value = 100;
-            this.myTrackBar3.ValueChanged += new System.EventHandler(this.myTrackBarEpsilon_ValueChanged);
+            this.epsilonbar.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.epsilonbar.Dock = System.Windows.Forms.DockStyle.Top;
+            this.epsilonbar.Location = new System.Drawing.Point(3, 17);
+            this.epsilonbar.Maximum = 1000;
+            this.epsilonbar.Minimum = 0;
+            this.epsilonbar.Name = "epsilonbar";
+            this.epsilonbar.Size = new System.Drawing.Size(361, 37);
+            this.epsilonbar.TabIndex = 1;
+            this.epsilonbar.Title = "epsilon";
+            this.epsilonbar.Value = 100;
+            this.epsilonbar.ValueChanged += new System.EventHandler(this.myTrackBarEpsilon_ValueChanged);
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.myTrackBar8);
-            this.groupBox1.Controls.Add(this.myTrackBar7);
-            this.groupBox1.Controls.Add(this.myTrackBar2);
-            this.groupBox1.Controls.Add(this.myTrackBar1);
+            this.groupBox1.Controls.Add(this.maxAreaToLenght);
+            this.groupBox1.Controls.Add(this.minAreaRatebar);
+            this.groupBox1.Controls.Add(this.maxLengthbar);
+            this.groupBox1.Controls.Add(this.minLengthBar);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Left;
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
@@ -230,61 +232,61 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Boundary Selection";
             // 
-            // myTrackBar8
+            // maxAreaToLenght
             // 
-            this.myTrackBar8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.myTrackBar8.Dock = System.Windows.Forms.DockStyle.Top;
-            this.myTrackBar8.Location = new System.Drawing.Point(3, 139);
-            this.myTrackBar8.Maximum = 1000;
-            this.myTrackBar8.Minimum = 0;
-            this.myTrackBar8.Name = "myTrackBar8";
-            this.myTrackBar8.Size = new System.Drawing.Size(353, 39);
-            this.myTrackBar8.TabIndex = 5;
-            this.myTrackBar8.Title = "MaxAreaToLength";
-            this.myTrackBar8.Value = 100;
-            this.myTrackBar8.ValueChanged += new System.EventHandler(this.myTrackBar5_ValueChanged);
+            this.maxAreaToLenght.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.maxAreaToLenght.Dock = System.Windows.Forms.DockStyle.Top;
+            this.maxAreaToLenght.Location = new System.Drawing.Point(3, 130);
+            this.maxAreaToLenght.Maximum = 1000;
+            this.maxAreaToLenght.Minimum = 0;
+            this.maxAreaToLenght.Name = "maxAreaToLenght";
+            this.maxAreaToLenght.Size = new System.Drawing.Size(353, 46);
+            this.maxAreaToLenght.TabIndex = 5;
+            this.maxAreaToLenght.Title = "MaxAreaToLength";
+            this.maxAreaToLenght.Value = 100;
+            this.maxAreaToLenght.ValueChanged += new System.EventHandler(this.myTrackBar5_ValueChanged);
             // 
-            // myTrackBar7
+            // minAreaRatebar
             // 
-            this.myTrackBar7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.myTrackBar7.Dock = System.Windows.Forms.DockStyle.Top;
-            this.myTrackBar7.Location = new System.Drawing.Point(3, 100);
-            this.myTrackBar7.Maximum = 100;
-            this.myTrackBar7.Minimum = 0;
-            this.myTrackBar7.Name = "myTrackBar7";
-            this.myTrackBar7.Size = new System.Drawing.Size(353, 39);
-            this.myTrackBar7.TabIndex = 4;
-            this.myTrackBar7.Title = "minAreaRate";
-            this.myTrackBar7.Value = 50;
-            this.myTrackBar7.ValueChanged += new System.EventHandler(this.myTrackBar5_ValueChanged);
+            this.minAreaRatebar.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.minAreaRatebar.Dock = System.Windows.Forms.DockStyle.Top;
+            this.minAreaRatebar.Location = new System.Drawing.Point(3, 91);
+            this.minAreaRatebar.Maximum = 100;
+            this.minAreaRatebar.Minimum = 0;
+            this.minAreaRatebar.Name = "minAreaRatebar";
+            this.minAreaRatebar.Size = new System.Drawing.Size(353, 39);
+            this.minAreaRatebar.TabIndex = 4;
+            this.minAreaRatebar.Title = "minAreaRate";
+            this.minAreaRatebar.Value = 50;
+            this.minAreaRatebar.ValueChanged += new System.EventHandler(this.myTrackBar5_ValueChanged);
             // 
-            // myTrackBar2
+            // maxLengthbar
             // 
-            this.myTrackBar2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.myTrackBar2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.myTrackBar2.Location = new System.Drawing.Point(3, 60);
-            this.myTrackBar2.Maximum = 1000;
-            this.myTrackBar2.Minimum = 0;
-            this.myTrackBar2.Name = "myTrackBar2";
-            this.myTrackBar2.Size = new System.Drawing.Size(353, 40);
-            this.myTrackBar2.TabIndex = 3;
-            this.myTrackBar2.Title = "MaxLength";
-            this.myTrackBar2.Value = 1000;
-            this.myTrackBar2.ValueChanged += new System.EventHandler(this.myTrackBar5_ValueChanged);
+            this.maxLengthbar.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.maxLengthbar.Dock = System.Windows.Forms.DockStyle.Top;
+            this.maxLengthbar.Location = new System.Drawing.Point(3, 54);
+            this.maxLengthbar.Maximum = 1000;
+            this.maxLengthbar.Minimum = 0;
+            this.maxLengthbar.Name = "maxLengthbar";
+            this.maxLengthbar.Size = new System.Drawing.Size(353, 37);
+            this.maxLengthbar.TabIndex = 3;
+            this.maxLengthbar.Title = "MaxLength";
+            this.maxLengthbar.Value = 1000;
+            this.maxLengthbar.ValueChanged += new System.EventHandler(this.myTrackBar5_ValueChanged);
             // 
-            // myTrackBar1
+            // minLengthBar
             // 
-            this.myTrackBar1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.myTrackBar1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.myTrackBar1.Location = new System.Drawing.Point(3, 17);
-            this.myTrackBar1.Maximum = 1000;
-            this.myTrackBar1.Minimum = 0;
-            this.myTrackBar1.Name = "myTrackBar1";
-            this.myTrackBar1.Size = new System.Drawing.Size(353, 43);
-            this.myTrackBar1.TabIndex = 2;
-            this.myTrackBar1.Title = "MinLength";
-            this.myTrackBar1.Value = 10;
-            this.myTrackBar1.ValueChanged += new System.EventHandler(this.myTrackBar5_ValueChanged);
+            this.minLengthBar.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.minLengthBar.Dock = System.Windows.Forms.DockStyle.Top;
+            this.minLengthBar.Location = new System.Drawing.Point(3, 17);
+            this.minLengthBar.Maximum = 1000;
+            this.minLengthBar.Minimum = 0;
+            this.minLengthBar.Name = "minLengthBar";
+            this.minLengthBar.Size = new System.Drawing.Size(353, 37);
+            this.minLengthBar.TabIndex = 2;
+            this.minLengthBar.Title = "MinLength";
+            this.minLengthBar.Value = 10;
+            this.minLengthBar.ValueChanged += new System.EventHandler(this.myTrackBar5_ValueChanged);
             // 
             // toolStrip1
             // 
@@ -304,14 +306,13 @@
             this.toolStrip1.Size = new System.Drawing.Size(726, 25);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
-            
             // 
             // tsbtnOpenImg
             // 
             this.tsbtnOpenImg.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnOpenImg.Image")));
             this.tsbtnOpenImg.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnOpenImg.Name = "tsbtnOpenImg";
-            this.tsbtnOpenImg.Size = new System.Drawing.Size(52, 22);
+            this.tsbtnOpenImg.Size = new System.Drawing.Size(51, 22);
             this.tsbtnOpenImg.Text = "打开";
             this.tsbtnOpenImg.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
@@ -320,7 +321,7 @@
             this.tsbtnOpenModelImg.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnOpenModelImg.Image")));
             this.tsbtnOpenModelImg.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnOpenModelImg.Name = "tsbtnOpenModelImg";
-            this.tsbtnOpenModelImg.Size = new System.Drawing.Size(88, 22);
+            this.tsbtnOpenModelImg.Size = new System.Drawing.Size(87, 22);
             this.tsbtnOpenModelImg.Text = "加载模板图";
             this.tsbtnOpenModelImg.Click += new System.EventHandler(this.toolStripButton2_Click);
             // 
@@ -329,7 +330,7 @@
             this.tsbtnCreatConImg.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnCreatConImg.Image")));
             this.tsbtnCreatConImg.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnCreatConImg.Name = "tsbtnCreatConImg";
-            this.tsbtnCreatConImg.Size = new System.Drawing.Size(88, 22);
+            this.tsbtnCreatConImg.Size = new System.Drawing.Size(87, 22);
             this.tsbtnCreatConImg.Text = "生成轮廓图";
             this.tsbtnCreatConImg.ToolTipText = "生成轮廓图";
             this.tsbtnCreatConImg.Click += new System.EventHandler(this.toolStripButton3_Click);
@@ -348,7 +349,7 @@
             this.tsbtnRotateRect.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnRotateRect.Image")));
             this.tsbtnRotateRect.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnRotateRect.Name = "tsbtnRotateRect";
-            this.tsbtnRotateRect.Size = new System.Drawing.Size(75, 22);
+            this.tsbtnRotateRect.Size = new System.Drawing.Size(74, 22);
             this.tsbtnRotateRect.Text = "RotateRect";
             // 
             // tsbtnWeightCentre
@@ -358,7 +359,7 @@
             this.tsbtnWeightCentre.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnWeightCentre.Image")));
             this.tsbtnWeightCentre.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnWeightCentre.Name = "tsbtnWeightCentre";
-            this.tsbtnWeightCentre.Size = new System.Drawing.Size(91, 22);
+            this.tsbtnWeightCentre.Size = new System.Drawing.Size(90, 22);
             this.tsbtnWeightCentre.Text = "WeightCentre";
             // 
             // tsbtnFitLine
@@ -368,7 +369,7 @@
             this.tsbtnFitLine.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnFitLine.Image")));
             this.tsbtnFitLine.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnFitLine.Name = "tsbtnFitLine";
-            this.tsbtnFitLine.Size = new System.Drawing.Size(77, 22);
+            this.tsbtnFitLine.Size = new System.Drawing.Size(76, 22);
             this.tsbtnFitLine.Text = "tsbtnFitLine";
             // 
             // tsbtnLookWhenSelect
@@ -378,7 +379,7 @@
             this.tsbtnLookWhenSelect.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnLookWhenSelect.Image")));
             this.tsbtnLookWhenSelect.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnLookWhenSelect.Name = "tsbtnLookWhenSelect";
-            this.tsbtnLookWhenSelect.Size = new System.Drawing.Size(52, 22);
+            this.tsbtnLookWhenSelect.Size = new System.Drawing.Size(51, 22);
             this.tsbtnLookWhenSelect.Text = "Review";
             // 
             // toolStripButton1
@@ -386,7 +387,7 @@
             this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(100, 22);
+            this.toolStripButton1.Size = new System.Drawing.Size(99, 22);
             this.toolStripButton1.Text = "计算分类结果";
             this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click_1);
             // 
@@ -395,7 +396,7 @@
             this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
             this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(88, 21);
+            this.toolStripButton2.Size = new System.Drawing.Size(87, 22);
             this.toolStripButton2.Text = "人行道检测";
             this.toolStripButton2.Click += new System.EventHandler(this.toolStripButton2_Click_1);
             // 
@@ -420,57 +421,67 @@
             // toolStripStatusLabel5
             // 
             this.toolStripStatusLabel5.Name = "toolStripStatusLabel5";
-            this.toolStripStatusLabel5.Size = new System.Drawing.Size(68, 17);
+            this.toolStripStatusLabel5.Size = new System.Drawing.Size(67, 17);
             this.toolStripStatusLabel5.Text = "矩形旋转角";
             // 
             // tsslblRectAngle
             // 
             this.tsslblRectAngle.Name = "tsslblRectAngle";
-            this.tsslblRectAngle.Size = new System.Drawing.Size(25, 17);
+            this.tsslblRectAngle.Size = new System.Drawing.Size(24, 17);
             this.tsslblRectAngle.Text = "0.0";
             // 
             // toolStripStatusLabel7
             // 
             this.toolStripStatusLabel7.Name = "toolStripStatusLabel7";
-            this.toolStripStatusLabel7.Size = new System.Drawing.Size(32, 17);
+            this.toolStripStatusLabel7.Size = new System.Drawing.Size(31, 17);
             this.toolStripStatusLabel7.Text = "长宽";
             // 
             // tsslblRectSize
             // 
             this.tsslblRectSize.Name = "tsslblRectSize";
-            this.tsslblRectSize.Size = new System.Drawing.Size(25, 17);
+            this.tsslblRectSize.Size = new System.Drawing.Size(24, 17);
             this.tsslblRectSize.Text = "0,0";
             // 
             // toolStripStatusLabel4
             // 
             this.toolStripStatusLabel4.BackColor = System.Drawing.SystemColors.Control;
             this.toolStripStatusLabel4.Name = "toolStripStatusLabel4";
-            this.toolStripStatusLabel4.Size = new System.Drawing.Size(353, 17);
+            this.toolStripStatusLabel4.Size = new System.Drawing.Size(361, 17);
             this.toolStripStatusLabel4.Spring = true;
             // 
             // toolStripStatusLabel2
             // 
             this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
-            this.toolStripStatusLabel2.Size = new System.Drawing.Size(68, 17);
+            this.toolStripStatusLabel2.Size = new System.Drawing.Size(67, 17);
             this.toolStripStatusLabel2.Text = "模板路径：";
             // 
             // tslblModeFilePath
             // 
             this.tslblModeFilePath.Name = "tslblModeFilePath";
-            this.tslblModeFilePath.Size = new System.Drawing.Size(47, 17);
+            this.tslblModeFilePath.Size = new System.Drawing.Size(46, 17);
             this.tslblModeFilePath.Text = "NULL  ";
             // 
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(68, 17);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(67, 17);
             this.toolStripStatusLabel1.Text = "不相似度：";
             // 
             // tslblFm
             // 
             this.tslblFm.Name = "tslblFm";
-            this.tslblFm.Size = new System.Drawing.Size(25, 17);
+            this.tslblFm.Size = new System.Drawing.Size(24, 17);
             this.tslblFm.Text = "1.0";
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(6, 137);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 26);
+            this.button2.TabIndex = 4;
+            this.button2.Text = "Save";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // FindContours
             // 
@@ -485,7 +496,7 @@
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.statusStrip1);
             this.Name = "FindContours";
-            this.Text = "BitmapFindCon";
+            this.Text = "FindContours";
             this.Load += new System.EventHandler(this.FindContours_Load);
             this.groupBox3.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
@@ -508,11 +519,11 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.GroupBox groupBox2;
-        private MyTrackBar myTrackBar3;
+        private MyTrackBar epsilonbar;
         private System.Windows.Forms.TreeView treeView1;
         private System.Windows.Forms.Splitter splitter1;
-        private MyTrackBar myTrackBar5;
-        private MyTrackBar myTrackBar4;
+        private MyTrackBar maxAreabar;
+        private MyTrackBar minAreabar;
         private System.Windows.Forms.ToolStripButton tsbtnOpenModelImg;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel tslblModeFilePath;
@@ -536,9 +547,10 @@
         private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.ToolStripButton toolStripButton2;
         private System.Windows.Forms.ComboBox comboBox1;
-        private MyTrackBar myTrackBar7;
-        private MyTrackBar myTrackBar2;
-        private MyTrackBar myTrackBar1;
-        private MyTrackBar myTrackBar8;
+        private MyTrackBar minAreaRatebar;
+        private MyTrackBar maxLengthbar;
+        private MyTrackBar minLengthBar;
+        private MyTrackBar maxAreaToLenght;
+        private System.Windows.Forms.Button button2;
     }
 }
