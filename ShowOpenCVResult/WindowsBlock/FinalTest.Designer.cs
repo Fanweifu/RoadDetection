@@ -68,7 +68,9 @@
             // 
             // toolStripButton2
             // 
+            this.toolStripButton2.Checked = true;
             this.toolStripButton2.CheckOnClick = true;
+            this.toolStripButton2.CheckState = System.Windows.Forms.CheckState.Checked;
             this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
             this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton2.Name = "toolStripButton2";

@@ -29,14 +29,19 @@ namespace ShowOpenCVResult
             if (m_src == null) return;
             Image<Gray, Byte> img = m_src.Convert<Gray, Byte>();
             //Image<Gray, Byte> bw = img.ThresholdBinary(new Gray(100), new Gray(255));
-            CvInvoke.Threshold(img, img, 150, 255, Emgu.CV.CvEnum.ThresholdType.Binary);
-            CvInvoke.Canny(img, img, myTrackBar1.Value, myTrackBar2.Value);
+
+            if (toolStripButton2.Checked)
+            {
+                CvInvoke.Canny(img, img, myTrackBar1.Value, myTrackBar2.Value);
+            }
+
             if (imageIOControl1.Image1 != null) imageIOControl1.Image1.Dispose();
             imageIOControl1.Image1 = img;
             LineSegment2D[] lns = CvInvoke.HoughLinesP(img, (double)myTrackBar3.Value / 100, (double)myTrackBar4.Value / 100, myTrackBar5.Value, myTrackBar6.Value, myTrackBar7.Value);
             Image<Bgr, Byte> outimg = new Image<Bgr, Byte>(m_src.Size);
             foreach (var ln in lns)
                 CvInvoke.Line(outimg, ln.P1, ln.P2, new MCvScalar(0, 0, 255), 1);
+
             if (imageIOControl1.Image2 != null) imageIOControl1.Image2.Dispose();
             imageIOControl1.Image2 = outimg;
             

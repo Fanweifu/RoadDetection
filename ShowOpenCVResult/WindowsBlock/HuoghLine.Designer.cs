@@ -40,6 +40,7 @@
             this.myTrackBar5 = new ShowOpenCVResult.MyTrackBar();
             this.myTrackBar4 = new ShowOpenCVResult.MyTrackBar();
             this.myTrackBar3 = new ShowOpenCVResult.MyTrackBar();
+            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -50,7 +51,8 @@
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButton1});
+            this.toolStripButton1,
+            this.toolStripButton2});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(723, 25);
@@ -200,6 +202,17 @@
             this.myTrackBar3.Value = 100;
             this.myTrackBar3.ValueChanged += new System.EventHandler(this.imageIOControl1_DoImgChange);
             // 
+            // toolStripButton2
+            // 
+            this.toolStripButton2.Checked = true;
+            this.toolStripButton2.CheckOnClick = true;
+            this.toolStripButton2.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
+            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton2.Name = "toolStripButton2";
+            this.toolStripButton2.Size = new System.Drawing.Size(106, 22);
+            this.toolStripButton2.Text = "cannyProcess";
+            // 
             // HuoghLine
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -234,5 +247,6 @@
         private MyTrackBar myTrackBar5;
         private MyTrackBar myTrackBar7;
         private MyTrackBar myTrackBar6;
+        private System.Windows.Forms.ToolStripButton toolStripButton2;
     }
 }

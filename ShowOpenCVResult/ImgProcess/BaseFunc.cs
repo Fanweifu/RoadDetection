@@ -44,10 +44,7 @@ namespace ShowOpenCVResult
             return CvInvoke.GetPerspectiveTransform(srcTri, dstTri);
         }
 
-
-
-
-        public static bool ArraySmooth(double[] value, int rangeLen, double e, ref double[] value2)
+        static public bool ArraySmooth(double[] value, int rangeLen, double e, ref double[] value2)
         {
             if (value == null || rangeLen <= 0 || value.Count() < (rangeLen * 2 + 1)) return false;
             int cnt = value.Count();
@@ -262,15 +259,16 @@ namespace ShowOpenCVResult
             return m;
         }
 
-        static public void RoadPreProcess(Mat inputimg, IInputArray mask = null, int openSize = 1, int meadinSize = 2)
+        static public void RoadPreProcess(Mat inputimg, IInputArray mask = null, int openSize = 2, int meadinSize = 3)
         {
+            meadinSize = 2;
             Mat result = new Mat();
             int width = inputimg.Width, height = inputimg.Height;
 
             Mat intmat = new Mat();
             inputimg.ConvertTo(intmat, DepthType.Cv32S);
 
-            Mat rect = new Mat(intmat, new Rectangle(new Point(width / 10, height / 10), new Size(width / 10 * 8, height / 10 * 8)));
+            Mat rect = new Mat(inputimg, new Rectangle(new Point(width / 3, height / 2), new Size(width / 3, height / 4 )));
             double min = 0, max = 0;
             int[] maxid = new int[2], minid = new int[2];
             CvInvoke.MinMaxIdx(rect, out min, out max, minid, maxid);
@@ -279,9 +277,9 @@ namespace ShowOpenCVResult
             intmat.ConvertTo(inputimg, DepthType.Cv8U);
             intmat.Dispose();
 
-            CvInvoke.Normalize(inputimg, inputimg, 0, 255, NormType.MinMax, DepthType.Default, mask);
+            //CvInvoke.Normalize(inputimg, inputimg, 0, 255, NormType.MinMax, DepthType.Default, mask);
             CvInvoke.MedianBlur(inputimg, inputimg, meadinSize * 2 + 1);
-            CvInvoke.MorphologyEx(inputimg, inputimg, MorphOp.Close, CvInvoke.GetStructuringElement(ElementShape.Cross, new Size(3, openSize * 2 + 1), new Point(-1, -1)), new Point(-1, -1), 1, BorderType.Default, new MCvScalar(0));
+            CvInvoke.MorphologyEx(inputimg, inputimg, MorphOp.Close, CvInvoke.GetStructuringElement(ElementShape.Cross, new Size(1, openSize * 2 + 1), new Point(-1, -1)), new Point(-1, -1), 1, BorderType.Default, new MCvScalar(0));
             EdgeEnhancement(inputimg);
         }
 
@@ -295,20 +293,21 @@ namespace ShowOpenCVResult
             Mat laplacemat8u = new Mat();
             laplace.ConvertTo(laplacemat8u, DepthType.Cv8U);
             //CvInvoke.Add(img, laplacemat8u, img);
-            int rows = img.Rows;
-            MyByteImgAdd(img, laplacemat8u, img, cal);
+            myByteImgAdd(img, laplacemat8u, img, cal);
             laplacemat8u.Dispose();
             laplace.Dispose();
             gussbulr.Dispose();
 
         }
         public delegate double ScaleMethod(int x, int y);
+
         static ScaleMethod cal = (int x, int y) =>
         {
             double k = (double)y / RoadTransform.OutSize.Height;
             return (1 - k) * (1 - k);
         };
-        static public void MyByteImgAdd(Mat src, Mat added, Mat dst, ScaleMethod cal)
+
+        static private void myByteImgAdd(Mat src, Mat added, Mat dst, ScaleMethod cal)
         {
             if (cal == null || src == null || src.IsEmpty || src.NumberOfChannels != 1 || src.Depth != DepthType.Cv8U
             || added == null || added.IsEmpty || added.NumberOfChannels != 1 || added.Depth != DepthType.Cv8U || src.Size != added.Size)
@@ -322,18 +321,21 @@ namespace ShowOpenCVResult
 
                 for (int i = 0; i < rows; i++)
                 {
+                    double k = (double)i / rows;
+                    double k2 = (1 - k) * (1 - k);
                     for (int j = 0; j < cols; j++)
                     {
-                        *(resultHead + i * cols + j) = (byte)(*(srcHead + i * cols + j) + cal(j, i) * (*(addedHead + i * cols + j)));
+                        *(resultHead + i * cols + j) = (byte)(*(srcHead + i * cols + j) + k2 * (*(addedHead + i * cols + j)));
                     }
                 }
             }
 
         }
+
         static public Mat GetLine(IInputArray inputimg, int width)
         {
             var lineimg = new Mat();
-            CvInvoke.AdaptiveThreshold(inputimg, lineimg, 255, AdaptiveThresholdType.MeanC, ThresholdType.Binary, 2 * (width / 6) + 1, -20);
+            CvInvoke.AdaptiveThreshold(inputimg, lineimg, 255, AdaptiveThresholdType.MeanC, ThresholdType.Binary, 2 * (width / 7) + 1, -20);
             return lineimg;
         }
 
@@ -365,6 +367,7 @@ namespace ShowOpenCVResult
             else return RoadObjectType.SignInLoad;
 
         }
+
         static public Mat JugdeTest(VectorOfVectorOfPoint cons, Mat back, ref long time)
         {
 
@@ -409,7 +412,8 @@ namespace ShowOpenCVResult
             return test;
 
         }
-        static public Point FindSeedPointToFill(Mat img, double upos = 0.5, double vpos = 0.95)
+
+        static public Point FindSeedPointToFill(Mat img, double upos = 0.5, double vpos = 0.7)
         {
             if (img.Depth != DepthType.Cv8U || img.NumberOfChannels != 1) throw new ArgumentException("img.Depth!= DepthType.Cv8U||img.NumberOfChannels!=1");
             Point p = new Point((int)(img.Size.Width * upos), (int)(img.Size.Height * vpos));
@@ -434,6 +438,7 @@ namespace ShowOpenCVResult
             }
             return p;
         }
+
         /// <summary>
         /// 基于跨越的行扫描算法：检测人行道区域
         /// </summary>
@@ -629,24 +634,24 @@ namespace ShowOpenCVResult
             return vm;
         }
 
-        static public void FillRoad(ref Mat roadGray, int lowdiff = 3, int highdiff = 2)
+        static public void FillRoad(ref Mat roadGray, MCvScalar color = default(MCvScalar), int lowdiff = 4, int highdiff = 4)
         {
             Rectangle rect = new Rectangle();
-            var backup = roadGray.Clone();
-            Point p1 = OpencvMath.FindSeedPointToFill(roadGray);
+            //var backup = roadGray.Clone();
+            Point p1 = FindSeedPointToFill(roadGray);
 
-            int nums = CvInvoke.FloodFill(backup, null, p1, new MCvScalar(0), out rect, new MCvScalar(lowdiff), new MCvScalar(highdiff), Connectivity.EightConnected);
-            if (nums < roadGray.Size.Width * roadGray.Size.Height / 10)
-            {
-                backup.Dispose();
-                Point p2 = OpencvMath.FindSeedPointToFill(roadGray, 0.3);
-                nums = CvInvoke.FloodFill(roadGray, null, p2, new MCvScalar(0), out rect, new MCvScalar(lowdiff), new MCvScalar(highdiff));
-            }
-            else
-            {
-                roadGray.Dispose();
-                roadGray = backup;
-            }
+            int nums = CvInvoke.FloodFill(roadGray, null, p1, color, out rect, new MCvScalar(lowdiff), new MCvScalar(highdiff), Connectivity.FourConnected, FloodFillType.Default);
+            //if (nums < roadGray.Size.Width * roadGray.Size.Height / 10)
+            //{
+            //    backup.Dispose();
+            //    Point p2 = FindSeedPointToFill(roadGray, 0.5, 0.4);
+            //    nums = CvInvoke.FloodFill(roadGray, null, p2, color, out rect, new MCvScalar(lowdiff), new MCvScalar(highdiff));
+            //}
+            //else
+            //{
+            //    roadGray.Dispose();
+            //    roadGray = backup;
+            //}
         }
 
         static public void MyThreshold(Mat img, byte min, byte max, byte setvalue = 255, bool isorop = false)
@@ -733,7 +738,6 @@ namespace ShowOpenCVResult
             return vvp;
         }
 
-
         static public Mat FinalLineProcess(Mat img, out long time, bool needtrans = false, bool hascolor = false)
         {
             Stopwatch sw = new Stopwatch();
@@ -743,35 +747,55 @@ namespace ShowOpenCVResult
             imgs[0].Dispose();
             imgs[1].Dispose();
 
-            Mat tranform = null;
-            Mat unroad = null;
+            Mat oriGray =  imgs[2];
 
+
+            RoadPreProcess(oriGray, null, 2);
+            Mat processimg = oriGray;
+
+            Mat unroad = null;
+            Mat trans = null;
+            Mat blackRoad = null; 
             if (needtrans && !RoadTransform.TransformMat.IsEmpty)
             {
-                tranform = RoadTransform.WarpPerspective(imgs[2]);
-                imgs[2].Dispose();
-                unroad = RoadTransform.Roadmask;
+                unroad = RoadTransform.Roadmask.Clone();
+                trans = RoadTransform.WarpPerspective(processimg);
             }
             else
             {
+                trans = processimg.Clone();
                 unroad = new Mat(imgs[2].Size, DepthType.Cv8U, 1);
                 unroad.SetTo(new MCvScalar(255));
-                tranform = imgs[2];
             }
 
+            Mat fillarea = new Mat(processimg, new Rectangle(new Point(0, (int)(processimg.Height * RoadTransform.AY)), new Size(processimg.Width, (int)(processimg.Height * (1 - RoadTransform.AY)))));
+            FillRoad(ref fillarea, new MCvScalar(10));
+            if (needtrans && !RoadTransform.TransformMat.IsEmpty)
+            {
+                blackRoad = RoadTransform.WarpPerspective(processimg);
+                processimg.Dispose();
+            }
+            else
+            {
+                blackRoad = processimg;
+            }
+           
 
-            RoadPreProcess(tranform, null, 2);
 
-            var line = GetLine(tranform, tranform.Width);
-            FillRoad(ref tranform);
+            var line = GetLine(trans, trans.Width);
 
-            CvInvoke.BitwiseAnd(line, tranform, line);
-            CvInvoke.Threshold(tranform, tranform, 5, 127, ThresholdType.BinaryInv);
+
+            CvInvoke.BitwiseAnd(line, blackRoad, line);
+            MyThreshold(blackRoad, 10, 10, 127);
+            CvInvoke.MorphologyEx(blackRoad, blackRoad, MorphOp.Close, CvInvoke.GetStructuringElement(ElementShape.Cross, new Size(3, 3), new Point(-1, -1)), new Point(-1, -1), 1, BorderType.Default, new MCvScalar(0));
+
             CvInvoke.Threshold(line, line, 140, 255, ThresholdType.Otsu);
-            CvInvoke.Add(line, tranform, line);
-            tranform.Dispose();
-            CvInvoke.MorphologyEx(line, line, MorphOp.Close, CvInvoke.GetStructuringElement(ElementShape.Cross, new Size(1, 5), new Point(-1, -1)), new Point(-1, -1), 1, BorderType.Default, new MCvScalar(0));
+            CvInvoke.Add(line, blackRoad, line);
             CvInvoke.BitwiseAnd(line, unroad, line);
+            oriGray.Dispose();
+            unroad.Dispose();
+            trans.Dispose();
+            blackRoad.Dispose();
             sw.Stop();
             time = sw.ElapsedMilliseconds;
 
@@ -788,14 +812,14 @@ namespace ShowOpenCVResult
             }
         }
 
-        static private Bitmap GetContours(Image<Bgr, byte> img, TreeNodeCollection root,ref Point[][] ptss,ref int[] del,bool needSelect = false)
+        static private Bitmap GetContours(Image<Bgr, byte> img, TreeNodeCollection root, ref Point[][] ptss, ref int[] del, bool needSelect = false)
         {
             if (img == null) throw new ArgumentException("Img is Empty");
             long time = 0;
             Mat result = FinalLineProcess(img.Mat, out time, true);
             CvInvoke.Threshold(result, result, 130, 255, ThresholdType.Binary);
             int[] layer = null;
-            var vvp = getCons(result, ref layer, ref del,needSelect);
+            var vvp = getCons(result, ref layer, ref del, needSelect);
             editNode(layer, root);
             ptss = vvp.ToArrayOfArray();
             var grayimg = result.ToImage<Gray, byte>();
@@ -804,7 +828,8 @@ namespace ShowOpenCVResult
             grayimg.Dispose();
             return map;
         }
-        static VectorOfVectorOfPoint getCons(Mat img, ref int[] array,ref int []delectindex,bool needselect)
+
+        static VectorOfVectorOfPoint getCons(Mat img, ref int[] array, ref int[] delectindex, bool needselect)
         {
             Mat hirerarchy = new Mat();
             VectorOfVectorOfPoint vvp = new VectorOfVectorOfPoint();
@@ -846,13 +871,16 @@ namespace ShowOpenCVResult
             delectindex = dels.ToArray();
             return vvp;
         }
-        public static Bitmap GetContours(string path, TreeNodeCollection root, ref Point[][] pts,ref int[] del) {
-            return GetContours(new Image<Bgr, byte>(path), root,ref pts,ref del);
+
+        public static Bitmap GetContours(string path, TreeNodeCollection root, ref Point[][] pts, ref int[] del)
+        {    
+            return GetContours(new Image<Bgr, byte>(path), root, ref pts, ref del);
         }
-        static void editNode(int[] a, TreeNodeCollection root)
+
+        static void editNode(int[] layerArray, TreeNodeCollection root)
         {
             root.Clear();
-            int cnt = a.Count() / 4;
+            int cnt = layerArray.Count() / 4;
             TreeNode[] s = new TreeNode[cnt];
             for (int i = 0; i <= cnt - 1; i++)
             {
@@ -860,7 +888,7 @@ namespace ShowOpenCVResult
             }
             for (int i = 0; i < cnt; i++)
             {
-                if (a[i * 4 + 3] == -1)
+                if (layerArray[i * 4 + 3] == -1)
                 {
                     root.Add(s[i]);
 
@@ -868,28 +896,28 @@ namespace ShowOpenCVResult
 
                 else
                 {
-                    if (a[i * 4 + 3] >= 0 && !s[a[i * 4 + 3]].Nodes.Contains(s[i]) && s[i].Parent == null)
-                        s[a[i * 4 + 3]].Nodes.Add(s[i]);
+                    if (layerArray[i * 4 + 3] >= 0 && !s[layerArray[i * 4 + 3]].Nodes.Contains(s[i]) && s[i].Parent == null)
+                        s[layerArray[i * 4 + 3]].Nodes.Add(s[i]);
                 }
             }
 
             for (int i = 0; i < cnt; i++)
             {
-                if (a[i * 4 + 2] < 0)
+                if (layerArray[i * 4 + 2] < 0)
                 {
 
                 }
 
                 else
                 {
-                    if (!s[i].Nodes.Contains(s[a[i * 4 + 2]]) && s[a[i * 4 + 2]].Parent == null)
-                        s[i].Nodes.Add(s[a[i * 4 + 2]]);
+                    if (!s[i].Nodes.Contains(s[layerArray[i * 4 + 2]]) && s[layerArray[i * 4 + 2]].Parent == null)
+                        s[i].Nodes.Add(s[layerArray[i * 4 + 2]]);
                 }
             }
 
             for (int i = 0; i < cnt; i++)
             {
-                if (a[i * 4] < 0)
+                if (layerArray[i * 4] < 0)
                 {
 
                 }
@@ -898,16 +926,16 @@ namespace ShowOpenCVResult
                 {
                     if (s[i].Parent != null)
                     {
-                        s[a[i * 4]].Remove();
+                        s[layerArray[i * 4]].Remove();
                         int index = s[i].Index;
-                        s[i].Parent.Nodes.Insert(index + 1, s[a[i * 4]]);
+                        s[i].Parent.Nodes.Insert(index + 1, s[layerArray[i * 4]]);
 
                     }
                 }
             }
             for (int i = 0; i < cnt; i++)
             {
-                if (a[i * 4 + 1] < 0)
+                if (layerArray[i * 4 + 1] < 0)
                 {
 
                 }
@@ -916,9 +944,9 @@ namespace ShowOpenCVResult
                 {
                     if (s[i].Parent != null)
                     {
-                        s[a[i * 4 + 1]].Remove();
+                        s[layerArray[i * 4 + 1]].Remove();
                         int index = s[i].Index;
-                        s[i].Parent.Nodes.Insert(index, s[a[i * 4 + 1]]);
+                        s[i].Parent.Nodes.Insert(index, s[layerArray[i * 4 + 1]]);
 
                     }
                 }
@@ -981,7 +1009,7 @@ namespace ShowOpenCVResult
 
         #endregion
     }
-    static class RoadTransform
+    static public class RoadTransform
     {
 
         #region SaveImgOption
@@ -1062,7 +1090,8 @@ namespace ShowOpenCVResult
             m_roadmask.SetTo(new MCvScalar(255));
             CvInvoke.WarpPerspective(m_roadmask, m_roadmask, transformMat, OutSize);
         }
-        public static void LoadSetting() {
+        public static void LoadSetting()
+        {
             var config = Settings.Default;
             SetTransform(config.InputWidth, config.InputHeigth, config.AX, config.AY, config.LT, config.OW, config.OH);
         }
