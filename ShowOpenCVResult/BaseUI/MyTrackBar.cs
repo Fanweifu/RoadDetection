@@ -138,6 +138,10 @@ namespace ShowOpenCVResult
             }
             set
             {
+                if (trackBar1.Maximum < value) {
+                    trackBar1.Maximum = value;
+                    numericUpDown1.Maximum = value;
+                }
                 trackBar1.Value = value;
             }
         }

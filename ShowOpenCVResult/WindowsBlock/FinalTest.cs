@@ -27,7 +27,7 @@ namespace ShowOpenCVResult
 
             var img = (imageIO1.Image1 as Image<Bgr, Byte>).Mat;
             long time = 0;
-            var result = OpencvMath.FinalLineProcess(img, out time,toolStripButton2.Checked);
+            var result = OpencvMath.SpeedProcess(img, out time,true);
 
             if (imageIO1.Image2 != null)
             {

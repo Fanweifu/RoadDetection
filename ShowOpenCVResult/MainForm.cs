@@ -183,6 +183,12 @@ namespace ShowOpenCVResult
         {
             new AccordSvmTrain().Show(this.dockPanel1, DockState.Document);
         }
+
+        private void 设置ROIToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new SetROI().Show(this.dockPanel1, DockState.Document);
+
+        }
     }
 
 

@@ -162,6 +162,12 @@
     <Compile Include="BaseUI\AccordSVMPramasInput.Designer.cs">
       <DependentUpon>AccordSVMPramasInput.cs</DependentUpon>
     </Compile>
+    <Compile Include="WindowsBlock\SetROI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WindowsBlock\SetROI.Designer.cs">
+      <DependentUpon>SetROI.cs</DependentUpon>
+    </Compile>
     <Compile Include="Settings.cs" />
     <Compile Include="WindowsBlock\AccordSvmTrain.cs">
       <SubType>Form</SubType>
@@ -323,6 +329,9 @@
     </Compile>
     <EmbeddedResource Include="BaseUI\AccordSVMPramasInput.resx">
       <DependentUpon>AccordSVMPramasInput.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WindowsBlock\SetROI.resx">
+      <DependentUpon>SetROI.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WindowsBlock\AccordSvmTrain.resx">
       <DependentUpon>AccordSvmTrain.cs</DependentUpon>

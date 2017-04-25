@@ -55,20 +55,17 @@
             this.边缘检测ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.直线检测ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.myTestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.同物体追踪ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.标线流程测试ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.路面展示ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.填充测试ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.识别分类ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.特征点检测ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.svm训练ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.acoordsvmToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.其他ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.图像拼接ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.个体项目ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.机床定位ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.石块检测ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dockPanel1 = new WeifenLuo.WinFormsUI.Docking.DockPanel();
-            this.acoordsvmToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.设置ROIToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.msMenus.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -79,8 +76,7 @@
             this.特征提取ToolStripMenuItem,
             this.myTestToolStripMenuItem,
             this.识别分类ToolStripMenuItem,
-            this.其他ToolStripMenuItem,
-            this.个体项目ToolStripMenuItem});
+            this.其他ToolStripMenuItem});
             this.msMenus.Location = new System.Drawing.Point(0, 0);
             this.msMenus.Name = "msMenus";
             this.msMenus.Size = new System.Drawing.Size(1184, 25);
@@ -90,10 +86,11 @@
             // 预处理ToolStripMenuItem
             // 
             this.预处理ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.滤波ToolStripMenuItem,
-            this.局部阈值ToolStripMenuItem1,
-            this.直方图ToolStripMenuItem1,
             this.逆转换ToolStripMenuItem,
+            this.设置ROIToolStripMenuItem,
+            this.滤波ToolStripMenuItem,
+            this.直方图ToolStripMenuItem1,
+            this.局部阈值ToolStripMenuItem1,
             this.膨胀腐蚀ToolStripMenuItem,
             this.hSV测试ToolStripMenuItem});
             this.预处理ToolStripMenuItem.Name = "预处理ToolStripMenuItem";
@@ -168,20 +165,12 @@
             // myTestToolStripMenuItem
             // 
             this.myTestToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.同物体追踪ToolStripMenuItem,
             this.标线流程测试ToolStripMenuItem,
             this.路面展示ToolStripMenuItem,
             this.填充测试ToolStripMenuItem});
             this.myTestToolStripMenuItem.Name = "myTestToolStripMenuItem";
             this.myTestToolStripMenuItem.Size = new System.Drawing.Size(62, 21);
             this.myTestToolStripMenuItem.Text = "MyTest";
-            // 
-            // 同物体追踪ToolStripMenuItem
-            // 
-            this.同物体追踪ToolStripMenuItem.Name = "同物体追踪ToolStripMenuItem";
-            this.同物体追踪ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.同物体追踪ToolStripMenuItem.Text = "同物体追踪";
-            this.同物体追踪ToolStripMenuItem.Click += new System.EventHandler(this.同物体追踪ToolStripMenuItem_Click);
             // 
             // 标线流程测试ToolStripMenuItem
             // 
@@ -228,6 +217,13 @@
             this.svm训练ToolStripMenuItem.Text = "svm训练";
             this.svm训练ToolStripMenuItem.Click += new System.EventHandler(this.svm训练ToolStripMenuItem_Click);
             // 
+            // acoordsvmToolStripMenuItem
+            // 
+            this.acoordsvmToolStripMenuItem.Name = "acoordsvmToolStripMenuItem";
+            this.acoordsvmToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.acoordsvmToolStripMenuItem.Text = "Accordsvm";
+            this.acoordsvmToolStripMenuItem.Click += new System.EventHandler(this.acoordsvmToolStripMenuItem_Click);
+            // 
             // 其他ToolStripMenuItem
             // 
             this.其他ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -242,28 +238,6 @@
             this.图像拼接ToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
             this.图像拼接ToolStripMenuItem1.Text = "图像拼接";
             this.图像拼接ToolStripMenuItem1.Click += new System.EventHandler(this.图像拼接ToolStripMenuItem1_Click);
-            // 
-            // 个体项目ToolStripMenuItem
-            // 
-            this.个体项目ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.机床定位ToolStripMenuItem,
-            this.石块检测ToolStripMenuItem});
-            this.个体项目ToolStripMenuItem.Name = "个体项目ToolStripMenuItem";
-            this.个体项目ToolStripMenuItem.Size = new System.Drawing.Size(68, 21);
-            this.个体项目ToolStripMenuItem.Text = "个体项目";
-            // 
-            // 机床定位ToolStripMenuItem
-            // 
-            this.机床定位ToolStripMenuItem.Name = "机床定位ToolStripMenuItem";
-            this.机床定位ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.机床定位ToolStripMenuItem.Text = "机床定位";
-            this.机床定位ToolStripMenuItem.Click += new System.EventHandler(this.机床定位ToolStripMenuItem_Click);
-            // 
-            // 石块检测ToolStripMenuItem
-            // 
-            this.石块检测ToolStripMenuItem.Name = "石块检测ToolStripMenuItem";
-            this.石块检测ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.石块检测ToolStripMenuItem.Text = "石块检测";
             // 
             // dockPanel1
             // 
@@ -321,12 +295,12 @@
             this.dockPanel1.Skin = dockPanelSkin1;
             this.dockPanel1.TabIndex = 3;
             // 
-            // acoordsvmToolStripMenuItem
+            // 设置ROIToolStripMenuItem
             // 
-            this.acoordsvmToolStripMenuItem.Name = "acoordsvmToolStripMenuItem";
-            this.acoordsvmToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.acoordsvmToolStripMenuItem.Text = "Accordsvm";
-            this.acoordsvmToolStripMenuItem.Click += new System.EventHandler(this.acoordsvmToolStripMenuItem_Click);
+            this.设置ROIToolStripMenuItem.Name = "设置ROIToolStripMenuItem";
+            this.设置ROIToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.设置ROIToolStripMenuItem.Text = "设置ROI";
+            this.设置ROIToolStripMenuItem.Click += new System.EventHandler(this.设置ROIToolStripMenuItem_Click);
             // 
             // OpencvForm
             // 
@@ -362,7 +336,6 @@
         private System.Windows.Forms.ToolStripMenuItem 边缘检测ToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem 直线检测ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem myTestToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 同物体追踪ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 标线流程测试ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 路面展示ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 识别分类ToolStripMenuItem;
@@ -371,11 +344,9 @@
         private System.Windows.Forms.ToolStripMenuItem 其他ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 图像拼接ToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem 填充测试ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 个体项目ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 机床定位ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 石块检测ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem hSV测试ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem acoordsvmToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 设置ROIToolStripMenuItem;
     }
 }
 
