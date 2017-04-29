@@ -1,18 +1,14 @@
 ﻿using Emgu.CV;
 using Emgu.CV.Structure;
-using Emgu.CV.UI;
 using Emgu.CV.Util;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Windows.Forms;
 using Emgu.CV.CvEnum;
+using Accord.MachineLearning.VectorMachines;
 
 namespace ShowOpenCVResult
 {
@@ -30,6 +26,7 @@ namespace ShowOpenCVResult
         private List<double> m_i1 = new List<double>();
         private List<double> m_i2 = new List<double>();
         private List<double> m_i3 = new List<double>();
+        MulticlassSupportVectorMachine m_svm = null;
 
         public FindContours()
         {
@@ -443,7 +440,7 @@ namespace ShowOpenCVResult
         {
             if (cons != null && selectIndex < cons.Size)
             {
-                Mat result = OpencvMath.GetSquareExampleImg(cons[selectIndex], m_filesrc.Size);
+                Mat result = OpencvMath.GetSquareExampleImg(cons[selectIndex]);
                 imageIOControl1.Image2 = result;
             }
         }
@@ -454,7 +451,7 @@ namespace ShowOpenCVResult
             long time = 0;
             Stopwatch sw = new Stopwatch();
             sw.Start();
-            Mat result = OpencvMath.JugdeTest(cons, m_filesrc.Mat, ref time);
+            Mat result = TestClass.JugdeTest(cons, m_filesrc.Mat, ref time);
             sw.Stop();
             MessageBox.Show(string.Format("耗时{0}毫秒", sw.ElapsedMilliseconds));
 
@@ -495,10 +492,10 @@ namespace ShowOpenCVResult
             maxAreabar.Value = (int)config.MaxArea;
             minAreabar.Value = (int)config.MinArea;
             maxAreaToLenght.Value = (int)(config.MaxAreaToLength);
-            minAreaRatebar.Value = (int)(config.MinRateToRect/100);
+            minAreaRatebar.Value = (int)(config.MinRateToRect*100);
             maxLengthbar.Value = (int)config.MaxLength;
             minLengthBar.Value = (int)config.MinLength;
-            epsilonbar.Value = (int)(config.Epsilon/100);
+            epsilonbar.Value = (int)(config.Epsilon*100);
 
         }
 
@@ -534,6 +531,36 @@ namespace ShowOpenCVResult
             config.Save();
         }
 
+        private void toolStripButton3_Click_1(object sender, EventArgs e)
+        {
+            m_svm = MulticlassSupportVectorMachine.Load("svm.dat");
+            //using (OpenFileDialog of = new OpenFileDialog())
+            //{
+            //    of.Filter = "DAT|*.dat";
+            //    if (of.ShowDialog() != DialogResult.OK) return;
+  
+            //}
 
+        }
+
+        private void toolStripButton4_Click(object sender, EventArgs e)
+        {
+            Mat imgback = new Mat(m_filegray.Size, DepthType.Cv8U, 3);
+            if (m_filegray == null || m_svm == null) return;
+            for (int i = 0; i < vvp.Size; i++)
+            {
+                if (dels.Contains(i)) continue;
+
+                Mat result = OpencvMath.GetSquareExampleImg(vvp[i]);
+                double[] array = OpencvMath.extract(result);
+                int lable = m_svm.Compute(array, MulticlassComputeMethod.Elimination);
+                CvInvoke.DrawContours(imgback, vvp, i,OpencvMath.getcolor(lable), -1);
+                
+            }
+            imageIOControl1.Image2 = imgback;
+            
+        }
+
+       
     }
 }

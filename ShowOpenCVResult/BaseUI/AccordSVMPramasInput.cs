@@ -1,14 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
+using Accord.MachineLearning.VectorMachines;
 using Accord.MachineLearning.VectorMachines.Learning;
 using Accord.Statistics.Kernels;
-using Accord.MachineLearning.VectorMachines;
 
 namespace ShowOpenCVResult
 {
@@ -45,7 +39,6 @@ namespace ShowOpenCVResult
                 return (int)numCache.Value;
             }
         }
-
         public SelectionStrategy Strategy
         {
             get
@@ -53,13 +46,11 @@ namespace ShowOpenCVResult
                 return SelectionStrategy.Sequential;
             }
         }
-        public bool HasTrain {
-            get {
-                return hasTrained;
-            }
-        }
 
-        
+        public bool HasTrain { get { return hasTrained; } }
+
+        public MulticlassSupportVectorMachine Svm { get { return ksvm; } }
+
 
 
         private IKernel createKernelFromPanel()
@@ -107,6 +98,18 @@ namespace ShowOpenCVResult
                 catch {
                     return -1;
                 }
+            }
+        }
+
+        public void LoadFile(string path) {
+            ksvm = MulticlassSupportVectorMachine.Load(path);
+            hasTrained = true;
+        }
+
+        public void ExportFile(string path)
+        {
+            if (hasTrained) {
+                ksvm.Save(path);
             }
         }
     }

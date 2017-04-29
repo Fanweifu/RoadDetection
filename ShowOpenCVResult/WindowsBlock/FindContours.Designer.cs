@@ -38,6 +38,7 @@
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.panel1 = new System.Windows.Forms.Panel();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.button2 = new System.Windows.Forms.Button();
             this.maxAreabar = new ShowOpenCVResult.MyTrackBar();
             this.minAreabar = new ShowOpenCVResult.MyTrackBar();
             this.epsilonbar = new ShowOpenCVResult.MyTrackBar();
@@ -55,8 +56,11 @@
             this.tsbtnWeightCentre = new System.Windows.Forms.ToolStripButton();
             this.tsbtnFitLine = new System.Windows.Forms.ToolStripButton();
             this.tsbtnLookWhenSelect = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel5 = new System.Windows.Forms.ToolStripStatusLabel();
             this.tsslblRectAngle = new System.Windows.Forms.ToolStripStatusLabel();
@@ -67,7 +71,6 @@
             this.tslblModeFilePath = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.tslblFm = new System.Windows.Forms.ToolStripStatusLabel();
-            this.button2 = new System.Windows.Forms.Button();
             this.groupBox3.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -83,7 +86,7 @@
             this.imageIOControl1.Image2 = null;
             this.imageIOControl1.Location = new System.Drawing.Point(124, 202);
             this.imageIOControl1.Name = "imageIOControl1";
-            this.imageIOControl1.Size = new System.Drawing.Size(602, 161);
+            this.imageIOControl1.Size = new System.Drawing.Size(807, 161);
             this.imageIOControl1.SpOrientation = System.Windows.Forms.Orientation.Vertical;
             this.imageIOControl1.TabIndex = 1;
             this.imageIOControl1.DoImgChange += new System.EventHandler(this.imageIOControl1_DoImgChange);
@@ -97,7 +100,7 @@
             this.groupBox3.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.groupBox3.Location = new System.Drawing.Point(124, 363);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(602, 59);
+            this.groupBox3.Size = new System.Drawing.Size(807, 59);
             this.groupBox3.TabIndex = 7;
             this.groupBox3.TabStop = false;
             // 
@@ -110,7 +113,7 @@
             this.myTrackBar6.Maximum = 3000;
             this.myTrackBar6.Minimum = 0;
             this.myTrackBar6.Name = "myTrackBar6";
-            this.myTrackBar6.Size = new System.Drawing.Size(536, 39);
+            this.myTrackBar6.Size = new System.Drawing.Size(741, 39);
             this.myTrackBar6.TabIndex = 2;
             this.myTrackBar6.Title = "SelectValue";
             this.myTrackBar6.Value = 180;
@@ -159,7 +162,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 25);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(726, 177);
+            this.panel1.Size = new System.Drawing.Size(931, 177);
             this.panel1.TabIndex = 3;
             // 
             // groupBox2
@@ -171,10 +174,20 @@
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox2.Location = new System.Drawing.Point(359, 0);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(367, 177);
+            this.groupBox2.Size = new System.Drawing.Size(572, 177);
             this.groupBox2.TabIndex = 3;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "ApproxPoly";
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(6, 137);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 26);
+            this.button2.TabIndex = 4;
+            this.button2.Text = "Save";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // maxAreabar
             // 
@@ -184,7 +197,7 @@
             this.maxAreabar.Maximum = 10000;
             this.maxAreabar.Minimum = 0;
             this.maxAreabar.Name = "maxAreabar";
-            this.maxAreabar.Size = new System.Drawing.Size(361, 36);
+            this.maxAreabar.Size = new System.Drawing.Size(566, 36);
             this.maxAreabar.TabIndex = 3;
             this.maxAreabar.Title = "MaxArea";
             this.maxAreabar.Value = 1000;
@@ -198,7 +211,7 @@
             this.minAreabar.Maximum = 1000;
             this.minAreabar.Minimum = 0;
             this.minAreabar.Name = "minAreabar";
-            this.minAreabar.Size = new System.Drawing.Size(361, 37);
+            this.minAreabar.Size = new System.Drawing.Size(566, 37);
             this.minAreabar.TabIndex = 2;
             this.minAreabar.Title = "MinArea";
             this.minAreabar.Value = 10;
@@ -212,7 +225,7 @@
             this.epsilonbar.Maximum = 1000;
             this.epsilonbar.Minimum = 0;
             this.epsilonbar.Name = "epsilonbar";
-            this.epsilonbar.Size = new System.Drawing.Size(361, 37);
+            this.epsilonbar.Size = new System.Drawing.Size(566, 37);
             this.epsilonbar.TabIndex = 1;
             this.epsilonbar.Title = "epsilon";
             this.epsilonbar.Value = 100;
@@ -299,11 +312,14 @@
             this.tsbtnWeightCentre,
             this.tsbtnFitLine,
             this.tsbtnLookWhenSelect,
+            this.toolStripSeparator2,
             this.toolStripButton1,
-            this.toolStripButton2});
+            this.toolStripButton2,
+            this.toolStripButton3,
+            this.toolStripButton4});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(726, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(931, 25);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -312,7 +328,7 @@
             this.tsbtnOpenImg.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnOpenImg.Image")));
             this.tsbtnOpenImg.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnOpenImg.Name = "tsbtnOpenImg";
-            this.tsbtnOpenImg.Size = new System.Drawing.Size(51, 22);
+            this.tsbtnOpenImg.Size = new System.Drawing.Size(52, 22);
             this.tsbtnOpenImg.Text = "打开";
             this.tsbtnOpenImg.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
@@ -321,7 +337,7 @@
             this.tsbtnOpenModelImg.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnOpenModelImg.Image")));
             this.tsbtnOpenModelImg.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnOpenModelImg.Name = "tsbtnOpenModelImg";
-            this.tsbtnOpenModelImg.Size = new System.Drawing.Size(87, 22);
+            this.tsbtnOpenModelImg.Size = new System.Drawing.Size(88, 22);
             this.tsbtnOpenModelImg.Text = "加载模板图";
             this.tsbtnOpenModelImg.Click += new System.EventHandler(this.toolStripButton2_Click);
             // 
@@ -330,7 +346,7 @@
             this.tsbtnCreatConImg.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnCreatConImg.Image")));
             this.tsbtnCreatConImg.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnCreatConImg.Name = "tsbtnCreatConImg";
-            this.tsbtnCreatConImg.Size = new System.Drawing.Size(87, 22);
+            this.tsbtnCreatConImg.Size = new System.Drawing.Size(88, 22);
             this.tsbtnCreatConImg.Text = "生成轮廓图";
             this.tsbtnCreatConImg.ToolTipText = "生成轮廓图";
             this.tsbtnCreatConImg.Click += new System.EventHandler(this.toolStripButton3_Click);
@@ -349,7 +365,7 @@
             this.tsbtnRotateRect.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnRotateRect.Image")));
             this.tsbtnRotateRect.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnRotateRect.Name = "tsbtnRotateRect";
-            this.tsbtnRotateRect.Size = new System.Drawing.Size(74, 22);
+            this.tsbtnRotateRect.Size = new System.Drawing.Size(75, 22);
             this.tsbtnRotateRect.Text = "RotateRect";
             // 
             // tsbtnWeightCentre
@@ -359,7 +375,7 @@
             this.tsbtnWeightCentre.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnWeightCentre.Image")));
             this.tsbtnWeightCentre.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnWeightCentre.Name = "tsbtnWeightCentre";
-            this.tsbtnWeightCentre.Size = new System.Drawing.Size(90, 22);
+            this.tsbtnWeightCentre.Size = new System.Drawing.Size(91, 22);
             this.tsbtnWeightCentre.Text = "WeightCentre";
             // 
             // tsbtnFitLine
@@ -369,7 +385,7 @@
             this.tsbtnFitLine.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnFitLine.Image")));
             this.tsbtnFitLine.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnFitLine.Name = "tsbtnFitLine";
-            this.tsbtnFitLine.Size = new System.Drawing.Size(76, 22);
+            this.tsbtnFitLine.Size = new System.Drawing.Size(77, 22);
             this.tsbtnFitLine.Text = "tsbtnFitLine";
             // 
             // tsbtnLookWhenSelect
@@ -379,15 +395,20 @@
             this.tsbtnLookWhenSelect.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnLookWhenSelect.Image")));
             this.tsbtnLookWhenSelect.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnLookWhenSelect.Name = "tsbtnLookWhenSelect";
-            this.tsbtnLookWhenSelect.Size = new System.Drawing.Size(51, 22);
+            this.tsbtnLookWhenSelect.Size = new System.Drawing.Size(52, 22);
             this.tsbtnLookWhenSelect.Text = "Review";
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
             // 
             // toolStripButton1
             // 
             this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(99, 22);
+            this.toolStripButton1.Size = new System.Drawing.Size(100, 22);
             this.toolStripButton1.Text = "计算分类结果";
             this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click_1);
             // 
@@ -396,9 +417,27 @@
             this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
             this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(87, 22);
+            this.toolStripButton2.Size = new System.Drawing.Size(88, 22);
             this.toolStripButton2.Text = "人行道检测";
             this.toolStripButton2.Click += new System.EventHandler(this.toolStripButton2_Click_1);
+            // 
+            // toolStripButton3
+            // 
+            this.toolStripButton3.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton3.Image")));
+            this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton3.Name = "toolStripButton3";
+            this.toolStripButton3.Size = new System.Drawing.Size(100, 22);
+            this.toolStripButton3.Text = "加载训练文件";
+            this.toolStripButton3.Click += new System.EventHandler(this.toolStripButton3_Click_1);
+            // 
+            // toolStripButton4
+            // 
+            this.toolStripButton4.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton4.Image")));
+            this.toolStripButton4.ImageTransparentColor = System.Drawing.Color.White;
+            this.toolStripButton4.Name = "toolStripButton4";
+            this.toolStripButton4.Size = new System.Drawing.Size(75, 22);
+            this.toolStripButton4.Text = "显示svm";
+            this.toolStripButton4.Click += new System.EventHandler(this.toolStripButton4_Click);
             // 
             // statusStrip1
             // 
@@ -414,80 +453,70 @@
             this.tslblFm});
             this.statusStrip1.Location = new System.Drawing.Point(0, 422);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(726, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(931, 22);
             this.statusStrip1.TabIndex = 6;
             this.statusStrip1.Text = "statusStrip1";
             // 
             // toolStripStatusLabel5
             // 
             this.toolStripStatusLabel5.Name = "toolStripStatusLabel5";
-            this.toolStripStatusLabel5.Size = new System.Drawing.Size(67, 17);
+            this.toolStripStatusLabel5.Size = new System.Drawing.Size(68, 17);
             this.toolStripStatusLabel5.Text = "矩形旋转角";
             // 
             // tsslblRectAngle
             // 
             this.tsslblRectAngle.Name = "tsslblRectAngle";
-            this.tsslblRectAngle.Size = new System.Drawing.Size(24, 17);
+            this.tsslblRectAngle.Size = new System.Drawing.Size(25, 17);
             this.tsslblRectAngle.Text = "0.0";
             // 
             // toolStripStatusLabel7
             // 
             this.toolStripStatusLabel7.Name = "toolStripStatusLabel7";
-            this.toolStripStatusLabel7.Size = new System.Drawing.Size(31, 17);
+            this.toolStripStatusLabel7.Size = new System.Drawing.Size(32, 17);
             this.toolStripStatusLabel7.Text = "长宽";
             // 
             // tsslblRectSize
             // 
             this.tsslblRectSize.Name = "tsslblRectSize";
-            this.tsslblRectSize.Size = new System.Drawing.Size(24, 17);
+            this.tsslblRectSize.Size = new System.Drawing.Size(25, 17);
             this.tsslblRectSize.Text = "0,0";
             // 
             // toolStripStatusLabel4
             // 
             this.toolStripStatusLabel4.BackColor = System.Drawing.SystemColors.Control;
             this.toolStripStatusLabel4.Name = "toolStripStatusLabel4";
-            this.toolStripStatusLabel4.Size = new System.Drawing.Size(361, 17);
+            this.toolStripStatusLabel4.Size = new System.Drawing.Size(558, 17);
             this.toolStripStatusLabel4.Spring = true;
             // 
             // toolStripStatusLabel2
             // 
             this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
-            this.toolStripStatusLabel2.Size = new System.Drawing.Size(67, 17);
+            this.toolStripStatusLabel2.Size = new System.Drawing.Size(68, 17);
             this.toolStripStatusLabel2.Text = "模板路径：";
             // 
             // tslblModeFilePath
             // 
             this.tslblModeFilePath.Name = "tslblModeFilePath";
-            this.tslblModeFilePath.Size = new System.Drawing.Size(46, 17);
+            this.tslblModeFilePath.Size = new System.Drawing.Size(47, 17);
             this.tslblModeFilePath.Text = "NULL  ";
             // 
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(67, 17);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(68, 17);
             this.toolStripStatusLabel1.Text = "不相似度：";
             // 
             // tslblFm
             // 
             this.tslblFm.Name = "tslblFm";
-            this.tslblFm.Size = new System.Drawing.Size(24, 17);
+            this.tslblFm.Size = new System.Drawing.Size(25, 17);
             this.tslblFm.Text = "1.0";
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(6, 137);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 26);
-            this.button2.TabIndex = 4;
-            this.button2.Text = "Save";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // FindContours
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(726, 444);
+            this.ClientSize = new System.Drawing.Size(931, 444);
             this.Controls.Add(this.imageIOControl1);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.splitter1);
@@ -552,5 +581,8 @@
         private MyTrackBar minLengthBar;
         private MyTrackBar maxAreaToLenght;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripButton toolStripButton3;
+        private System.Windows.Forms.ToolStripButton toolStripButton4;
     }
 }

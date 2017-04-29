@@ -7,6 +7,9 @@ using System.Threading;
 using System.IO;
 using Emgu.CV.CvEnum;
 using System.Threading.Tasks;
+using Accord.MachineLearning.VectorMachines;
+using Emgu.CV.Structure;
+using System.Diagnostics;
 
 namespace ShowOpenCVResult
 {
@@ -21,12 +24,16 @@ namespace ShowOpenCVResult
         int curplayindex = 0;
         string[] exs = new string[] { ".jpg", ".png", ".bmp", "jpeg" };
 
+        MulticlassSupportVectorMachine m_svm = null;
+        Dictionary<int, int> svmresult = new Dictionary<int, int>();
+
         public RoadDetectShow()
         {
             initTimer();
             iniPictPlay();
             InitializeComponent();
         }
+        Queue<Mat> m_queue = new Queue<Mat>();
 
         List<string> imgspath = new List<string>();
         bool isinplay = true;
@@ -69,24 +76,28 @@ namespace ShowOpenCVResult
                     if (imageIOControl1.Image1 != null)
                         imageIOControl1.Image1.Dispose();
                     imageIOControl1.Image1 = matimg;
-                    long time = 0;
-                    Mat road = null;
-                    Mat result = OpencvMath.FinalLineProcess(matimg, out time, true);
-                    var vpp = OpencvMath.WalkRoadImg(result);
-                    for (int i = 0; i < vpp.Size; i++)
+                    if (tsbtnUpdate.Checked)
                     {
-                        OpencvMath.DrawRotatedRect(CvInvoke.MinAreaRect(vpp[i]), result);
+                        long time = 0;
+                        Mat road = null;
+                        Mat result = OpencvMath.FinalLineProcess(matimg, out time, true);
+                        var vpp = OpencvMath.WalkRoadImg(result);
+                        for (int i = 0; i < vpp.Size; i++)
+                        {
+                            OpencvMath.DrawRotatedRect(CvInvoke.MinAreaRect(vpp[i]), result);
+                        }
+                        if (imageIOControl1.Image2 != null)
+                            imageIOControl1.Image2.Dispose();
+                        imageIOControl1.Image2 = result;
+                        playcnt++;
+                        timesum += time;
+
+                        Invoke(new Action(() =>
+                        {
+                            toolStripStatusLabel4.Text = path;
+                            toolStripStatusLabel2.Text = string.Format("当前耗时:{0}ms,播放帧数{1},平均耗时{2}", time, playcnt, timesum / playcnt);
+                        }));
                     }
-                    if (imageIOControl1.Image2 != null)
-                        imageIOControl1.Image2.Dispose();
-                    imageIOControl1.Image2 = result;
-                    playcnt++;
-                    timesum += time;
-                    Invoke(new Action(() =>
-                    {
-                        toolStripStatusLabel4.Text = path;
-                        toolStripStatusLabel2.Text = string.Format("当前耗时:{0}ms,播放帧数{1},平均耗时{2}", time, playcnt, timesum / playcnt);
-                    }));
                     Thread.Sleep(1000);
                 }
 
@@ -183,11 +194,11 @@ namespace ShowOpenCVResult
 
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
-            string videopath = null;
+            string videopath = @"D:\Youku Files\download\高速公路-阴险放坑-行车记录仪_标清.flv";
 
             using (OpenFileDialog of = new OpenFileDialog())
             {
-                of.Filter = "(MP4)|*.mp4|(AVI)|*.avi|(FLV)|*.flv";
+                of.Filter = "(*.*)|*.*|(MP4)|*.mp4|(AVI)|*.avi|(FLV)|*.flv";
                 if (of.ShowDialog() != DialogResult.OK) return;
                 videopath = of.FileName;
             }
@@ -211,29 +222,72 @@ namespace ShowOpenCVResult
                 {
                     if (!isinplay)
                         mr.WaitOne();
+                    Stopwatch sw = Stopwatch.StartNew();
 
                     Mat img = m_captrue.QueryFrame();
-
-                    if (cnt % 4 == 0) {
+                    m_queue.Enqueue(img);
+                    if (cnt%4==0&&tsbtnUpdate.Checked) {
 
                         new Thread(() =>
                         {
-                            long time = 0;
-                            Mat todoprocess = new Mat(img.Clone(), Properties.Settings.Default.DetectArea);
-                            var result = OpencvMath.SpeedProcess(todoprocess, out time, true);
-                            imageIOControl1.Image2 = result;
-                            Invoke(new Action(() => { imageIOControl1.Refresh(); }));
-                            img.Dispose();
+                            doprocess(img.Clone());
+                            Invoke(new Action(() => { if(!imageIOControl1.IsDisposed) imageIOControl1.Refresh(); }));
+                            
                         }).Start();
 
                     }
 
+                    if (m_queue.Count > 4) {
+                        Mat outimg = m_queue.Dequeue();
+                        outimg.Dispose();
+                    }
+
                     imageIOControl1.Image1 = img;
-                    last.Dispose();
-                    last = img;
+                    sw.Stop();
+                    int sleeptime = 1000 / fps - (int)sw.ElapsedMilliseconds;
+                    if(sleeptime>0)
+                        Thread.Sleep(sleeptime);
+                    
                 }
             });
 
+        }
+
+        void doprocess(Mat img)
+        {
+            long time = 0;
+            Mat todoprocess = new Mat(img, Properties.Settings.Default.DetectArea);
+            var result = OpencvMath.SpeedProcess(todoprocess, out time, false);
+            if (m_svm != null&&tsbtnSVMDetect.Checked)
+            {
+                Mat svmimg = OpencvMath.SvmResult(result, svmresult, m_svm);
+                result.Dispose();
+                imageIOControl1.Image2 = svmimg;
+            }
+            else
+                imageIOControl1.Image2 = result;
+        }
+        private void toolStripButton4_Click(object sender, EventArgs e)
+        {
+            //using (OpenFileDialog of = new OpenFileDialog())
+            //{
+            //    of.Filter = "DAT|*.dat";
+            //    if (of.ShowDialog() != DialogResult.OK) return;
+            //    
+            //}
+            m_svm = MulticlassSupportVectorMachine.Load("svm.dat");
+        }
+
+        private void toolStripButton5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void toolStripButton5_Click_1(object sender, EventArgs e)
+        {
+            if (null == imageIOControl1.Image1) return;
+            Mat img = imageIOControl1.Image1 as Mat;
+            doprocess(img.Clone());
         }
     }
 }

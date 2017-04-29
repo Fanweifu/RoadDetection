@@ -32,7 +32,14 @@ namespace ShowOpenCVResult
         #region Event
         private void 导出训练结果ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            using (SaveFileDialog sf = new SaveFileDialog())
+            {
+                sf.Filter = "DAT|*.dat";
+                if (sf.ShowDialog() != DialogResult.OK) return;
+                if (!svmControl.HasTrain) return;
+                svmControl.Svm.Save(sf.FileName);
+                
+            }
         }
 
         private void 载入样本ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -204,7 +211,13 @@ namespace ShowOpenCVResult
 
         private void 载入训练结果ToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            using (OpenFileDialog of = new OpenFileDialog())
+            {
+                of.Filter = "DAT|*.dat";
+                if (of.ShowDialog() != DialogResult.OK) return;
+                svmControl.LoadFile(of.FileName);
 
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -295,16 +308,16 @@ namespace ShowOpenCVResult
             {
                 Img = (drawImageBox1.Image as Image<Bgr, byte>).Convert<Gray, byte>();
             }
-            else {
+                             else {
                 Img = (drawImageBox1.Image as Image<Gray, byte>);
             }
 
-            double[] array = Extract(Img.Resize(trainSize.Width, trainSize.Height, Emgu.CV.CvEnum.Inter.Linear));
+            double[] array = Extract(Img);
             if (!svmControl.HasTrain) return;
 
             int result = svmControl.Pridect(array, MulticlassComputeMethod.Elimination);
-
-            MessageBox.Show(string.Format("{0}-{1}", result, labelDescription[result]));
+            string des = labelDescription.Keys.Contains(result)? labelDescription[result]:"";
+            MessageBox.Show(string.Format("{0}-{1}", result, des));
 
         }
     }

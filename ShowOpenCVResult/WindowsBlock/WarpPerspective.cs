@@ -12,6 +12,7 @@ using System.Threading;
 using System.Windows.Forms;
 using Accord.Statistics.Kernels;
 using Emgu.CV.CvEnum;
+using Emgu.CV.Util;
 
 namespace ShowOpenCVResult
 {
@@ -174,6 +175,14 @@ namespace ShowOpenCVResult
         private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)
         {
             imageIOControl1.DoChange();
+        }
+
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            VectorOfMat vm = new VectorOfMat();
+            CvInvoke.Split(imageIOControl1.Image2 as Mat, vm);
+             var img =OpencvMath.RoadLineDetect(vm[2], vm[2].Width/20);
+            imageIOControl1.Image1 = img;
         }
     }
 }

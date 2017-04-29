@@ -214,5 +214,101 @@ namespace ShowOpenCVResult.Properties {
                 this["DetectArea"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("\"svm.data\"")]
+        public string SvmPath {
+            get {
+                return ((string)(this["SvmPath"]));
+            }
+            set {
+                this["SvmPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public double LineRho {
+            get {
+                return ((double)(this["LineRho"]));
+            }
+            set {
+                this["LineRho"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.01")]
+        public double LineTheta {
+            get {
+                return ((double)(this["LineTheta"]));
+            }
+            set {
+                this["LineTheta"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("50")]
+        public int LineThreshold {
+            get {
+                return ((int)(this["LineThreshold"]));
+            }
+            set {
+                this["LineThreshold"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("80")]
+        public int LineMinLength {
+            get {
+                return ((int)(this["LineMinLength"]));
+            }
+            set {
+                this["LineMinLength"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("50")]
+        public int LineMaxGrap {
+            get {
+                return ((int)(this["LineMaxGrap"]));
+            }
+            set {
+                this["LineMaxGrap"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("120")]
+        public int CannyThreshold {
+            get {
+                return ((int)(this["CannyThreshold"]));
+            }
+            set {
+                this["CannyThreshold"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("180")]
+        public int CannyLink {
+            get {
+                return ((int)(this["CannyLink"]));
+            }
+            set {
+                this["CannyLink"] = value;
+            }
+        }
     }
 }

@@ -345,13 +345,13 @@
             // lbStatus
             // 
             this.lbStatus.Name = "lbStatus";
-            this.lbStatus.Size = new System.Drawing.Size(31, 17);
+            this.lbStatus.Size = new System.Drawing.Size(32, 17);
             this.lbStatus.Text = "      ";
             // 
             // tsslbFileInfo
             // 
             this.tsslbFileInfo.Name = "tsslbFileInfo";
-            this.tsslbFileInfo.Size = new System.Drawing.Size(575, 17);
+            this.tsslbFileInfo.Size = new System.Drawing.Size(574, 17);
             this.tsslbFileInfo.Spring = true;
             this.tsslbFileInfo.Text = "                ";
             this.tsslbFileInfo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -380,20 +380,20 @@
             this.toolStripSplitButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripSplitButton1.Image")));
             this.toolStripSplitButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripSplitButton1.Name = "toolStripSplitButton1";
-            this.toolStripSplitButton1.Size = new System.Drawing.Size(63, 22);
+            this.toolStripSplitButton1.Size = new System.Drawing.Size(64, 22);
             this.toolStripSplitButton1.Text = "文件";
             // 
             // 载入训练样本ToolStripMenuItem
             // 
             this.载入训练样本ToolStripMenuItem.Name = "载入训练样本ToolStripMenuItem";
-            this.载入训练样本ToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.载入训练样本ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.载入训练样本ToolStripMenuItem.Text = "载入训练样本";
             this.载入训练样本ToolStripMenuItem.Click += new System.EventHandler(this.载入样本ToolStripMenuItem_Click);
             // 
             // 载入测试样本ToolStripMenuItem1
             // 
             this.载入测试样本ToolStripMenuItem1.Name = "载入测试样本ToolStripMenuItem1";
-            this.载入测试样本ToolStripMenuItem1.Size = new System.Drawing.Size(146, 22);
+            this.载入测试样本ToolStripMenuItem1.Size = new System.Drawing.Size(148, 22);
             this.载入测试样本ToolStripMenuItem1.Text = "载入测试样本";
             this.载入测试样本ToolStripMenuItem1.Click += new System.EventHandler(this.载入测试样本ToolStripMenuItem_Click);
             // 
@@ -405,21 +405,21 @@
             this.toolStripSplitButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripSplitButton2.Image")));
             this.toolStripSplitButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripSplitButton2.Name = "toolStripSplitButton2";
-            this.toolStripSplitButton2.Size = new System.Drawing.Size(63, 22);
+            this.toolStripSplitButton2.Size = new System.Drawing.Size(64, 22);
             this.toolStripSplitButton2.Text = "数据";
             // 
             // 加载batToolStripMenuItem
             // 
             this.加载batToolStripMenuItem.Name = "加载batToolStripMenuItem";
-            this.加载batToolStripMenuItem.Size = new System.Drawing.Size(120, 22);
-            this.加载batToolStripMenuItem.Text = "加载.bat";
+            this.加载batToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.加载batToolStripMenuItem.Text = "加载.dat";
             this.加载batToolStripMenuItem.Click += new System.EventHandler(this.载入训练结果ToolStripMenuItem_Click);
             // 
             // 导出batToolStripMenuItem
             // 
             this.导出batToolStripMenuItem.Name = "导出batToolStripMenuItem";
-            this.导出batToolStripMenuItem.Size = new System.Drawing.Size(120, 22);
-            this.导出batToolStripMenuItem.Text = "导出.bat";
+            this.导出batToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.导出batToolStripMenuItem.Text = "导出.dat";
             this.导出batToolStripMenuItem.Click += new System.EventHandler(this.导出训练结果ToolStripMenuItem_Click);
             // 
             // tabControl1
