@@ -71,8 +71,6 @@ namespace ShowOpenCVResult
                     CvInvoke.CvtColor(img, backimg, ColorConversion.Bgr2Gray);
                     if (curidx % 5 == 0)
                     {
-                        new Task(() =>
-                        {
                             Rectangle[] rects = m_classifier.DetectMultiScale(backimg);
                             foreach (var item in rects)
                             {
@@ -82,7 +80,6 @@ namespace ShowOpenCVResult
                             if (imageIO1.Image2 != null)
                                 imageIO1.Image2.Dispose();
                             imageIO1.Image2 = backimg;
-                        }).Start();
                     }
                     sw.Stop();
                     int time = 1000 / fps - (int)sw.ElapsedMilliseconds;

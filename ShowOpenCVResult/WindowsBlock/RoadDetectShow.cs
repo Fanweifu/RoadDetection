@@ -226,7 +226,7 @@ namespace ShowOpenCVResult
 
                     Mat img = m_captrue.QueryFrame();
                     m_queue.Enqueue(img);
-                    if (cnt%4==0&&tsbtnUpdate.Checked) {
+                    if (tsbtnUpdate.Checked) {
 
                         new Thread(() =>
                         {
@@ -256,13 +256,23 @@ namespace ShowOpenCVResult
         void doprocess(Mat img)
         {
             long time = 0;
+            LineSegment2D[] lines = null;
             Mat todoprocess = new Mat(img, Properties.Settings.Default.DetectArea);
-            var result = OpencvMath.SpeedProcess(todoprocess, out time, false);
+            var result = OpencvMath.SpeedProcess(todoprocess, out time,out lines, false);
             if (m_svm != null&&tsbtnSVMDetect.Checked)
             {
                 Mat svmimg = OpencvMath.SvmResult(result, svmresult, m_svm);
                 result.Dispose();
-                imageIOControl1.Image2 = svmimg;
+                Mat trans = new Mat();
+                CvInvoke.WarpPerspective(svmimg, trans, RoadTransform.TranforMatInv, Properties.Settings.Default.DetectArea.Size);
+                foreach (var item in lines)
+                {
+                    CvInvoke.Line(trans, item.P1, item.P2, new MCvScalar(0, 255, 0), 2);
+                }
+                OpencvMath.DrawMiddlePos(trans, lines);
+                Mat rect = new Mat(img, Properties.Settings.Default.DetectArea);
+                OpencvMath.MyAddWeight(rect, trans, 0.8);
+                imageIOControl1.Image2 = img;
             }
             else
                 imageIOControl1.Image2 = result;

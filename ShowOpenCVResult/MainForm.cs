@@ -32,8 +32,8 @@ namespace ShowOpenCVResult
             this.dockPanel1.DocumentStyle = DocumentStyle.DockingMdi;
             this.m_DockPath = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "DockPanel.config");
             var config = Settings.Default;
-            RoadTransform.SetTransform(config.InputWidth, config.InputHeigth, config.AX, config.AY, config.LT, config.OW, config.OH);
-
+            //RoadTransform.SetTransform(config.InputWidth, config.InputHeigth, config.AX, config.AY, config.LT, config.OW, config.OH);
+            RoadTransform.LoadSetting();
 
         }
 

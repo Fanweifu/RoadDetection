@@ -40,12 +40,12 @@ namespace ShowOpenCVResult
 
             if (imageIOControl1.Image1 != null) imageIOControl1.Image1.Dispose();
             imageIOControl1.Image1 = grayimg;
-            LineSegment2D[] lns = CvInvoke.HoughLinesP(grayimg, (double)myTrackBar3.Value / 100, (double)myTrackBar4.Value / 100, myTrackBar5.Value, myTrackBar6.Value, myTrackBar7.Value);
+            LineSegment2D[] lns = CvInvoke.HoughLinesP(grayimg, (double)rhoBar.Value / 100, (double)thetaBar.Value / 100, thresholdBar.Value, minLenghtBar.Value, maxgrapBar.Value);
             Image<Bgr, byte> outimg = new Image<Bgr, byte>(m_src.Size);
-            LineSegment2D[] selectls = OpencvMath.SelectLines(lns);
 
-   
-            foreach (var ln in selectls)
+            if (toolStripButton4.Checked)
+                lns = OpencvMath.SelectLines(lns);
+            foreach (var ln in lns)
                 CvInvoke.Line(outimg, ln.P1, ln.P2, new MCvScalar(0, 0, 255), 1);
 
             if (imageIOControl1.Image2 != null) imageIOControl1.Image2.Dispose();
@@ -60,7 +60,28 @@ namespace ShowOpenCVResult
 
         private void HuoghLine_Load(object sender, EventArgs e)
         {
+            var config = Properties.Settings.Default;
+            myTrackBar1.Value = config.CannyThreshold;
+            myTrackBar2.Value = config.CannyLink;
+            rhoBar.Value  = (int)(config.LineRho*100);
+            thetaBar.Value = (int)(config.LineTheta * 100);
+            thresholdBar.Value = config.LineThreshold;
+            minLenghtBar.Value = config.LineMinLength;
+            maxgrapBar.Value = config.LineMaxGrap;
+    
+        }
 
+        private void toolStripButton3_Click(object sender, EventArgs e)
+        {
+            var config = Properties.Settings.Default;
+            config.CannyThreshold = myTrackBar1.Value;
+            config.CannyLink = myTrackBar2.Value;
+            config.LineRho = (double)rhoBar.Value / 100;
+            config.LineTheta = (double)thetaBar.Value / 100;
+            config.LineThreshold = thresholdBar.Value;
+            config.LineMinLength = minLenghtBar.Value;
+            config.LineMaxGrap = maxgrapBar.Value;
+            config.Save();
         }
     }
 }
