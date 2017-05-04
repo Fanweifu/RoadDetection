@@ -17,7 +17,7 @@ namespace ShowOpenCVResult
         {
             InitializeComponent();
         }
-        Image<Gray, byte> m_src;
+        Mat m_src;
 
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
@@ -27,7 +27,7 @@ namespace ShowOpenCVResult
         private void imageIOControl1_DoImgChange(object sender, EventArgs e)
         {
             if (m_src == null) return;
-            Mat grayimg = m_src.Clone().Mat;
+            Mat grayimg = m_src.Clone();
 
             if (toolStripButton2.Checked)
             {
@@ -45,8 +45,12 @@ namespace ShowOpenCVResult
 
             if (toolStripButton4.Checked)
                 lns = OpencvMath.SelectLines(lns);
+            Random rm = new Random();
             foreach (var ln in lns)
-                CvInvoke.Line(outimg, ln.P1, ln.P2, new MCvScalar(0, 0, 255), 1);
+            {
+                int b = rm.Next(0, 255), g = rm.Next(0, 255), r = rm.Next(0, 255);
+                CvInvoke.Line(outimg, ln.P1, ln.P2, new MCvScalar(b, g, r), 1);
+            }
 
             if (imageIOControl1.Image2 != null) imageIOControl1.Image2.Dispose();
             imageIOControl1.Image2 = outimg;
@@ -55,7 +59,7 @@ namespace ShowOpenCVResult
 
         private void imageIOControl1_AfterImgLoaded(object sender, EventArgs e)
         {
-            m_src = (imageIOControl1.Image1 as Image<Bgr, Byte>).Convert<Gray, byte>();
+            m_src = OpencvMath.MyBgrToGray((imageIOControl1.Image1 as Image<Bgr, Byte>).Mat);
         }
 
         private void HuoghLine_Load(object sender, EventArgs e)
@@ -82,6 +86,11 @@ namespace ShowOpenCVResult
             config.LineMinLength = minLenghtBar.Value;
             config.LineMaxGrap = maxgrapBar.Value;
             config.Save();
+        }
+
+        private void toolStripButton4_Click(object sender, EventArgs e)
+        {
+            imageIOControl1.DoChange();
         }
     }
 }

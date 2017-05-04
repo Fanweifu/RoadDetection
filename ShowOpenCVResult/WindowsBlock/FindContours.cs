@@ -440,7 +440,7 @@ namespace ShowOpenCVResult
         {
             if (cons != null && selectIndex < cons.Size)
             {
-                Mat result = OpencvMath.GetSquareExampleImg(cons[selectIndex]);
+                Mat result = OpencvMath.GetSquareExampleImg(vvp[selectIndex]);
                 imageIOControl1.Image2 = result;
             }
         }

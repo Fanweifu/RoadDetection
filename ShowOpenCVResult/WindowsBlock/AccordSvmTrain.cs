@@ -248,6 +248,43 @@ namespace ShowOpenCVResult
             
         }
 
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            int key = (int)numericUpDown1.Value;
+            if (folders.Keys.Contains(key) && drawImageBox1.Image != null)
+            {
+                DateTime dt = DateTime.Now;
+                string path = string.Format("{0}\\{1}{2}{3}.png", folders[key], dt.Hour, dt.Minute, dt.Second);
+                drawImageBox1.Image.Save(path);
+                MessageBox.Show(string.Format("分类：{0}，保存在{1}", key, path));
+            }
+            else
+            {
+                MessageBox.Show("不存在此目录");
+            }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Image<Gray, byte> Img = null;
+            if (drawImageBox1.Image == null) return;
+            if (!(drawImageBox1.Image is Image<Gray, byte>))
+            {
+                Img = (drawImageBox1.Image as Image<Bgr, byte>).Convert<Gray, byte>();
+            }
+            else
+            {
+                Img = (drawImageBox1.Image as Image<Gray, byte>);
+            }
+
+            double[] array = Extract(Img);
+            if (!svmControl.HasTrain) return;
+
+            int result = svmControl.Pridect(array, MulticlassComputeMethod.Elimination);
+            string des = labelDescription.Keys.Contains(result) ? labelDescription[result] : "";
+            MessageBox.Show(string.Format("{0}-{1}", result, des));
+
+        }
         #endregion
 
         #region Function
@@ -285,40 +322,6 @@ namespace ShowOpenCVResult
 
         #endregion
 
-        private void button1_Click_1(object sender, EventArgs e)
-        {
-            int key = (int)numericUpDown1.Value;
-            if (folders.Keys.Contains(key) && drawImageBox1.Image != null) {
-                DateTime dt = DateTime.Now;
-                string path = string.Format("{0}\\{1}{2}{3}.png", folders[key], dt.Hour,dt.Minute,dt.Second);
-                drawImageBox1.Image.Save(path);
-                MessageBox.Show(string.Format("分类：{0}，保存在{1}", key, path));
-            }
-            else
-            {
-                MessageBox.Show("不存在此目录");
-            }
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            Image<Gray, byte> Img = null;
-            if (drawImageBox1.Image == null) return;
-            if (!(drawImageBox1.Image is Image<Gray, byte>))
-            {
-                Img = (drawImageBox1.Image as Image<Bgr, byte>).Convert<Gray, byte>();
-            }
-                             else {
-                Img = (drawImageBox1.Image as Image<Gray, byte>);
-            }
-
-            double[] array = Extract(Img);
-            if (!svmControl.HasTrain) return;
-
-            int result = svmControl.Pridect(array, MulticlassComputeMethod.Elimination);
-            string des = labelDescription.Keys.Contains(result)? labelDescription[result]:"";
-            MessageBox.Show(string.Format("{0}-{1}", result, des));
-
-        }
+      
     }
 }

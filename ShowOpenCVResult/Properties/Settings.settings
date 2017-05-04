@@ -74,5 +74,11 @@
     <Setting Name="CannyLink" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">180</Value>
     </Setting>
+    <Setting Name="AdaptiveParam" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">-30</Value>
+    </Setting>
+    <Setting Name="AdaptiveBlockSize" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">60</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

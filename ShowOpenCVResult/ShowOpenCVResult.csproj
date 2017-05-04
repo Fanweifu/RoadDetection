@@ -163,16 +163,16 @@
     <Compile Include="BaseUI\AccordSVMPramasInput.Designer.cs">
       <DependentUpon>AccordSVMPramasInput.cs</DependentUpon>
     </Compile>
-    <Compile Include="CarDetect.cs">
+    <Compile Include="WindowsBlock\CarDetect.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CarDetect.Designer.cs">
+    <Compile Include="WindowsBlock\CarDetect.Designer.cs">
       <DependentUpon>CarDetect.cs</DependentUpon>
     </Compile>
-    <Compile Include="LineDetect.cs">
+    <Compile Include="WindowsBlock\LineDetect.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="LineDetect.Designer.cs">
+    <Compile Include="WindowsBlock\LineDetect.Designer.cs">
       <DependentUpon>LineDetect.cs</DependentUpon>
     </Compile>
     <Compile Include="WindowsBlock\SetROI.cs">
@@ -343,10 +343,10 @@
     <EmbeddedResource Include="BaseUI\AccordSVMPramasInput.resx">
       <DependentUpon>AccordSVMPramasInput.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CarDetect.resx">
+    <EmbeddedResource Include="WindowsBlock\CarDetect.resx">
       <DependentUpon>CarDetect.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LineDetect.resx">
+    <EmbeddedResource Include="WindowsBlock\LineDetect.resx">
       <DependentUpon>LineDetect.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WindowsBlock\SetROI.resx">

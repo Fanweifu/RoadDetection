@@ -310,5 +310,29 @@ namespace ShowOpenCVResult.Properties {
                 this["CannyLink"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("-30")]
+        public int AdaptiveParam {
+            get {
+                return ((int)(this["AdaptiveParam"]));
+            }
+            set {
+                this["AdaptiveParam"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("60")]
+        public int AdaptiveBlockSize {
+            get {
+                return ((int)(this["AdaptiveBlockSize"]));
+            }
+            set {
+                this["AdaptiveBlockSize"] = value;
+            }
+        }
     }
 }
