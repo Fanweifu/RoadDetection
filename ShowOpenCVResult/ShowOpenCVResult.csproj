@@ -163,6 +163,7 @@
     <Compile Include="BaseUI\AccordSVMPramasInput.Designer.cs">
       <DependentUpon>AccordSVMPramasInput.cs</DependentUpon>
     </Compile>
+    <Compile Include="ImgProcess\RoadDetect.cs" />
     <Compile Include="WindowsBlock\CarDetect.cs">
       <SubType>Form</SubType>
     </Compile>

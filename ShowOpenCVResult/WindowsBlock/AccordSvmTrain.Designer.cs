@@ -183,7 +183,7 @@
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F);
             this.Column4.DefaultCellStyle = dataGridViewCellStyle3;
-            this.Column4.HeaderText = "TestLable";
+            this.Column4.HeaderText = "Testlebel";
             this.Column4.Name = "Column4";
             this.Column4.ReadOnly = true;
             // 

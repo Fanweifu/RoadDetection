@@ -440,7 +440,7 @@ namespace ShowOpenCVResult
         {
             if (cons != null && selectIndex < cons.Size)
             {
-                Mat result = OpencvMath.GetSquareExampleImg(vvp[selectIndex]);
+                Mat result = OpencvMath.GetSquareExampleImg(vvp[selectIndex], RoadTransform.ExampleSize);
                 imageIOControl1.Image2 = result;
             }
         }
@@ -551,10 +551,10 @@ namespace ShowOpenCVResult
             {
                 if (dels.Contains(i)) continue;
 
-                Mat result = OpencvMath.GetSquareExampleImg(vvp[i]);
+                Mat result = OpencvMath.GetSquareExampleImg(vvp[i], RoadTransform.ExampleSize);
                 double[] array = OpencvMath.extract(result);
-                int lable = m_svm.Compute(array, MulticlassComputeMethod.Elimination);
-                CvInvoke.DrawContours(imgback, vvp, i,OpencvMath.getcolor(lable), -1);
+                int lebel = m_svm.Compute(array, MulticlassComputeMethod.Elimination);
+                CvInvoke.DrawContours(imgback, vvp, i,OpencvMath.getcolor(lebel), -1);
                 
             }
             imageIOControl1.Image2 = imgback;

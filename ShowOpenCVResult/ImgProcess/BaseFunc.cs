@@ -67,7 +67,7 @@ namespace ShowOpenCVResult
                 CvInvoke.Line(backimg, intpts[i % 4], intpts[(i + 1) % 4], new MCvScalar(127), 2);
             }
         }
-        static public Mat GetSquareExampleImg(VectorOfPoint vp, bool angleadjust = true, bool needthreshold = false)
+        static public Mat GetSquareExampleImg(VectorOfPoint vp,Size size, bool needthreshold = false)
         {
             var rightvp = AngleAdjustVp(vp);
             Rectangle vpr = CvInvoke.BoundingRectangle(rightvp);
@@ -101,7 +101,8 @@ namespace ShowOpenCVResult
             }
             vvp.Dispose();
             Mat result = r.Clone();
-            CvInvoke.Resize(result, result, RoadTransform.ExampleSize, 0, 0, Inter.Nearest);
+            if(result.Size!=size)
+            CvInvoke.Resize(result, result, size, 0, 0, Inter.Nearest);
             if (needthreshold)
             {
                 CvInvoke.Threshold(result, result, 127, 255, ThresholdType.Binary);
@@ -329,13 +330,13 @@ namespace ShowOpenCVResult
 
         #region SvmProcess
 
-        static internal MCvScalar getcolor(int lable)
+        static internal MCvScalar getcolor(int lebel)
         {
-            if (lable >= 12)
+            if (lebel >= 12)
                 return new MCvScalar(127, 127, 127);
             else
             {
-                int m = lable / 3, n = lable % 3;
+                int m = lebel / 3, n = lebel % 3;
                 int b = 0, g = 0, r = 0;
                 switch (n)
                 {
@@ -410,7 +411,7 @@ namespace ShowOpenCVResult
             for (int i = 0; i < cnt; i++)
             {
                 var vp = vvp[indexs[i]];
-                Mat img = GetSquareExampleImg(vp);
+                Mat img = GetSquareExampleImg(vp, RoadTransform.ExampleSize);
                 double[] array = extract(img);
                 int label = svm.Compute(array, MulticlassComputeMethod.Elimination);
                 result[indexs[i]] = label;
@@ -786,7 +787,7 @@ namespace ShowOpenCVResult
                             double angle = Math.Abs( lnj.GetExteriorAngleDegree(lnk));
                             if (angle > 90)
                                 angle = 180 - angle;
-                            if (/*Math.Abs(result.Y) < size.Height / 5 && result.Y > 0 &&*/ Math.Abs(jx - kx) > Settings.Default.OW/ 4&& angle<5)
+                            if (/*Math.Abs(result.Y) < size.Height / 5 && result.Y > 0 &&*/ Math.Abs(jx - kx) > Settings.Default.OW/ 4&& angle<4)
                                 return new LineSegment2D[] { lines[k], lines[j] };
                         }
                     }

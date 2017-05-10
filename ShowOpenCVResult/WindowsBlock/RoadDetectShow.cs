@@ -11,6 +11,7 @@ using Accord.MachineLearning.VectorMachines;
 using Emgu.CV.Structure;
 using System.Diagnostics;
 using System.Drawing;
+using ShowOpenCVResult.ImgProcess;
 
 namespace ShowOpenCVResult
 {
@@ -27,6 +28,7 @@ namespace ShowOpenCVResult
 
         MulticlassSupportVectorMachine m_svm = null;
         Dictionary<int, int> svmresult = new Dictionary<int, int>();
+        RoadDetect m_detector = null;
 
         public RoadDetectShow()
         {
@@ -233,7 +235,8 @@ namespace ShowOpenCVResult
                         new Thread(() =>
                         {
                             long time = 0;
-                            doprocess(img.Clone(),out time);
+                            if (m_detector==null) return;
+                            doprocess(img ,out time);
                             sumtime += time;
                             Invoke(new Action(() => { if(!imageIOControl1.IsDisposed) imageIOControl1.Refresh();
                                 toolStripStatusLabel2.Text = string.Format("总体耗时:{0}ms,播放帧数{1},当前耗时:{2}平均耗时{3}", sumtime, cnt, time, sumtime / cnt);
@@ -260,41 +263,46 @@ namespace ShowOpenCVResult
         }
 
         void doprocess(Mat img,out long time)
-        {
+        { 
+            if (m_detector == null) { time = 0; return; }
             Stopwatch sw = Stopwatch.StartNew();
-            LineSegment2D[] lines = null;
-            Mat todoprocess = new Mat(img, Properties.Settings.Default.DetectArea);
-            var result = OpencvMath.SpeedProcess(todoprocess, out time,out lines, false);
-            if (m_svm != null&&tsbtnSVMDetect.Checked)
-            {
-                Mat svmimg = OpencvMath.SvmResult(result, svmresult, m_svm);
-                result.Dispose();
-                Mat trans = new Mat();
-                CvInvoke.WarpPerspective(svmimg, trans, RoadTransform.TranforMatInv, Properties.Settings.Default.DetectArea.Size);
-                sw.Stop();
-                time = sw.ElapsedMilliseconds;
-                if (lines.Count() == 2)
-                {
-                    Point[] pts = new Point[] { lines[0].P1, lines[0].P2, lines[1].P1, lines[1].P2 };
-                    PointF[] ptfs = Array.ConvertAll<Point, PointF>(pts, (x) => { return new PointF(x.X, x.Y); });
-                    ptfs = CvInvoke.PerspectiveTransform(ptfs, RoadTransform.TranforMatInv);
-                    pts = Array.ConvertAll<PointF, Point>(ptfs, Point.Round);
-                    lines[0].P1 = pts[0];
-                    lines[0].P2 = pts[1];
-                    lines[1].P1 = pts[2];
-                    lines[1].P2 = pts[3];
-                    foreach (var item in lines)
-                    {
-                        CvInvoke.Line(trans, item.P1, item.P2, new MCvScalar(0, 255, 0), 2);
-                    }
-                    OpencvMath.DrawMiddlePos(trans, lines);
-                }
-                Mat rect = new Mat(img, Properties.Settings.Default.DetectArea);
-                OpencvMath.MyAddWeight(rect, trans, 0.8);
-                imageIOControl1.Image2 = img;
-            }
-            else
-                imageIOControl1.Image2 = result;
+            //img = img.Clone();
+            //LineSegment2D[] lines = null;
+
+            //Mat todoprocess = new Mat(img, Properties.Settings.Default.DetectArea);
+            //var result = OpencvMath.SpeedProcess(todoprocess, out time, out lines, false);
+
+
+            //Mat svmimg = OpencvMath.SvmResult(result, svmresult, m_svm);
+            //result.Dispose();
+            //Mat trans = new Mat();
+            //CvInvoke.WarpPerspective(svmimg, trans, RoadTransform.TranforMatInv, Properties.Settings.Default.DetectArea.Size);
+            //sw.Stop();
+            //time = sw.ElapsedMilliseconds;
+            //if (lines.Count() == 2)
+            //{
+            //    Point[] pts = new Point[] { lines[0].P1, lines[0].P2, lines[1].P1, lines[1].P2 };
+            //    PointF[] ptfs = Array.ConvertAll<Point, PointF>(pts, (x) => { return new PointF(x.X, x.Y); });
+            //    ptfs = CvInvoke.PerspectiveTransform(ptfs, RoadTransform.TranforMatInv);
+            //    pts = Array.ConvertAll<PointF, Point>(ptfs, Point.Round);
+            //    lines[0].P1 = pts[0];
+            //    lines[0].P2 = pts[1];
+            //    lines[1].P1 = pts[2];
+            //    lines[1].P2 = pts[3];
+            //    foreach (var item in lines)
+            //    {
+            //        CvInvoke.Line(trans, item.P1, item.P2, new MCvScalar(0, 255, 0), 2);
+            //    }
+            //    OpencvMath.DrawMiddlePos(trans, lines);
+            //}
+            //Mat rect = new Mat(img, Properties.Settings.Default.DetectArea);
+            //OpencvMath.MyAddWeight(rect, trans, 0.8);
+
+            Mat result = m_detector.DetectAndShow(img);
+            imageIOControl1.Image2 = result;
+            
+            sw.Stop();
+            time = sw.ElapsedMilliseconds;
         }
         private void toolStripButton4_Click(object sender, EventArgs e)
         {
@@ -305,6 +313,8 @@ namespace ShowOpenCVResult
             //    
             //}
             m_svm = MulticlassSupportVectorMachine.Load("svm.dat");
+
+             m_detector = new RoadDetect("svm.dat");
         }
 
         private void toolStripButton5_Click(object sender, EventArgs e)
@@ -317,7 +327,16 @@ namespace ShowOpenCVResult
             if (null == imageIOControl1.Image1) return;
             Mat img = imageIOControl1.Image1 as Mat;
             long time = 0;
-            doprocess(img.Clone(),out time);
+            doprocess(img,out time);
+        }
+
+        private void toolStripButton3_Click(object sender, EventArgs e)
+        {
+            m_detector.ReLoadParams();
+            if (null == imageIOControl1.Image1) return;
+            Mat img = imageIOControl1.Image1 as Mat;
+            long time = 0;
+            doprocess(img, out time);
         }
     }
 }

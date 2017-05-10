@@ -119,13 +119,13 @@ namespace ShowOpenCVResult
 
             //
 
-            Image<Gray, int> lables = new Image<Gray, int>(m_imglist.Count,1);
+            Image<Gray, int> lebels = new Image<Gray, int>(m_imglist.Count,1);
             for (int i = 0; i < m_mytb.Rows.Count; i++) {
-                lables[0, i] = new Gray((int)(m_mytb.Rows[i][1]));
+                lebels[0, i] = new Gray((int)(m_mytb.Rows[i][1]));
             }
             Mat ex = new Mat();
             //examples.Mat.ConvertTo(ex, Emgu.CV.CvEnum.DepthType.Cv32F);
-            TrainData td = new TrainData(examples, Emgu.CV.ML.MlEnum.DataLayoutType.RowSample, lables);
+            TrainData td = new TrainData(examples, Emgu.CV.ML.MlEnum.DataLayoutType.RowSample, lebels);
             svm.TrainAuto(td);
         
         }
