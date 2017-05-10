@@ -2,12 +2,6 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="ShowOpenCVResult.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="InputWidth" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">1600</Value>
-    </Setting>
-    <Setting Name="InputHeigth" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">1200</Value>
-    </Setting>
     <Setting Name="AX" Type="System.Single" Scope="User">
       <Value Profile="(Default)">0.25</Value>
     </Setting>

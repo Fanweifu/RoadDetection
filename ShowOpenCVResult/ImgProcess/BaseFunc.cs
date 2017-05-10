@@ -466,6 +466,7 @@ namespace ShowOpenCVResult
         }
 
 
+
         static public Mat MyBgrToGray(Mat img, double bk = 1, double gk = 1, double rk = 1) {
             if (img == null || img.IsEmpty || img.NumberOfChannels != 3) throw new AggregateException("img is unvalid");
 
@@ -1403,9 +1404,9 @@ namespace ShowOpenCVResult
             }
         }
 
-        public static void SetTransform(int iw, int ih, float ax, float ay, float lt, int ow, int oh)
+        public static void SetTransform(Size inputsize, float ax, float ay, float lt, int ow, int oh)
         {
-            InputSize = new Size(iw, ih);
+            InputSize = inputsize;
             OutSize = new Size(ow, oh);
             m_AX = ax; m_AY = ay; m_LT = lt;
             m_transformMat = OpencvMath.CalTransformatMat(InputSize, ax, ay, lt, ow, oh);
@@ -1421,7 +1422,7 @@ namespace ShowOpenCVResult
         public static void LoadSetting()
         {
             var config = Settings.Default;
-            SetTransform(config.InputWidth, config.InputHeigth, config.AX, config.AY, config.LT, config.OW, config.OH);
+            SetTransform(config.DetectArea.Size, config.AX, config.AY, config.LT, config.OW, config.OH);
 
         }
         public static Mat WarpPerspective(Mat img)

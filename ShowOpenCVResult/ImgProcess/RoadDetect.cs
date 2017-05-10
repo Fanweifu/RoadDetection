@@ -148,9 +148,9 @@ namespace ShowOpenCVResult.ImgProcess
 
         #region Funcation
 
-        public void SetTransform(int iw, int ih, float ax, float ay, float lt, int ow, int oh)
+        public void SetTransform(Size inputsize, float ax, float ay, float lt, int ow, int oh)
         {
-            m_inputSize = new Size(iw, ih);
+            m_inputSize = inputsize;
             m_outputSize = new Size(ow, oh);
             m_AX = ax; m_AY = ay; m_LT = lt;
             m_transformMat= CalTransformatMat(InSize, ax, ay, lt, ow, oh);
@@ -166,7 +166,7 @@ namespace ShowOpenCVResult.ImgProcess
         public void LoadSetting()
         {
             var config = Settings.Default;
-            SetTransform(config.InputWidth, config.InputHeigth, config.AX, config.AY, config.LT, config.OW, config.OH);
+            SetTransform(config.DetectArea.Size,  config.AX, config.AY, config.LT, config.OW, config.OH);
 
         }
         public Mat ImgWarpPerspective(Mat img)

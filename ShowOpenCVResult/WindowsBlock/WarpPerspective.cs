@@ -56,10 +56,11 @@ namespace ShowOpenCVResult
 
             Size s = (imageIOControl1.Image1 as Image<Bgr, byte>).Size;
 
-            RoadTransform.SetTransform(s.Width,s.Height, (float)nudAX.Value / 100, (float)nudAY.Value / 100, (float)nudLT.Value / 100, (int)nudOW.Value, (int)nudOH.Value);
+            RoadTransform.SetTransform(s, (float)nudAX.Value / 100, (float)nudAY.Value / 100, (float)nudLT.Value / 100, (int)nudOW.Value, (int)nudOH.Value);
             var config = Properties.Settings.Default;
-            config.InputHeigth = s.Height;
-            config.InputWidth = s.Width;
+            //config.InputHeigth = s.Height;
+            //config.InputWidth = s.Width;
+
             config.AX = (float)nudAX.Value / 100;
             config.AY = (float)nudAY.Value / 100;
             config.LT = (float)nudLT.Value / 100;

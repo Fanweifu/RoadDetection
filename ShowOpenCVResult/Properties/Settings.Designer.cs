@@ -25,30 +25,6 @@ namespace ShowOpenCVResult.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1600")]
-        public int InputWidth {
-            get {
-                return ((int)(this["InputWidth"]));
-            }
-            set {
-                this["InputWidth"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1200")]
-        public int InputHeigth {
-            get {
-                return ((int)(this["InputHeigth"]));
-            }
-            set {
-                this["InputHeigth"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0.25")]
         public float AX {
             get {

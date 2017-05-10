@@ -70,8 +70,8 @@ namespace ShowOpenCVResult
         private void Form1_Load(object sender, EventArgs e)
         {
             var config = Properties.Settings.Default;
-            numericUpDown1.Maximum = numericUpDown3.Maximum = config.InputWidth;
-            numericUpDown2.Maximum = numericUpDown4.Maximum = config.InputHeigth;
+            numericUpDown1.Maximum = numericUpDown3.Maximum = config.DetectArea.Width;
+            numericUpDown2.Maximum = numericUpDown4.Maximum = config.DetectArea.Height;
             numericUpDown1.Value = config.DetectArea.X;
             numericUpDown2.Value = config.DetectArea.Y;
             numericUpDown3.Value = config.DetectArea.Width;

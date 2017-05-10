@@ -14,6 +14,7 @@ using System.IO;
 using Emgu.CV;
 using Emgu.CV.Structure;
 using ShowOpenCVResult.Properties;
+using System.Xml;
 
 namespace ShowOpenCVResult
 {
@@ -198,6 +199,139 @@ namespace ShowOpenCVResult
         private void 车辆检测ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             new CarDetect().Show(this.dockPanel1, DockState.Document);
+        }
+
+        private void 保存ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (SaveFileDialog sf= new SaveFileDialog())
+            {
+                sf.Filter = "XML|*.xml";
+                if (sf.ShowDialog() != DialogResult.OK) return;
+                SaveConfigTO(sf.FileName);
+            }
+        }
+
+        public void SaveConfigTO(string path)
+        {
+            XmlDocument xmldoc = new XmlDocument();
+            xmldoc.CreateXmlDeclaration("1.0", "UT8-F", "yes");
+            var root = xmldoc.CreateElement("DetectParams");
+
+            var config = Properties.Settings.Default;
+
+            ///DetectArea
+            var noderect = xmldoc.CreateElement("DetectArea");
+            root.AppendChild(noderect);
+
+            var rectx = xmldoc.CreateElement("X");
+            rectx.InnerText= config.DetectArea.X.ToString();
+            noderect.AppendChild(rectx);
+
+            var recty = xmldoc.CreateElement("Y");
+            recty.InnerText = config.DetectArea.Y.ToString();
+            noderect.AppendChild(recty);
+
+            var rectw = xmldoc.CreateElement("Width");
+            rectw.InnerText = config.DetectArea.Width.ToString();
+            noderect.AppendChild(rectw);
+
+            var recth = xmldoc.CreateElement("Height");
+            recth.InnerText = config.DetectArea.Height.ToString();
+            noderect.AppendChild(recth);
+
+            ///OutSize
+            var nodetransize = xmldoc.CreateElement("OutSize");
+            root.AppendChild(nodetransize);
+
+            var nodeoutw = xmldoc.CreateElement("outSizeW");
+            nodeoutw.InnerText = config.OW.ToString();
+            nodetransize.AppendChild(nodeoutw);
+
+            var nodeouth = xmldoc.CreateElement("outSizeH");
+            nodeouth.InnerText = config.OH.ToString();
+            nodetransize.AppendChild(nodeouth);
+
+            ///Tranformation Scale
+            var nodeTransScale = xmldoc.CreateElement("TranformationScale");
+            root.AppendChild(nodeTransScale);
+
+            var nodeax = xmldoc.CreateElement("AX");
+            nodeax.InnerText = config.AX.ToString();
+            nodeTransScale.AppendChild(nodeax);
+
+            var nodeay = xmldoc.CreateElement("AY");
+            nodeay.InnerText = config.AY.ToString();
+            nodeTransScale.AppendChild(nodeay);
+
+            var nodelt = xmldoc.CreateElement("LT");
+            nodelt.InnerText = config.LT.ToString();
+            nodeTransScale.AppendChild(nodelt);
+
+            ///AdaptiveThreshold
+            var nodead = xmldoc.CreateElement("AdaptiveThreshold");
+            root.AppendChild(nodead);
+
+            var nodeblocksize = xmldoc.CreateElement("BlockSize");
+            nodeblocksize.InnerText = config.AdaptiveBlockSize.ToString();
+            nodead.AppendChild(nodeblocksize);
+
+            var nodeparams = xmldoc.CreateElement("Params");
+            nodeparams.InnerText = config.AdaptiveParam.ToString();
+            nodead.AppendChild(nodeparams);
+
+            ///Canny
+            var nodecanny = xmldoc.CreateElement("Canny");
+            root.AppendChild(nodecanny);
+
+            var nodecannythreshold = xmldoc.CreateElement("CannyThreshold");
+            nodecannythreshold.InnerText = config.CannyThreshold.ToString();
+            nodecanny.AppendChild(nodecannythreshold);
+
+            var nodecannythressholdlink = xmldoc.CreateElement("ThresholdLink");
+            nodecannythressholdlink.InnerText = config.CannyLink.ToString();
+            nodecanny.AppendChild(nodecannythressholdlink);
+
+            ///Line
+            var nodehuoghline = xmldoc.CreateElement("HuoghLine");
+            root.AppendChild(nodehuoghline);
+
+            var nodehuoghthreshold = xmldoc.CreateElement("Threshold");
+            nodehuoghthreshold.InnerText = config.LineThreshold.ToString();
+            nodehuoghline.AppendChild(nodehuoghthreshold);
+
+            var nodehuoghminlength = xmldoc.CreateElement("MinLength");
+            nodehuoghminlength.InnerText = config.LineMinLength.ToString();
+            nodehuoghline.AppendChild(nodehuoghminlength);
+
+            var nodehoughmaxgrap = xmldoc.CreateElement("MaxGrap");
+            nodehoughmaxgrap.InnerText = config.LineMaxGrap.ToString();
+            nodehuoghline.AppendChild(nodehoughmaxgrap);
+
+            ///FindContours
+            var nodecontours = xmldoc.CreateElement("Contours");
+            root.AppendChild(nodecontours);
+
+            var nodeminarea = xmldoc.CreateElement("MinArea");
+            nodeminarea.InnerText = config.MinArea.ToString();
+            nodecontours.AppendChild(nodeminarea);
+
+            var nodeminlenght = xmldoc.CreateElement("MinLength");
+            nodeminlenght.InnerText = config.MinLength.ToString();
+            nodecontours.AppendChild(nodeminlenght);
+
+            var nodemaxwidth = xmldoc.CreateElement("MaxWidth");
+            nodemaxwidth.InnerText = config.MaxAreaToLength.ToString();
+            nodecontours.AppendChild(nodemaxwidth);
+
+            var nodemaxarea = xmldoc.CreateElement("MaxArea");
+            nodemaxarea.InnerText = config.MaxArea.ToString();
+            nodecontours.AppendChild(nodemaxarea);
+
+            var nodeepslion = xmldoc.CreateElement("Esplion");
+            nodeepslion.InnerText = config.Epsilon.ToString();
+            nodecontours.AppendChild(nodeepslion);
+            xmldoc.AppendChild(root);
+            xmldoc.Save(path);
         }
     }
 
