@@ -262,17 +262,16 @@ namespace ShowOpenCVResult
 
         }
 
-        void doprocess(Mat img,out long time)
-        { 
+        void doprocess(Mat img, out long time)
+        {
             if (m_detector == null) { time = 0; return; }
             Stopwatch sw = Stopwatch.StartNew();
+
             //img = img.Clone();
             //LineSegment2D[] lines = null;
 
             //Mat todoprocess = new Mat(img, Properties.Settings.Default.DetectArea);
             //var result = OpencvMath.SpeedProcess(todoprocess, out time, out lines, false);
-
-
             //Mat svmimg = OpencvMath.SvmResult(result, svmresult, m_svm);
             //result.Dispose();
             //Mat trans = new Mat();
@@ -298,9 +297,10 @@ namespace ShowOpenCVResult
             //Mat rect = new Mat(img, Properties.Settings.Default.DetectArea);
             //OpencvMath.MyAddWeight(rect, trans, 0.8);
 
-            Mat result = m_detector.DetectAndShow(img);
+            int offest = 0, lanewidth = 0;
+            Mat result = m_detector.DetectAndShow(img, out offest, out lanewidth);
             imageIOControl1.Image2 = result;
-            
+
             sw.Stop();
             time = sw.ElapsedMilliseconds;
         }

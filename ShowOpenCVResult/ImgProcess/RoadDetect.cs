@@ -167,7 +167,6 @@ namespace ShowOpenCVResult.ImgProcess
         {
             var config = Settings.Default;
             SetTransform(config.DetectArea.Size,  config.AX, config.AY, config.LT, config.OW, config.OH);
-
         }
         public Mat ImgWarpPerspective(Mat img)
         {
@@ -630,22 +629,24 @@ namespace ShowOpenCVResult.ImgProcess
 
             return result.ToArrayOfArray();
         }
-        private double GetOffset(Mat imgroi, LineSegment2D[] lines_wrapInv, double verticalscaletop = 0, double verticalscalebottom = 0.95, bool isNeedDarwResult = true, int drawWidth = 1)
+        private int GetOffset(Mat imgroi, LineSegment2D[] lines,out int lanewidht, bool isNeedDarwResult = true,  double verticalscaletop = 0, double verticalscalebottom = 0.95 , int drawWidth = 1)
         {
-            if (lines_wrapInv == null || lines_wrapInv.Count() != 2) return 404;
+            if (lines == null || lines.Count() != 2) throw new ArgumentException("lins is empty");
 
             int middleindex = (imgroi.Width - 1) / 2;
             int verticalvaluebottom = (int)(imgroi.Height * verticalscalebottom);
             int verticalvaluetop = (int)(imgroi.Height * verticalscaletop);
             Point cammid = new Point(middleindex, verticalvaluebottom);
-            LineSegment2D lnleft = lines_wrapInv[0], lnright = lines_wrapInv[1];
+            LineSegment2D lnleft = lines[0], lnright = lines[1];
             Point lpbuttpm = new Point((int)((double)(verticalvaluebottom - lnleft.P1.Y) / lnleft.Direction.Y * lnleft.Direction.X) + lnleft.P1.X, verticalvaluebottom);
             Point rpbuttom = new Point((int)((double)(verticalvaluebottom - lnright.P1.Y) / lnright.Direction.Y * lnright.Direction.X) + lnright.P1.X, verticalvaluebottom);
             Point lptop = new Point((int)((double)(verticalvaluetop - lnleft.P1.Y) / lnleft.Direction.Y * lnleft.Direction.X) + lnleft.P1.X, verticalvaluetop);
             Point rptop = new Point((int)((double)(verticalvaluetop - lnright.P1.Y) / lnright.Direction.Y * lnright.Direction.X) + lnright.P1.X, verticalvaluetop);
             Point midp = new Point((lpbuttpm.X + rpbuttom.X) / 2, verticalvaluebottom);
             Point midp2 = new Point((lptop.X + rptop.X) / 2, verticalvaluetop);
-            double offset = (double)(middleindex - midp.X) / (rpbuttom.X - lpbuttpm.X) * 100;
+            lanewidht = (rpbuttom.X - lpbuttpm.X);
+            int offset = middleindex - midp.X;
+            double offsetrate = (double)offset / lanewidht * 100;
             if (isNeedDarwResult)
             {
                 Mat black = new Mat(imgroi.Size, DepthType.Cv8U, 3);
@@ -661,7 +662,7 @@ namespace ShowOpenCVResult.ImgProcess
                 CvInvoke.Circle(black, lpbuttpm, 2, resultlinescol, -1);
                 CvInvoke.Circle(black, rpbuttom, 2, resultlinescol, -1);
                 CvInvoke.Circle(black, midp, 2, resultlinescol, -1);
-                CvInvoke.PutText(black, string.Format("{0}%", offset.ToString("0.0")), midp, FontFace.HersheyComplex, 0.5, linecol, 1);
+                CvInvoke.PutText(black, string.Format("{0}%", offsetrate.ToString("0.0")), midp, FontFace.HersheyComplex, 0.5, linecol, 1);
                 Mat mask = new Mat();
                 CvInvoke.CvtColor(black, mask, ColorConversion.Bgr2Gray);
                 OpencvMath.MyAddWeight(imgroi, black, 0.5, mask);
@@ -722,7 +723,7 @@ namespace ShowOpenCVResult.ImgProcess
             }
             return black;
         }
-        public Mat DetectAndShow(Mat imgsrc)
+        public Mat DetectAndShow(Mat imgsrc,out int offset,out int lanewidth)
         {
             Mat img = imgsrc.Clone();
             Mat imgroi = new Mat(img, m_config.DetectArea);
@@ -733,15 +734,17 @@ namespace ShowOpenCVResult.ImgProcess
             Mat segmat = null;
             var vvp = MainDetect(imggray, ref segmat, ref lebels , ref lines);
             Mat svmresult = SvmResultImg(segmat, vvp, lebels);
+            if (lines.Count() != 0)
+            {
+                offset = GetOffset(svmresult, lines,out lanewidth);
+            }else
+            {
+                offset = -1; lanewidth = 0;
+            }
+
             segmat.Dispose();
             Mat svmretran = m_trans.ImgWarpPerspectiveInv(svmresult);
             svmresult.Dispose();
-            if (lines.Count() != 0)
-            {
-                wrapLine(ref lines[0]);
-                wrapLine(ref lines[1]);
-                double offset = GetOffset(svmretran, lines);
-            }
             OpencvMath.MyAddWeight(imgroi, svmretran, 0.8);
             return img;
         }
