@@ -166,6 +166,12 @@
     <Compile Include="BaseUI\AccordSVMPramasInput.Designer.cs">
       <DependentUpon>AccordSVMPramasInput.cs</DependentUpon>
     </Compile>
+    <Compile Include="Videotoimg.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Videotoimg.Designer.cs">
+      <DependentUpon>Videotoimg.cs</DependentUpon>
+    </Compile>
     <Compile Include="ImgProcess\RoadDetect.cs" />
     <Compile Include="WindowsBlock\SetROI.cs">
       <SubType>Form</SubType>
@@ -334,6 +340,9 @@
     </Compile>
     <EmbeddedResource Include="BaseUI\AccordSVMPramasInput.resx">
       <DependentUpon>AccordSVMPramasInput.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Videotoimg.resx">
+      <DependentUpon>Videotoimg.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WindowsBlock\SetROI.resx">
       <DependentUpon>SetROI.cs</DependentUpon>

@@ -333,6 +333,11 @@ namespace ShowOpenCVResult
             xmldoc.AppendChild(root);
             xmldoc.Save(path);
         }
+
+        private void 视频分解ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new ConvertVideoToImgs().Show(this.dockPanel1, DockState.Document);
+        }
     }
 
 

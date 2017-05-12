@@ -193,7 +193,7 @@ namespace ShowOpenCVResult.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("\"svm.data\"")]
+        [global::System.Configuration.DefaultSettingValueAttribute("svm.data")]
         public string SvmPath {
             get {
                 return ((string)(this["SvmPath"]));
