@@ -18,10 +18,8 @@ namespace ShowOpenCVResult.ImgProcess
 
     }
 
-    public class RoadTransform: ILoadPramas
+    public class RoadTransformation: ILoadPramas
     {
-
-
         #region Field
         private float m_AX = 0.25f;
         private float m_AY = 0.50f;
@@ -36,7 +34,7 @@ namespace ShowOpenCVResult.ImgProcess
         private Inter m_interType = Inter.Area;
         private BorderType m_borderType = BorderType.Replicate;
 
-        static RoadTransform m_default = null;
+        static RoadTransformation m_default = null;
         #endregion
 
         #region Property
@@ -95,13 +93,13 @@ namespace ShowOpenCVResult.ImgProcess
             }
         }
 
-        public static RoadTransform Default
+        public static RoadTransformation Default
         {
             get
             {
                 if (m_default == null)
                 {
-                    m_default = new RoadTransform();
+                    m_default = new RoadTransformation();
                     m_default.LoadSetting();
                 }
 
@@ -139,7 +137,7 @@ namespace ShowOpenCVResult.ImgProcess
 
         #region Construct
 
-        private RoadTransform()
+        private RoadTransformation()
         {
 
         }
@@ -354,7 +352,6 @@ namespace ShowOpenCVResult.ImgProcess
         #endregion
 
         #region Property
-
         public int MeadinSize
         {
             get
@@ -386,7 +383,6 @@ namespace ShowOpenCVResult.ImgProcess
         }
 
         #endregion
-
         void normalize(Mat inputimg,out double mingray, out double maxgray)
         {
             Mat rect = new Mat(inputimg, new Rectangle(new Point(inputimg.Width / 6, inputimg.Height / 4), new Size(inputimg.Width / 3 * 2, inputimg.Height / 2)));
@@ -394,12 +390,19 @@ namespace ShowOpenCVResult.ImgProcess
             CvInvoke.MinMaxIdx(rect, out mingray, out maxgray, minid, maxid);
             OpencvMath.MyMinMaxNormalize(inputimg, mingray, maxgray);
         }
-
         public void RoadPreProcess(Mat inputimg, out double mingray, out double maxgray)
         {
             normalize(inputimg, out mingray, out maxgray);
             CvInvoke.MedianBlur(inputimg, inputimg, MeadinSize * 2 + 1);
             CvInvoke.MorphologyEx(inputimg, inputimg, MorphOp.Close,m_structElement, new Point(-1, -1), 1, BorderType.Default, new MCvScalar(0));
+        }
+
+        public void RoadPreProcess(Mat inputimg)
+        {
+            double mingray = 0, maxgray = 0;
+            normalize(inputimg, out mingray, out maxgray);
+            CvInvoke.MedianBlur(inputimg, inputimg, MeadinSize * 2 + 1);
+            CvInvoke.MorphologyEx(inputimg, inputimg, MorphOp.Close, m_structElement, new Point(-1, -1), 1, BorderType.Default, new MCvScalar(0));
         }
 
     }
@@ -448,7 +451,7 @@ namespace ShowOpenCVResult.ImgProcess
         {
             Mat linesegmentimg = new Mat();
             CvInvoke.AdaptiveThreshold(img, linesegmentimg, 255, AdaptiveThresholdType.MeanC, ThresholdType.Binary, m_adBlockSize * 2 + 1, m_adParams);
-            CvInvoke.BitwiseAnd(linesegmentimg, RoadTransform.Default.RoadMask, linesegmentimg);
+            CvInvoke.BitwiseAnd(linesegmentimg, RoadTransformation.Default.RoadMask, linesegmentimg);
             return linesegmentimg;
         }
 
@@ -510,6 +513,11 @@ namespace ShowOpenCVResult.ImgProcess
         MulticlassSupportVectorMachine svm = null;
         bool isSetROi = false;
 
+        public static Size SvmSize
+        {
+            get { return RoadSvm.m_svmSize; }
+        }
+
         public RoadSvm(string path, Rectangle believableRect)
         {
             svm = MulticlassSupportVectorMachine.Load(path);
@@ -524,7 +532,7 @@ namespace ShowOpenCVResult.ImgProcess
 
         public int Predict(VectorOfPoint vp)
         {
-            Mat img = OpencvMath.GetSquareExampleImg(vp, m_svmSize);
+            Mat img = OpencvMath.GetSquareExampleImg(vp, SvmSize);
             double[] array = extract(img);
             return svm.Compute(array, MulticlassComputeMethod.Elimination);
         }
@@ -587,7 +595,7 @@ namespace ShowOpenCVResult.ImgProcess
 
     public class RoadDetect
     {
-        private RoadTransform m_trans = null;// RoadTransform.Default;
+        private RoadTransformation m_trans = null;// RoadTransform.Default;
         private PreProcess m_precess = null;// new PreProcess();
         private ContoursSegment m_contours = null;//= new ContoursSegment();
         private RoadSvm m_svm = null;
@@ -598,23 +606,26 @@ namespace ShowOpenCVResult.ImgProcess
         {
             int ow = m_config.OW, oh = m_config.OH;
             //Rectangle rect = new Rectangle(ow / 32 , oh / 8, ow / 16 * 15, oh / 32 * 27);
-            m_trans = RoadTransform.Default;
+            m_trans = RoadTransformation.Default;
             m_precess = new PreProcess();
             m_svm = new RoadSvm(svmDataPath);
             m_lane = new LaneDetect(new Size(ow,oh));
             m_contours = new ContoursSegment();
         }
-        public VectorOfVectorOfPoint MainDetect(Mat roi,ref Mat segimg ,ref int[] labels , ref LineSegment2D[] lines)
-        {
+
+
+        public  VectorOfVectorOfPoint MainDetectAfterWarp(Mat warpimg,ref Mat segimg ,ref int[] labels , ref LineSegment2D[] lines){
             bool[] usetag = null;
-            Mat transimg = m_trans.ImgWarpPerspective(roi);
-            double min = 0, max = 0;
-            m_precess.RoadPreProcess(transimg, out min, out max);
-            lines = m_lane.Detect(transimg);
-            var vvp = m_contours.GetSelectContours(transimg, ref segimg, ref usetag);
-            transimg.Dispose();
+            m_precess.RoadPreProcess(warpimg);
+            lines = m_lane.Detect(warpimg);
+            var vvp = m_contours.GetSelectContours(warpimg, ref segimg,ref usetag);
             labels = m_svm.Predict(vvp, usetag);
             return vvp;
+        }
+        public VectorOfVectorOfPoint MainDetect(Mat roi,ref Mat segimg ,ref int[] labels , ref LineSegment2D[] lines)
+        {
+            Mat transimg = m_trans.ImgWarpPerspective(roi);
+            return MainDetectAfterWarp(transimg, ref segimg, ref labels, ref lines);
         }
         public Point[][] GetOutputData(Mat orginimg, ref int[] labels, ref bool[] usetag, ref Point[][] linePts)
         {
@@ -629,27 +640,27 @@ namespace ShowOpenCVResult.ImgProcess
 
             return result.ToArrayOfArray();
         }
-        private int GetOffset(Mat imgroi, LineSegment2D[] lines,out int lanewidht, bool isNeedDarwResult = true,  double verticalscaletop = 0, double verticalscalebottom = 0.95 , int drawWidth = 1)
+        public Point[] GetOffsetData(Mat lineimg, LineSegment2D[] lines,out int lanewidht, out int offset, bool isNeedDarwResult = true,  double verticalscaletop = 0, double verticalscalebottom = 0.95 , int drawWidth = 2)
         {
             if (lines == null || lines.Count() != 2) throw new ArgumentException("lins is empty");
 
-            int middleindex = (imgroi.Width - 1) / 2;
-            int verticalvaluebottom = (int)(imgroi.Height * verticalscalebottom);
-            int verticalvaluetop = (int)(imgroi.Height * verticalscaletop);
+            int middleindex = (lineimg.Width - 1) / 2;
+            int verticalvaluebottom = (int)(lineimg.Height * verticalscalebottom);
+            int verticalvaluetop = (int)(lineimg.Height * verticalscaletop);
             Point cammid = new Point(middleindex, verticalvaluebottom);
             LineSegment2D lnleft = lines[0], lnright = lines[1];
             Point lpbuttpm = new Point((int)((double)(verticalvaluebottom - lnleft.P1.Y) / lnleft.Direction.Y * lnleft.Direction.X) + lnleft.P1.X, verticalvaluebottom);
             Point rpbuttom = new Point((int)((double)(verticalvaluebottom - lnright.P1.Y) / lnright.Direction.Y * lnright.Direction.X) + lnright.P1.X, verticalvaluebottom);
             Point lptop = new Point((int)((double)(verticalvaluetop - lnleft.P1.Y) / lnleft.Direction.Y * lnleft.Direction.X) + lnleft.P1.X, verticalvaluetop);
             Point rptop = new Point((int)((double)(verticalvaluetop - lnright.P1.Y) / lnright.Direction.Y * lnright.Direction.X) + lnright.P1.X, verticalvaluetop);
-            Point midp = new Point((lpbuttpm.X + rpbuttom.X) / 2, verticalvaluebottom);
-            Point midp2 = new Point((lptop.X + rptop.X) / 2, verticalvaluetop);
+            Point midbuttom = new Point((lpbuttpm.X + rpbuttom.X) / 2, verticalvaluebottom);
+            Point midtop = new Point((lptop.X + rptop.X) / 2, verticalvaluetop);
             lanewidht = (rpbuttom.X - lpbuttpm.X);
-            int offset = middleindex - midp.X;
+            offset = middleindex - midbuttom.X;
             double offsetrate = (double)offset / lanewidht * 100;
             if (isNeedDarwResult)
             {
-                Mat black = new Mat(imgroi.Size, DepthType.Cv8U, 3);
+                Mat black = new Mat(lineimg.Size, DepthType.Cv8U, 3);
                 black.SetTo(default(MCvScalar));
                 MCvScalar linecol = new MCvScalar(0, 255, 255);
                 MCvScalar resultlinescol = new MCvScalar(100, 100, 255);
@@ -657,18 +668,20 @@ namespace ShowOpenCVResult.ImgProcess
                 CvInvoke.DrawContours(black, vvp, -1, new MCvScalar(0, 50, 0), -1);
                 CvInvoke.Line(black, lnleft.P1, lnleft.P2, linecol, drawWidth);
                 CvInvoke.Line(black, lnright.P1, lnright.P2, linecol, drawWidth);
-                CvInvoke.Line(black, midp, midp2, linecol, drawWidth);
-                CvInvoke.ArrowedLine(black, midp, cammid, linecol, drawWidth);
+                CvInvoke.Line(black, midbuttom, midtop, linecol, drawWidth);
+                CvInvoke.ArrowedLine(black, midbuttom, cammid, linecol, drawWidth);
                 CvInvoke.Circle(black, lpbuttpm, 2, resultlinescol, -1);
                 CvInvoke.Circle(black, rpbuttom, 2, resultlinescol, -1);
-                CvInvoke.Circle(black, midp, 2, resultlinescol, -1);
-                CvInvoke.PutText(black, string.Format("{0}%", offsetrate.ToString("0.0")), midp, FontFace.HersheyComplex, 0.5, linecol, 1);
+                CvInvoke.Circle(black, midbuttom, 2, resultlinescol, -1);
+                CvInvoke.PutText(black, string.Format("{0}%", offsetrate.ToString("0.0")), midbuttom, FontFace.HersheyComplex, 0.5, linecol, 1);
                 Mat mask = new Mat();
                 CvInvoke.CvtColor(black, mask, ColorConversion.Bgr2Gray);
-                OpencvMath.MyAddWeight(imgroi, black, 0.5, mask);
+                OpencvMath.MyAddWeight(lineimg, black, 0.5, mask);
             }
 
-            return offset;
+            return new Point[] { lpbuttpm, rpbuttom, midtop };
+
+            
         }
         private void wrapLine(ref LineSegment2D ln)
         {
@@ -736,7 +749,7 @@ namespace ShowOpenCVResult.ImgProcess
             Mat svmresult = SvmResultImg(segmat, vvp, lebels);
             if (lines.Count() != 0)
             {
-                offset = GetOffset(svmresult, lines,out lanewidth);
+                GetOffsetData(svmresult, lines,out lanewidth,out offset);
             }else
             {
                 offset = -1; lanewidth = 0;

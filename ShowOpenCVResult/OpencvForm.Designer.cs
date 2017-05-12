@@ -210,14 +210,14 @@
             this.车道检测ToolStripMenuItem.Name = "车道检测ToolStripMenuItem";
             this.车道检测ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.车道检测ToolStripMenuItem.Text = "车道检测";
-            this.车道检测ToolStripMenuItem.Click += new System.EventHandler(this.车道检测ToolStripMenuItem_Click);
+     
             // 
             // 车辆检测ToolStripMenuItem
             // 
             this.车辆检测ToolStripMenuItem.Name = "车辆检测ToolStripMenuItem";
             this.车辆检测ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.车辆检测ToolStripMenuItem.Text = "车辆检测";
-            this.车辆检测ToolStripMenuItem.Click += new System.EventHandler(this.车辆检测ToolStripMenuItem_Click);
+            
             // 
             // 识别分类ToolStripMenuItem
             // 

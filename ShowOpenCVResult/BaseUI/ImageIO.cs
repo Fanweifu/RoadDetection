@@ -78,7 +78,8 @@ namespace ShowOpenCVResult
         }
 
         public void DoChange() {
-            DoImgChange?.Invoke(this, null);
+            if(DoImgChange!=null)
+                DoImgChange.Invoke(this, null);
         }
 
     }

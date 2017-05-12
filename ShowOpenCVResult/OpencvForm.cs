@@ -191,15 +191,15 @@ namespace ShowOpenCVResult
 
         }
 
-        private void 车道检测ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            new LineDetect().Show(this.dockPanel1, DockState.Document);
-        }
+        //private void 车道检测ToolStripMenuItem_Click(object sender, EventArgs e)
+        //{
+        //    new LineDetectTest().Show(this.dockPanel1, DockState.Document);
+        //}
 
-        private void 车辆检测ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            new CarDetect().Show(this.dockPanel1, DockState.Document);
-        }
+        //private void 车辆检测ToolStripMenuItem_Click(object sender, EventArgs e)
+        //{
+        //    new CarDetect().Show(this.dockPanel1, DockState.Document);
+        //}
 
         private void 保存ToolStripMenuItem_Click(object sender, EventArgs e)
         {

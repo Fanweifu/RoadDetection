@@ -41,6 +41,11 @@ namespace ShowOpenCVResult
 
         #region Contours
 
+
+        public static Mat GetDefaultRoi(Mat img)
+        {
+            return new Mat(img, Properties.Settings.Default.DetectArea);
+        }
         static public void DrawRotatedRect(RotatedRect rr, IInputOutputArray backimg, int kickness = 2)
         {
             PointF[] pts = rr.GetVertices();
@@ -67,7 +72,7 @@ namespace ShowOpenCVResult
                 CvInvoke.Line(backimg, intpts[i % 4], intpts[(i + 1) % 4], new MCvScalar(127), 2);
             }
         }
-        static public Mat GetSquareExampleImg(VectorOfPoint vp,Size size, bool needthreshold = false)
+        static public Mat GetSquareExampleImg(VectorOfPoint vp, Size size, bool needthreshold = false)
         {
             var rightvp = AngleAdjustVp(vp);
             Rectangle vpr = CvInvoke.BoundingRectangle(rightvp);
@@ -123,26 +128,27 @@ namespace ShowOpenCVResult
             Point[] resultpts = Array.ConvertAll<PointF, Point>(dst.ToArray(), Point.Round);
             return new VectorOfPoint(resultpts);
         }
-        static private Bitmap GetContours(Image<Bgr, byte> img, TreeNodeCollection root, ref Point[][] ptss, ref int[] del, bool needSelect = false)
-        {
-            if (img == null) throw new ArgumentException("Img is Empty");
-            long time = 0;
-            Mat result = FinalLineProcess(img.Mat, out time, true);
-            CvInvoke.Threshold(result, result, 130, 255, ThresholdType.Binary);
-            int[] layer = null;
-            var vvp = getCons(result, ref layer, ref del, needSelect);
-            editNode(layer, root);
-            ptss = vvp.ToArrayOfArray();
-            var grayimg = result.ToImage<Gray, byte>();
-            var map = grayimg.ToBitmap();
-            result.Dispose();
-            grayimg.Dispose();
-            return map;
-        }
-        static public Bitmap GetContours(string path, TreeNodeCollection root, ref Point[][] pts, ref int[] del)
-        {
-            return GetContours(new Image<Bgr, byte>(path), root, ref pts, ref del);
-        }
+        //static public Bitmap GetContours(Image<Gray, byte> wrapimg, TreeNodeCollection root, ref Point[][] ptss, ref int[] del, bool needSelect = false)
+        //{
+        //    //if (wrapimg == null) throw new ArgumentException("Img is Empty");
+        //    //long time = 0;
+        //    //LineSegment2D[] lns = null;
+        //    //Mat result = SpeedProcessNoWarp(wrapimg, out time, out lns);
+        //    //CvInvoke.Threshold(result, result, 130, 255, ThresholdType.Binary);
+        //    //int[] layer = null;
+        //    //var vvp = getCons(result, ref layer, ref del, needSelect);
+        //    //editNode(layer, root);
+        //    //ptss = vvp.ToArrayOfArray();
+        //    //var grayimg = result.ToImage<Gray, byte>();
+        //    //var map = grayimg.ToBitmap();
+        //    //result.Dispose();
+        //    //grayimg.Dispose();
+        //    //return map;
+        //}
+        //static public Bitmap GetContours(string path, TreeNodeCollection root, ref Point[][] pts, ref int[] del)
+        //{
+        //    return GetContours(new Image<Bgr, byte>(path), root, ref pts, ref del);
+        //}
         static public VectorOfVectorOfPoint FindMaxAreaIndexCon(Mat img, out int index)
         {
             VectorOfVectorOfPoint vvp = new VectorOfVectorOfPoint();
@@ -160,6 +166,7 @@ namespace ShowOpenCVResult
             }
             index = maxindex;
             return vvp;
+            
         }
         static VectorOfVectorOfPoint getCons(Mat img, ref int[] array, ref int[] delectindex, bool needselect)
         {
@@ -935,7 +942,7 @@ namespace ShowOpenCVResult
             CvInvoke.MedianBlur(inputimg, inputimg, meadinSize * 2 + 1);
             CvInvoke.MorphologyEx(inputimg, inputimg, MorphOp.Open, CvInvoke.GetStructuringElement(ElementShape.Rectangle, new Size(1, openSize * 2 + 1), new Point(-1, -1)), new Point(-1, -1), 1, BorderType.Default, new MCvScalar(0));
         }
-        static public Mat GetLine(IInputArray inputimg, int width)
+        static public Mat GetLine(IInputArray inputimg)
         {
             var lineimg = new Mat();
             var config = Settings.Default;
@@ -1213,7 +1220,7 @@ namespace ShowOpenCVResult
                 blackRoad = processimg;
             }
 
-            var line = GetLine(trans, trans.Width);
+            var line = GetLine(trans);
             MyThreshold(blackRoad, 10, 10, 127);
             CvInvoke.MorphologyEx(blackRoad, blackRoad, MorphOp.Close, Struct, new Point(-1, -1), 1, BorderType.Default, new MCvScalar(0));
             CvInvoke.Add(line, blackRoad, line);
@@ -1254,7 +1261,7 @@ namespace ShowOpenCVResult
 
             double min = 0, max = 0;
             RoadPreProcess(trans, ref min, ref max, null, false, true, 2, true, 2);
-            var line = GetLine(trans, trans.Width);
+            var line = GetLine(trans);
             if (findRoadArea)
             {
                 Mat rect = new Mat(vch, new Rectangle(new Point(0, (int)(vch.Height * RoadTransform.AY)), new Size(vch.Width, (int)(vch.Height * (1 - RoadTransform.AY)))));
@@ -1283,15 +1290,21 @@ namespace ShowOpenCVResult
         static public Mat SpeedProcessNoWarp(Mat img, out long time, Mat mask = null)
         {
             Stopwatch sw = Stopwatch.StartNew();
-            var imgs = img.Split();
-            imgs[0].Dispose();
-            imgs[1].Dispose();
-            Mat vch = imgs[2];
+            Mat grayimg = null;
+            if (img.NumberOfChannels == 3)
+            {
+                grayimg = OpencvMath.MyBgrToGray(img);
+            }
+            else
+            {
+                grayimg = null;
+            }
+
             double min = 0, max = 0;
-            RoadPreProcess(vch, ref min, ref max, null, false, true, 2, true, 2);
-            var line = GetLine(vch, vch.Width);
-            CvInvoke.MorphologyEx(line, line, MorphOp.Close, CvInvoke.GetStructuringElement(ElementShape.Rectangle, new Size(1, 5), new Point(-1, -1)), new Point(-1, -1), 1, BorderType.Default, default(MCvScalar));
-            CvInvoke.MorphologyEx(line, line, MorphOp.Open, Struct, new Point(-1, -1), 1, BorderType.Default, default(MCvScalar));
+            RoadPreProcess(grayimg, ref min, ref max, null, false, true, 2, true, 2);
+            var line = GetLine(grayimg);
+            CvInvoke.BitwiseAnd(line, RoadTransform.RoadMask, line);
+
             sw.Stop();
             time = sw.ElapsedMilliseconds;
             return line;
