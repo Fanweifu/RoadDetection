@@ -34,7 +34,14 @@ namespace ShowOpenCVResult
             this.m_DockPath = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "DockPanel.config");
             var config = Settings.Default;
             //RoadTransform.SetTransform(config.InputWidth, config.InputHeigth, config.AX, config.AY, config.LT, config.OW, config.OH);
-            RoadTransform.LoadSetting();
+            try
+            {
+                RoadTransform.LoadSetting();
+            }
+            catch
+            {
+
+            }
 
         }
 

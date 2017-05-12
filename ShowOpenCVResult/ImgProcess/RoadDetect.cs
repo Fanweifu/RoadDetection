@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -250,11 +251,11 @@ namespace ShowOpenCVResult.ImgProcess
             var result = CvInvoke.HoughLinesP(edge, m_rho, m_theata, m_HuoghThreshold, m_HuoghMinLength, m_HuoghMaxGrap);
             ///to  delect
             var mat = new Mat(edge.Size, DepthType.Cv8U, 3);
-            mat.SetTo(new MCvScalar());
-            foreach (var item in result)
-            {
-                CvInvoke.Line(mat, item.P1, item.P2, new MCvScalar(0, 255, 255), 2);
-            }
+            //mat.SetTo(new MCvScalar());
+            //foreach (var item in result)
+            //{
+            //    CvInvoke.Line(mat, item.P1, item.P2, new MCvScalar(0, 255, 255), 2);
+            //}
 
             edge.Dispose();
             return result;
@@ -286,7 +287,7 @@ namespace ShowOpenCVResult.ImgProcess
                             double angle = Math.Abs(lnj.GetExteriorAngleDegree(lnk));
                             if (angle > 90)
                                 angle = 180 - angle;
-                            if (/*Math.Abs(result.Y) < size.Height / 5 && result.Y > 0 &&*/ Math.Abs(jx - kx) > m_size.Width/ 4 && angle < 5)
+                            if (/*Math.Abs(result.Y) < size.Height / 5 && result.Y > 0 &&*/ Math.Abs(jx - kx) > m_size.Width/ 4 && angle < 4)
                                 return new LineSegment2D[] { lines[k], lines[j] };
                         }
                     }
@@ -614,24 +615,28 @@ namespace ShowOpenCVResult.ImgProcess
         }
 
 
-        public  VectorOfVectorOfPoint MainDetectAfterWarp(Mat warpimg,ref Mat segimg ,ref int[] labels , ref LineSegment2D[] lines){
+        public  VectorOfVectorOfPoint MainDetectAfterWarp(Mat warpimg,ref Mat segimg ,ref int[] labels , ref LineSegment2D[] lines,out long time){
+            Stopwatch sw = Stopwatch.StartNew();
             bool[] usetag = null;
-            m_precess.RoadPreProcess(warpimg);
             lines = m_lane.Detect(warpimg);
+            m_precess.RoadPreProcess(warpimg);
             var vvp = m_contours.GetSelectContours(warpimg, ref segimg,ref usetag);
             labels = m_svm.Predict(vvp, usetag);
+            sw.Stop();
+            time = sw.ElapsedMilliseconds;
             return vvp;
         }
-        public VectorOfVectorOfPoint MainDetect(Mat roi,ref Mat segimg ,ref int[] labels , ref LineSegment2D[] lines)
+        public VectorOfVectorOfPoint MainDetect(Mat roi,ref Mat segimg ,ref int[] labels , ref LineSegment2D[] lines,out long time)
         {
             Mat transimg = m_trans.ImgWarpPerspective(roi);
-            return MainDetectAfterWarp(transimg, ref segimg, ref labels, ref lines);
+            return MainDetectAfterWarp(transimg, ref segimg, ref labels, ref lines,out time);
         }
         public Point[][] GetOutputData(Mat orginimg, ref int[] labels, ref bool[] usetag, ref Point[][] linePts)
         {
             LineSegment2D[] lines = null;
             Mat segment = null;
-            var result = MainDetect(orginimg, ref segment, ref labels, ref lines);
+            long time = 0;
+            var result = MainDetect(orginimg, ref segment, ref labels, ref lines,out time);
 
             if (lines == null || lines.Count() == 0)
                 linePts = new Point[0][] { };
@@ -736,7 +741,7 @@ namespace ShowOpenCVResult.ImgProcess
             }
             return black;
         }
-        public Mat DetectAndShow(Mat imgsrc,out int offset,out int lanewidth)
+        public Mat DetectAndShow(Mat imgsrc,out int offset,out int lanewidth,out long caltime)
         {
             Mat img = imgsrc.Clone();
             Mat imgroi = new Mat(img, m_config.DetectArea);
@@ -745,7 +750,7 @@ namespace ShowOpenCVResult.ImgProcess
             bool[] usetag = null;
             LineSegment2D[] lines = null;
             Mat segmat = null;
-            var vvp = MainDetect(imggray, ref segmat, ref lebels , ref lines);
+            var vvp = MainDetect(imggray, ref segmat, ref lebels , ref lines,out caltime);
             Mat svmresult = SvmResultImg(segmat, vvp, lebels);
             if (lines.Count() != 0)
             {
@@ -765,9 +770,9 @@ namespace ShowOpenCVResult.ImgProcess
         public void ReLoadParams()
         {
             m_trans.LoadSetting();
-            m_trans.LoadSetting();
             m_lane.LoadSetting();
             m_contours.LoadSetting();
+
         }
     }
 }

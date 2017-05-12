@@ -1419,6 +1419,8 @@ namespace ShowOpenCVResult
 
         public static void SetTransform(Size inputsize, float ax, float ay, float lt, int ow, int oh)
         {
+            if (inputsize == default(Size)) return;
+
             InputSize = inputsize;
             OutSize = new Size(ow, oh);
             m_AX = ax; m_AY = ay; m_LT = lt;

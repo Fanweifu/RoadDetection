@@ -265,7 +265,6 @@ namespace ShowOpenCVResult
         void doprocess(Mat img, out long time)
         {
             if (m_detector == null) { time = 0; return; }
-            Stopwatch sw = Stopwatch.StartNew();
 
             //img = img.Clone();
             //LineSegment2D[] lines = null;
@@ -298,11 +297,9 @@ namespace ShowOpenCVResult
             //OpencvMath.MyAddWeight(rect, trans, 0.8);
 
             int offest = 0, lanewidth = 0;
-            Mat result = m_detector.DetectAndShow(img, out offest, out lanewidth);
+            Mat result = m_detector.DetectAndShow(img, out offest, out lanewidth,out time);
             imageIOControl1.Image2 = result;
 
-            sw.Stop();
-            time = sw.ElapsedMilliseconds;
         }
         private void toolStripButton4_Click(object sender, EventArgs e)
         {
