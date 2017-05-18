@@ -24,6 +24,8 @@ namespace ShowOpenCVResult
         int playcnt = 0;
         int fps = 0;
         int curplayindex = 0;
+        int detectInternal = 1;
+        bool isclosewindows = false;
         string[] exs = new string[] { ".jpg", ".png", ".bmp", "jpeg" };
 
         MulticlassSupportVectorMachine m_svm = null;
@@ -74,6 +76,8 @@ namespace ShowOpenCVResult
                     {
                         mr.WaitOne();
                     }
+                    if (isclosewindows)
+                        return;
 
                     Mat matimg = new Mat(path, LoadImageType.Unchanged);
                     if (imageIOControl1.Image1 != null)
@@ -98,7 +102,7 @@ namespace ShowOpenCVResult
                         Invoke(new Action(() =>
                         {
                             toolStripStatusLabel4.Text = path;
-                            toolStripStatusLabel2.Text = string.Format("当前耗时:{0}ms,播放帧数{1},平均耗时{2}", time, playcnt, timesum / playcnt);
+                            tsslbShow.Text = string.Format("当前耗时:{0}ms,播放帧数{1},平均耗时{2}", time, playcnt, timesum / playcnt);
                         }));
                     }
                     Thread.Sleep(1000);
@@ -150,7 +154,7 @@ namespace ShowOpenCVResult
             Thread.Sleep(1000);
             Invoke(new Action(() =>
             {
-                toolStripStatusLabel2.Text = string.Format("总体耗时:{0}ms,播放帧数{1},平均耗时{2}", timesum, playcnt, timesum / playcnt);
+                tsslbShow.Text = string.Format("总体耗时:{0}ms,播放帧数{1},平均耗时{2}", timesum, playcnt, timesum / playcnt);
 
             }));
             mr.Set();
@@ -197,20 +201,7 @@ namespace ShowOpenCVResult
 
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
-            string videopath = @"D:\Youku Files\download\高速公路-阴险放坑-行车记录仪_标清.flv";
 
-            using (OpenFileDialog of = new OpenFileDialog())
-            {
-                of.Filter = "(*.*)|*.*|(MP4)|*.mp4|(AVI)|*.avi|(FLV)|*.flv";
-                if (of.ShowDialog() != DialogResult.OK) return;
-                videopath = of.FileName;
-            }
-            m_captrue = new Capture(videopath);
-            playcnt = (int)m_captrue.GetCaptureProperty(CapProp.FrameCount);
-            fps = (int)m_captrue.GetCaptureProperty(CapProp.Fps);
-            toolStripButton2.Enabled = true;
-            iniVideotPlay();
-            playthead.Start();
         }
 
 
@@ -222,26 +213,31 @@ namespace ShowOpenCVResult
                 if (m_captrue == null) return;
                 int cnt = 0;
                 long sumtime = 0;
-                while (++cnt <= playcnt)
+                while (cnt++ < playcnt)
                 {
                     if (!isinplay)
                         mr.WaitOne();
                     Stopwatch sw = Stopwatch.StartNew();
 
                     Mat img = m_captrue.QueryFrame();
+                    imageIOControl1.Image1 = img;
                     m_queue.Enqueue(img);
-                    if (tsbtnUpdate.Checked) {
+
+                    if (tsbtnUpdate.Checked && cnt % detectInternal == 0)
+                    {
 
                         new Thread(() =>
                         {
                             long time = 0;
-                            if (m_detector==null) return;
-                            doprocess(img ,out time);
+                            if (m_detector == null) return;
+                            doprocess(img, out time);
                             sumtime += time;
-                            Invoke(new Action(() => { if(!imageIOControl1.IsDisposed) imageIOControl1.Refresh();
-                                toolStripStatusLabel2.Text = string.Format("总体耗时:{0}ms,播放帧数{1},当前耗时:{2}平均耗时{3}", sumtime, cnt, time, sumtime / cnt);
+                            Invoke(new Action(() =>
+                            {
+                                if (!imageIOControl1.IsDisposed) imageIOControl1.Refresh();
+                                tsslbShow.Text = string.Format("总体耗时:{0}ms,播放帧数{1},当前耗时:{2}平均耗时{3}", sumtime, cnt, time, sumtime / cnt);
                             }));
-                            
+
                         }).Start();
 
                     }
@@ -251,7 +247,6 @@ namespace ShowOpenCVResult
                         outimg.Dispose();
                     }
 
-                    imageIOControl1.Image1 = img;
                     sw.Stop();
                     int sleeptime = 1000 / fps - (int)sw.ElapsedMilliseconds;
                     if(sleeptime>0)
@@ -262,6 +257,8 @@ namespace ShowOpenCVResult
 
         }
 
+        int lastoffset = 0;
+        int lastlane = 0;
         void doprocess(Mat img, out long time)
         {
             if (m_detector == null) { time = 0; return; }
@@ -296,8 +293,29 @@ namespace ShowOpenCVResult
             //Mat rect = new Mat(img, Properties.Settings.Default.DetectArea);
             //OpencvMath.MyAddWeight(rect, trans, 0.8);
 
-            int offest = 0, lanewidth = 0;
-            Mat result = m_detector.DetectAndShow(img, out offest, out lanewidth,out time);
+            int offest = lastoffset, lanewidth = lastlane;
+            Mat imgroi = new Mat(img.Clone(), Properties.Settings.Default.DetectArea);
+            Mat result = m_detector.DetectAndShow(imgroi, ref  offest, ref lanewidth,out time);
+
+            //if ((offest - lastoffset) > (lastlane + lanewidth) / 3)
+            //{
+            //    Invoke(new Action(() =>
+            //    {
+            //        tsslbshowturn.Text = "change lane to left";
+            //        toolStripButton2_Click(null,null);
+            //    }));
+            //}
+            //else if ((offest - lastoffset) < -(lastlane + lanewidth) / 3)
+            //{
+            //    Invoke(new Action(() =>
+            //    {
+            //        tsslbshowturn.Text = "change lane to right";
+            //        toolStripButton2_Click(null, null);
+            //    }));
+            //}
+            lastoffset = offest;
+            lastlane = lanewidth;
+
             imageIOControl1.Image2 = result;
 
         }
@@ -334,6 +352,42 @@ namespace ShowOpenCVResult
             Mat img = imageIOControl1.Image1 as Mat;
             long time = 0;
             doprocess(img, out time);
+        }
+
+        private void numDetectInternal_ValueChanged(object sender, EventArgs e)
+        {
+            detectInternal = (int)numDetectInternal.Value;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(tbDirectory.Text) || File.Exists(tbDirectory.Text))
+            {
+                Process.Start(tbDirectory.Text);
+            }
+        }
+
+        private void tsbtnConnectcam_Click(object sender, EventArgs e)
+        {
+            m_captrue = new Emgu.CV.Capture(1);
+            playthead = new Task(() =>
+            {
+                while (true)
+                {
+                    if (isclosewindows)
+                        return;
+                    imageIOControl1.Image1 = m_captrue.QueryFrame();
+                    Thread.Sleep(33);
+                }
+
+            });
+
+            playthead.Start();
+        }
+
+        private void RoadDetectShow_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            isclosewindows = true;
         }
     }
 }

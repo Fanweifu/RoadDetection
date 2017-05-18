@@ -214,11 +214,11 @@ namespace ShowOpenCVResult
             {
                 sf.Filter = "XML|*.xml";
                 if (sf.ShowDialog() != DialogResult.OK) return;
-                SaveConfigTO(sf.FileName);
+                SaveConfigTOXML(sf.FileName);
             }
         }
 
-        public void SaveConfigTO(string path)
+        public void SaveConfigTOXML(string path)
         {
             XmlDocument xmldoc = new XmlDocument();
             xmldoc.CreateXmlDeclaration("1.0", "UT8-F", "yes");
@@ -341,9 +341,73 @@ namespace ShowOpenCVResult
             xmldoc.Save(path);
         }
 
+        public void LoadConfigFromXml(string path)
+        {
+            var config = Properties.Settings.Default;
+            XmlDocument xml = new XmlDocument();
+            xml.Load(path);
+            XmlNode xn = xml.SelectSingleNode("DetectParams");
+            XmlNodeList xnls = xn.ChildNodes;
+
+            XmlElement noderect = xnls[0] as XmlElement;
+            var rectls = noderect.ChildNodes;
+            int x = int.Parse(((XmlElement)rectls[0]).InnerText);
+            int y = int.Parse(((XmlElement)rectls[1]).InnerText);
+            int w = int.Parse(((XmlElement)rectls[2]).InnerText);
+            int h = int.Parse(((XmlElement)rectls[3]).InnerText);
+            config.DetectArea = new Rectangle(x, y, w, h);
+
+            XmlElement nodeoutsize = xnls[1] as XmlElement;
+            config.OW = int.Parse(((XmlElement)nodeoutsize.ChildNodes[0]).InnerText);
+            config.OH= int.Parse(((XmlElement)nodeoutsize.ChildNodes[1]).InnerText);
+
+            ///Tranformation Scale
+            XmlElement nodetrans = xnls[2] as XmlElement;
+            config.AX = float.Parse(((XmlElement)nodetrans.ChildNodes[0]).InnerText);
+            config.AY = float.Parse(((XmlElement)nodetrans.ChildNodes[1]).InnerText);
+            config.LT = float.Parse(((XmlElement)nodetrans.ChildNodes[2]).InnerText);
+
+            ///AdaptiveThreshold
+            XmlElement nodead = xnls[3] as XmlElement;
+            config.AdaptiveBlockSize = int.Parse(((XmlElement)nodead.ChildNodes[0]).InnerText);
+            config.AdaptiveParam = int.Parse(((XmlElement)nodead.ChildNodes[1]).InnerText);
+
+            ///Canny
+            XmlElement nodecanny = xnls[4] as XmlElement;
+            config.CannyThreshold = int.Parse(((XmlElement)nodecanny.ChildNodes[0]).InnerText);
+            config.CannyLink = int.Parse(((XmlElement)nodecanny.ChildNodes[1]).InnerText);
+
+            ///Line
+            XmlElement nodeline = xnls[5] as XmlElement;
+            config.LineThreshold = int.Parse(((XmlElement)nodeline.ChildNodes[0]).InnerText);
+            config.LineMinLength = int.Parse(((XmlElement)nodeline.ChildNodes[1]).InnerText);
+            config.LineMaxGrap = int.Parse(((XmlElement)nodeline.ChildNodes[2]).InnerText);
+
+            ///FindContours
+            XmlElement nodecontours= xnls[6] as XmlElement;
+            config.MinArea = double.Parse(((XmlElement)nodecontours.ChildNodes[0]).InnerText);
+            config.MinLength = double.Parse(((XmlElement)nodecontours.ChildNodes[1]).InnerText);
+            config.MaxAreaToLength= int.Parse(((XmlElement)nodecontours.ChildNodes[2]).InnerText);
+            config.MaxArea = int.Parse(((XmlElement)nodecontours.ChildNodes[3]).InnerText);
+            config.Epsilon = double.Parse(((XmlElement)nodecontours.ChildNodes[4]).InnerText);
+
+            config.Save();
+
+        }
+
         private void 视频分解ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             new ConvertVideoToImgs().Show(this.dockPanel1, DockState.Document);
+        }
+
+        private void 读取ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog of = new OpenFileDialog())
+            {
+                of.Filter = "XML|*.xml";
+                if (of.ShowDialog() != DialogResult.OK) return;
+                LoadConfigFromXml(of.FileName);
+            }
         }
     }
 

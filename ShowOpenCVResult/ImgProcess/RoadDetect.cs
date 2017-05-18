@@ -250,7 +250,7 @@ namespace ShowOpenCVResult.ImgProcess
             CvInvoke.Canny(img, edge, m_CannyThreshold, m_CannyThresholdLink);
             var result = CvInvoke.HoughLinesP(edge, m_rho, m_theata, m_HuoghThreshold, m_HuoghMinLength, m_HuoghMaxGrap);
             ///to  delect
-            var mat = new Mat(edge.Size, DepthType.Cv8U, 3);
+            //var mat = new Mat(edge.Size, DepthType.Cv8U, 3);
             //mat.SetTo(new MCvScalar());
             //foreach (var item in result)
             //{
@@ -601,6 +601,10 @@ namespace ShowOpenCVResult.ImgProcess
         private ContoursSegment m_contours = null;//= new ContoursSegment();
         private RoadSvm m_svm = null;
         private LaneDetect m_lane = null;// new LaneDetect();
+        private int lastoffset = 0;
+        public event EventHandler TurnLeft;
+        public event EventHandler TurnRigth; 
+
         Settings m_config = Settings.Default;
 
         public RoadDetect(string svmDataPath)
@@ -741,10 +745,9 @@ namespace ShowOpenCVResult.ImgProcess
             }
             return black;
         }
-        public Mat DetectAndShow(Mat imgsrc,out int offset,out int lanewidth,out long caltime)
+        public Mat DetectAndShow(Mat imgroi, ref int offset, ref  int lanewidth,out long caltime)
         {
-            Mat img = imgsrc.Clone();
-            Mat imgroi = new Mat(img, m_config.DetectArea);
+
             Mat imggray = OpencvMath.MyBgrToGray(imgroi);
             int[] lebels = null;
             bool[] usetag = null;
@@ -752,19 +755,16 @@ namespace ShowOpenCVResult.ImgProcess
             Mat segmat = null;
             var vvp = MainDetect(imggray, ref segmat, ref lebels , ref lines,out caltime);
             Mat svmresult = SvmResultImg(segmat, vvp, lebels);
-            if (lines.Count() != 0)
+            if (lines != null&& lines.Count() != 0)
             {
                 GetOffsetData(svmresult, lines,out lanewidth,out offset);
-            }else
-            {
-                offset = -1; lanewidth = 0;
             }
 
             segmat.Dispose();
             Mat svmretran = m_trans.ImgWarpPerspectiveInv(svmresult);
             svmresult.Dispose();
             OpencvMath.MyAddWeight(imgroi, svmretran, 0.8);
-            return img;
+            return imgroi;
         }
 
         public void ReLoadParams()

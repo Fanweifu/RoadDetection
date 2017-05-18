@@ -1502,6 +1502,64 @@ namespace ShowOpenCVResult
 
 
         }
+        /// <summary>
+        /// 遍历模板函数
+        /// </summary>
+        /// <param name="img">Mat类型的图像，如果是Image<,>类型图像， 使用img,Mat</param>
+        static public void PtrProcess(Mat img)
+        {
+            ///要使用指针遍历需要预先知道Mat矩阵元素的类型，通常使用的是Cv8U(unchar) 在C#里面对应byte,其他类型的对应关系见DepthType的枚举注释
+            if (img == null || img.IsEmpty || img.Depth != DepthType.Cv8U) throw new ArgumentException("img is unvalid!");
+
+            int rows = img.Rows, cols = img.Cols, step = img.Step;
+           
+            unsafe
+            {
+                byte* dataptr = (byte*)img.DataPointer;
+                ///单通道图像遍历方式
+                if (img.NumberOfChannels == 1)
+                {
+                    for (int i = 0; i < rows; i++)
+                    {
+                        for (int j = 0; j < cols; j++)
+                        {
+                            int index = i * step + j;
+                            ///get
+                            byte getvalue = dataptr[index];
+                            ///set
+                            byte setvalue = 127;
+                            dataptr[index] = setvalue;
+                        }
+                    }
+                }
+                ///多通道图像遍历方式，以BGR图像为例
+                else
+                {
+                    int chns = img.NumberOfChannels;
+                    for (int i = 0; i < rows; i++)
+                    {
+                        for (int j = 0; j < cols; j++)
+                        {
+                            ///B,G,R 顺序 c= 0,1,2;
+                            for (int c = 0; c < chns; c++)
+                            {
+                                int index = i * step + j * chns + c;
+                                ///get
+                                byte getvalue = dataptr[index];
+                                ///set
+                                byte setvalue = 127;
+                                dataptr[index] = setvalue;
+
+                            }
+                        }
+                    }
+                }
+
+            }
+
+
+        }
+
         static public RoadObjectType JugdeLineShape(VectorOfPoint vp, Size imgsize)
         {
             var config = Settings.Default;

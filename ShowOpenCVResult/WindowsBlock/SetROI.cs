@@ -70,8 +70,8 @@ namespace ShowOpenCVResult
         private void Form1_Load(object sender, EventArgs e)
         {
             var config = Properties.Settings.Default;
-            numericUpDown1.Maximum = numericUpDown3.Maximum = config.DetectArea.Width;
-            numericUpDown2.Maximum = numericUpDown4.Maximum = config.DetectArea.Height;
+            //numericUpDown1.Maximum = numericUpDown3.Maximum = config.DetectArea.Width;
+            //numericUpDown2.Maximum = numericUpDown4.Maximum = config.DetectArea.Height;
             numericUpDown1.Value = config.DetectArea.X;
             numericUpDown2.Value = config.DetectArea.Y;
             numericUpDown3.Value = config.DetectArea.Width;
@@ -82,8 +82,8 @@ namespace ShowOpenCVResult
         {
             var img = imageIO1.Image1 as Image<Bgr, byte>;
             if (img == null) return;
-            numericUpDown1.Maximum = numericUpDown3.Maximum = img.Width;
-            numericUpDown2.Maximum = numericUpDown4.Maximum = img.Height;
+            //numericUpDown1.Maximum = numericUpDown3.Maximum = img.Width;
+            //numericUpDown2.Maximum = numericUpDown4.Maximum = img.Height;
             
         }
     }

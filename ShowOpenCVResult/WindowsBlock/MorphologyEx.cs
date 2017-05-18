@@ -30,6 +30,7 @@ namespace ShowOpenCVResult
         {  
             InitializeComponent();
             comboBox1.DataSource = Enum.GetValues(typeof(MorphOp));
+            comboBox2.DataSource = Enum.GetValues(typeof(ElementShape));
         }
 
         private void rbtnBoxBlur_CheckedChanged(object sender, EventArgs e)
@@ -49,9 +50,10 @@ namespace ShowOpenCVResult
             if (imageIOControl1.Image1 == null) return;
             if (imageIOControl1.Image2 != null) { imageIOControl1.Image2.Dispose(); }
 
-            int size = (int)myTrackBar1.Value;
+            int x = mybarX.Value;
+            int y = mybarY.Value;
             Image<Bgr, Byte> img = new Image<Bgr, byte>(imageIOControl1.Image1.Size);
-            Mat element = CvInvoke.GetStructuringElement(ElementShape.Rectangle,new Size(2*size+1,2*size+1),new Point(-1,-1));
+            Mat element = CvInvoke.GetStructuringElement((ElementShape)comboBox2.SelectedItem, new Size(2 * x + 1, 2 * y + 1), new Point(-1, -1));
             CvInvoke.MorphologyEx(imageIOControl1.Image1 as Image<Bgr, byte>, img, (MorphOp)comboBox1.SelectedItem, element, new Point(-1, -1), (int)numericUpDown1.Value, BorderType.Default, new MCvScalar(0));  
 
             imageIOControl1.Image2 = img;
@@ -80,6 +82,11 @@ namespace ShowOpenCVResult
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
             imageIOControl1.DoChange();
+        }
+
+        private void MorphologyEx_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

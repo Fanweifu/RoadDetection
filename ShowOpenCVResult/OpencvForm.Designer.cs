@@ -51,8 +51,8 @@
             this.设置ROIToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.逆转换ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.滤波ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.局部阈值ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.膨胀腐蚀ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.局部阈值ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.hSV测试ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.直方图ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.特征提取ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -67,9 +67,9 @@
             this.配置ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.保存ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.读取ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.dockPanel1 = new WeifenLuo.WinFormsUI.Docking.DockPanel();
             this.其他ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.视频分解ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dockPanel1 = new WeifenLuo.WinFormsUI.Docking.DockPanel();
             this.msMenus.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -100,14 +100,14 @@
             // 路面展示ToolStripMenuItem
             // 
             this.路面展示ToolStripMenuItem.Name = "路面展示ToolStripMenuItem";
-            this.路面展示ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.路面展示ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.路面展示ToolStripMenuItem.Text = "视频流展示";
             this.路面展示ToolStripMenuItem.Click += new System.EventHandler(this.颜色阈值ToolStripMenuItem_Click);
             // 
             // 标线流程测试ToolStripMenuItem
             // 
             this.标线流程测试ToolStripMenuItem.Name = "标线流程测试ToolStripMenuItem";
-            this.标线流程测试ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.标线流程测试ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.标线流程测试ToolStripMenuItem.Text = "标线流程测试";
             this.标线流程测试ToolStripMenuItem.Click += new System.EventHandler(this.标线流程测试ToolStripMenuItem_Click);
             // 
@@ -128,49 +128,49 @@
             // 设置ROIToolStripMenuItem
             // 
             this.设置ROIToolStripMenuItem.Name = "设置ROIToolStripMenuItem";
-            this.设置ROIToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.设置ROIToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.设置ROIToolStripMenuItem.Text = "设置ROI";
             this.设置ROIToolStripMenuItem.Click += new System.EventHandler(this.设置ROIToolStripMenuItem_Click);
             // 
             // 逆转换ToolStripMenuItem
             // 
             this.逆转换ToolStripMenuItem.Name = "逆转换ToolStripMenuItem";
-            this.逆转换ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.逆转换ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.逆转换ToolStripMenuItem.Text = "逆转换";
             this.逆转换ToolStripMenuItem.Click += new System.EventHandler(this.逆转换ToolStripMenuItem_Click);
             // 
             // 滤波ToolStripMenuItem
             // 
             this.滤波ToolStripMenuItem.Name = "滤波ToolStripMenuItem";
-            this.滤波ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.滤波ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.滤波ToolStripMenuItem.Text = "滤波";
             this.滤波ToolStripMenuItem.Click += new System.EventHandler(this.滤波ToolStripMenuItem_Click);
-            // 
-            // 局部阈值ToolStripMenuItem1
-            // 
-            this.局部阈值ToolStripMenuItem1.Name = "局部阈值ToolStripMenuItem1";
-            this.局部阈值ToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
-            this.局部阈值ToolStripMenuItem1.Text = "局部阈值";
-            this.局部阈值ToolStripMenuItem1.Click += new System.EventHandler(this.局部阈值ToolStripMenuItem1_Click);
             // 
             // 膨胀腐蚀ToolStripMenuItem
             // 
             this.膨胀腐蚀ToolStripMenuItem.Name = "膨胀腐蚀ToolStripMenuItem";
-            this.膨胀腐蚀ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.膨胀腐蚀ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.膨胀腐蚀ToolStripMenuItem.Text = "膨胀腐蚀";
             this.膨胀腐蚀ToolStripMenuItem.Click += new System.EventHandler(this.膨胀腐蚀ToolStripMenuItem_Click);
+            // 
+            // 局部阈值ToolStripMenuItem1
+            // 
+            this.局部阈值ToolStripMenuItem1.Name = "局部阈值ToolStripMenuItem1";
+            this.局部阈值ToolStripMenuItem1.Size = new System.Drawing.Size(124, 22);
+            this.局部阈值ToolStripMenuItem1.Text = "局部阈值";
+            this.局部阈值ToolStripMenuItem1.Click += new System.EventHandler(this.局部阈值ToolStripMenuItem1_Click);
             // 
             // hSV测试ToolStripMenuItem
             // 
             this.hSV测试ToolStripMenuItem.Name = "hSV测试ToolStripMenuItem";
-            this.hSV测试ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.hSV测试ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.hSV测试ToolStripMenuItem.Text = "HSV测试";
             this.hSV测试ToolStripMenuItem.Click += new System.EventHandler(this.hSV测试ToolStripMenuItem_Click);
             // 
             // 直方图ToolStripMenuItem1
             // 
             this.直方图ToolStripMenuItem1.Name = "直方图ToolStripMenuItem1";
-            this.直方图ToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.直方图ToolStripMenuItem1.Size = new System.Drawing.Size(124, 22);
             this.直方图ToolStripMenuItem1.Text = "直方图";
             this.直方图ToolStripMenuItem1.Click += new System.EventHandler(this.直方图ToolStripMenuItem1_Click);
             // 
@@ -188,27 +188,27 @@
             // 边缘检测ToolStripMenuItem1
             // 
             this.边缘检测ToolStripMenuItem1.Name = "边缘检测ToolStripMenuItem1";
-            this.边缘检测ToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.边缘检测ToolStripMenuItem1.Size = new System.Drawing.Size(124, 22);
             this.边缘检测ToolStripMenuItem1.Text = "边缘检测";
             this.边缘检测ToolStripMenuItem1.Click += new System.EventHandler(this.边缘检测ToolStripMenuItem1_Click);
             // 
             // 直线检测ToolStripMenuItem
             // 
             this.直线检测ToolStripMenuItem.Name = "直线检测ToolStripMenuItem";
-            this.直线检测ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.直线检测ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.直线检测ToolStripMenuItem.Text = "直线检测";
             this.直线检测ToolStripMenuItem.Click += new System.EventHandler(this.直线检测ToolStripMenuItem_Click);
             // 
             // 车道检测ToolStripMenuItem
             // 
             this.车道检测ToolStripMenuItem.Name = "车道检测ToolStripMenuItem";
-            this.车道检测ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.车道检测ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.车道检测ToolStripMenuItem.Text = "车道检测";
             // 
             // 车辆检测ToolStripMenuItem
             // 
             this.车辆检测ToolStripMenuItem.Name = "车辆检测ToolStripMenuItem";
-            this.车辆检测ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.车辆检测ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.车辆检测ToolStripMenuItem.Text = "车辆检测";
             // 
             // 识别分类ToolStripMenuItem
@@ -224,21 +224,21 @@
             // acoordsvmToolStripMenuItem
             // 
             this.acoordsvmToolStripMenuItem.Name = "acoordsvmToolStripMenuItem";
-            this.acoordsvmToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.acoordsvmToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.acoordsvmToolStripMenuItem.Text = "Accordsvm";
             this.acoordsvmToolStripMenuItem.Click += new System.EventHandler(this.acoordsvmToolStripMenuItem_Click);
             // 
             // 特征点检测ToolStripMenuItem
             // 
             this.特征点检测ToolStripMenuItem.Name = "特征点检测ToolStripMenuItem";
-            this.特征点检测ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.特征点检测ToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.特征点检测ToolStripMenuItem.Text = "特征点检测";
             this.特征点检测ToolStripMenuItem.Click += new System.EventHandler(this.特征点检测ToolStripMenuItem_Click);
             // 
             // svm训练ToolStripMenuItem
             // 
             this.svm训练ToolStripMenuItem.Name = "svm训练ToolStripMenuItem";
-            this.svm训练ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.svm训练ToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.svm训练ToolStripMenuItem.Text = "svm训练";
             this.svm训练ToolStripMenuItem.Click += new System.EventHandler(this.svm训练ToolStripMenuItem_Click);
             // 
@@ -254,15 +254,31 @@
             // 保存ToolStripMenuItem
             // 
             this.保存ToolStripMenuItem.Name = "保存ToolStripMenuItem";
-            this.保存ToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
+            this.保存ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.保存ToolStripMenuItem.Text = "保存";
             this.保存ToolStripMenuItem.Click += new System.EventHandler(this.保存ToolStripMenuItem_Click);
             // 
             // 读取ToolStripMenuItem
             // 
             this.读取ToolStripMenuItem.Name = "读取ToolStripMenuItem";
-            this.读取ToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
+            this.读取ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.读取ToolStripMenuItem.Text = "读取";
+            this.读取ToolStripMenuItem.Click += new System.EventHandler(this.读取ToolStripMenuItem_Click);
+            // 
+            // 其他ToolStripMenuItem
+            // 
+            this.其他ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.视频分解ToolStripMenuItem});
+            this.其他ToolStripMenuItem.Name = "其他ToolStripMenuItem";
+            this.其他ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
+            this.其他ToolStripMenuItem.Text = "其他";
+            // 
+            // 视频分解ToolStripMenuItem
+            // 
+            this.视频分解ToolStripMenuItem.Name = "视频分解ToolStripMenuItem";
+            this.视频分解ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.视频分解ToolStripMenuItem.Text = "视频分解";
+            this.视频分解ToolStripMenuItem.Click += new System.EventHandler(this.视频分解ToolStripMenuItem_Click);
             // 
             // dockPanel1
             // 
@@ -319,21 +335,6 @@
             dockPanelSkin1.DockPaneStripSkin = dockPaneStripSkin1;
             this.dockPanel1.Skin = dockPanelSkin1;
             this.dockPanel1.TabIndex = 3;
-            // 
-            // 其他ToolStripMenuItem
-            // 
-            this.其他ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.视频分解ToolStripMenuItem});
-            this.其他ToolStripMenuItem.Name = "其他ToolStripMenuItem";
-            this.其他ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
-            this.其他ToolStripMenuItem.Text = "其他";
-            // 
-            // 视频分解ToolStripMenuItem
-            // 
-            this.视频分解ToolStripMenuItem.Name = "视频分解ToolStripMenuItem";
-            this.视频分解ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.视频分解ToolStripMenuItem.Text = "视频分解";
-            this.视频分解ToolStripMenuItem.Click += new System.EventHandler(this.视频分解ToolStripMenuItem_Click);
             // 
             // OpencvForm
             // 
