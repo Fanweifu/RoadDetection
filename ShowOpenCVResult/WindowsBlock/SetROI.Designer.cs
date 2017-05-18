@@ -96,21 +96,28 @@
             // numericUpDown4
             // 
             this.numericUpDown4.Location = new System.Drawing.Point(258, 38);
+            this.numericUpDown4.Maximum = new decimal(new int[] {
+            2000,
+            0,
+            0,
+            0});
             this.numericUpDown4.Name = "numericUpDown4";
             this.numericUpDown4.Size = new System.Drawing.Size(120, 21);
             this.numericUpDown4.TabIndex = 5;
             this.numericUpDown4.ValueChanged += new System.EventHandler(this.numericUpDown4_ValueChanged);
-            this.numericUpDown4.Maximum = 2000;
-
             // 
             // numericUpDown3
             // 
             this.numericUpDown3.Location = new System.Drawing.Point(258, 11);
+            this.numericUpDown3.Maximum = new decimal(new int[] {
+            2000,
+            0,
+            0,
+            0});
             this.numericUpDown3.Name = "numericUpDown3";
             this.numericUpDown3.Size = new System.Drawing.Size(120, 21);
             this.numericUpDown3.TabIndex = 4;
             this.numericUpDown3.ValueChanged += new System.EventHandler(this.numericUpDown3_ValueChanged);
-            this.numericUpDown3.Maximum = 2000;
             // 
             // label2
             // 
@@ -124,20 +131,28 @@
             // numericUpDown2
             // 
             this.numericUpDown2.Location = new System.Drawing.Point(65, 40);
+            this.numericUpDown2.Maximum = new decimal(new int[] {
+            2000,
+            0,
+            0,
+            0});
             this.numericUpDown2.Name = "numericUpDown2";
             this.numericUpDown2.Size = new System.Drawing.Size(120, 21);
             this.numericUpDown2.TabIndex = 2;
             this.numericUpDown2.ValueChanged += new System.EventHandler(this.numericUpDown2_ValueChanged);
-            this.numericUpDown2.Maximum = 2000;
             // 
             // numericUpDown1
             // 
             this.numericUpDown1.Location = new System.Drawing.Point(65, 11);
+            this.numericUpDown1.Maximum = new decimal(new int[] {
+            2000,
+            0,
+            0,
+            0});
             this.numericUpDown1.Name = "numericUpDown1";
             this.numericUpDown1.Size = new System.Drawing.Size(120, 21);
             this.numericUpDown1.TabIndex = 1;
             this.numericUpDown1.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
-            this.numericUpDown1.Maximum = 2000;
             // 
             // label1
             // 
@@ -171,7 +186,7 @@
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.toolStrip1);
             this.Name = "SetROI";
-            this.Text = "Form1";
+            this.Text = "SetRoi";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();

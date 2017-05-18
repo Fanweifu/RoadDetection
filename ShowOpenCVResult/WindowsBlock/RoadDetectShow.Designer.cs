@@ -31,15 +31,15 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RoadDetectShow));
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.tsbtnOpenImg = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton6 = new System.Windows.Forms.ToolStripButton();
+            this.tsbtnConnectToVideo = new System.Windows.Forms.ToolStripButton();
             this.tsbtnConnectcam = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
+            this.tsbtnPlayPause = new System.Windows.Forms.ToolStripButton();
             this.tsbtnUpdate = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
+            this.tsbtnLoadSvm = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButton5 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
+            this.tsbtnTest = new System.Windows.Forms.ToolStripButton();
+            this.tsbtnReloadParams = new System.Windows.Forms.ToolStripButton();
             this.imageIOControl1 = new ShowOpenCVResult.ImageIO();
             this.panel1 = new System.Windows.Forms.Panel();
             this.gpBox = new System.Windows.Forms.GroupBox();
@@ -55,6 +55,7 @@
             this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
             this.tsslbShow = new System.Windows.Forms.ToolStripStatusLabel();
             this.tsslbshowturn = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.gpBox.SuspendLayout();
@@ -66,15 +67,16 @@
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsbtnOpenImg,
-            this.toolStripButton6,
+            this.tsbtnConnectToVideo,
             this.tsbtnConnectcam,
             this.toolStripSeparator1,
-            this.toolStripButton2,
+            this.tsbtnPlayPause,
             this.tsbtnUpdate,
-            this.toolStripButton4,
+            this.toolStripSeparator3,
+            this.tsbtnLoadSvm,
             this.toolStripSeparator2,
-            this.toolStripButton5,
-            this.toolStripButton3});
+            this.tsbtnTest,
+            this.tsbtnReloadParams});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(805, 25);
@@ -92,14 +94,15 @@
             this.tsbtnOpenImg.Text = "选择目录";
             this.tsbtnOpenImg.Click += new System.EventHandler(this.tsbtnOpenImg_Click);
             // 
-            // toolStripButton6
+            // tsbtnConnectToVideo
             // 
-            this.toolStripButton6.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButton6.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton6.Image")));
-            this.toolStripButton6.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton6.Name = "toolStripButton6";
-            this.toolStripButton6.Size = new System.Drawing.Size(60, 22);
-            this.toolStripButton6.Text = "选择视频";
+            this.tsbtnConnectToVideo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tsbtnConnectToVideo.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnConnectToVideo.Image")));
+            this.tsbtnConnectToVideo.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbtnConnectToVideo.Name = "tsbtnConnectToVideo";
+            this.tsbtnConnectToVideo.Size = new System.Drawing.Size(60, 22);
+            this.tsbtnConnectToVideo.Text = "选择视频";
+            this.tsbtnConnectToVideo.Click += new System.EventHandler(this.tsbtnConnectToVideo_Click);
             // 
             // tsbtnConnectcam
             // 
@@ -116,15 +119,15 @@
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
             // 
-            // toolStripButton2
+            // tsbtnPlayPause
             // 
-            this.toolStripButton2.Enabled = false;
-            this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
-            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(81, 22);
-            this.toolStripButton2.Text = "暂停/播放";
-            this.toolStripButton2.Click += new System.EventHandler(this.toolStripButton2_Click);
+            this.tsbtnPlayPause.Enabled = false;
+            this.tsbtnPlayPause.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnPlayPause.Image")));
+            this.tsbtnPlayPause.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbtnPlayPause.Name = "tsbtnPlayPause";
+            this.tsbtnPlayPause.Size = new System.Drawing.Size(81, 22);
+            this.tsbtnPlayPause.Text = "暂停/播放";
+            this.tsbtnPlayPause.Click += new System.EventHandler(this.toolStripButton2_Click);
             // 
             // tsbtnUpdate
             // 
@@ -135,40 +138,38 @@
             this.tsbtnUpdate.Size = new System.Drawing.Size(52, 22);
             this.tsbtnUpdate.Text = "更新";
             this.tsbtnUpdate.ToolTipText = "更新";
-            this.tsbtnUpdate.Click += new System.EventHandler(this.toolStripButton5_Click);
             // 
-            // toolStripButton4
+            // tsbtnLoadSvm
             // 
-            this.toolStripButton4.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton4.Image")));
-            this.toolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton4.Name = "toolStripButton4";
-            this.toolStripButton4.Size = new System.Drawing.Size(79, 22);
-            this.toolStripButton4.Text = "加载SVM";
-            this.toolStripButton4.Click += new System.EventHandler(this.toolStripButton4_Click);
+            this.tsbtnLoadSvm.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnLoadSvm.Image")));
+            this.tsbtnLoadSvm.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbtnLoadSvm.Name = "tsbtnLoadSvm";
+            this.tsbtnLoadSvm.Size = new System.Drawing.Size(79, 22);
+            this.tsbtnLoadSvm.Text = "加载SVM";
+            this.tsbtnLoadSvm.Click += new System.EventHandler(this.toolStripButton4_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
             // 
-            // toolStripButton5
+            // tsbtnTest
             // 
-            this.toolStripButton5.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton5.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton5.Image")));
-            this.toolStripButton5.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton5.Name = "toolStripButton5";
-            this.toolStripButton5.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton5.Text = "toolStripButton5";
-            this.toolStripButton5.Click += new System.EventHandler(this.toolStripButton5_Click_1);
+            this.tsbtnTest.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnTest.Image")));
+            this.tsbtnTest.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbtnTest.Name = "tsbtnTest";
+            this.tsbtnTest.Size = new System.Drawing.Size(75, 22);
+            this.tsbtnTest.Text = "ImgTest";
+            this.tsbtnTest.Click += new System.EventHandler(this.toolStripButton5_Click_1);
             // 
-            // toolStripButton3
+            // tsbtnReloadParams
             // 
-            this.toolStripButton3.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton3.Image")));
-            this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton3.Name = "toolStripButton3";
-            this.toolStripButton3.Size = new System.Drawing.Size(103, 22);
-            this.toolStripButton3.Text = "ResetPramas";
-            this.toolStripButton3.Click += new System.EventHandler(this.toolStripButton3_Click);
+            this.tsbtnReloadParams.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnReloadParams.Image")));
+            this.tsbtnReloadParams.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbtnReloadParams.Name = "tsbtnReloadParams";
+            this.tsbtnReloadParams.Size = new System.Drawing.Size(103, 22);
+            this.tsbtnReloadParams.Text = "ResetPramas";
+            this.tsbtnReloadParams.Click += new System.EventHandler(this.toolStripButton3_Click);
             // 
             // imageIOControl1
             // 
@@ -318,6 +319,11 @@
             this.tsslbshowturn.Name = "tsslbshowturn";
             this.tsslbshowturn.Size = new System.Drawing.Size(0, 17);
             // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
+            // 
             // RoadDetectShow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -327,7 +333,7 @@
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.toolStrip1);
             this.Name = "RoadDetectShow";
-            this.Text = "HSV";
+            this.Text = "VideoTest";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.RoadDetectShow_FormClosing);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
@@ -350,8 +356,8 @@
         private ImageIO imageIOControl1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.ToolStripButton tsbtnConnectcam;
-        private System.Windows.Forms.ToolStripButton toolStripButton2;
-        private System.Windows.Forms.ToolStripButton toolStripButton4;
+        private System.Windows.Forms.ToolStripButton tsbtnPlayPause;
+        private System.Windows.Forms.ToolStripButton tsbtnLoadSvm;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
@@ -359,10 +365,10 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel3;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel4;
         private System.Windows.Forms.ToolStripButton tsbtnUpdate;
-        private System.Windows.Forms.ToolStripButton toolStripButton5;
+        private System.Windows.Forms.ToolStripButton tsbtnTest;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        private System.Windows.Forms.ToolStripButton toolStripButton3;
+        private System.Windows.Forms.ToolStripButton tsbtnReloadParams;
         private System.Windows.Forms.ToolStripStatusLabel tsslbshowturn;
         private System.Windows.Forms.GroupBox gpBox;
         private System.Windows.Forms.Button button1;
@@ -370,6 +376,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.NumericUpDown numDetectInternal;
-        private System.Windows.Forms.ToolStripButton toolStripButton6;
+        private System.Windows.Forms.ToolStripButton tsbtnConnectToVideo;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
     }
 }

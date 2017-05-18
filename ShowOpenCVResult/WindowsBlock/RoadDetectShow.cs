@@ -34,7 +34,6 @@ namespace ShowOpenCVResult
 
         public RoadDetectShow()
         {
-            initTimer();
             iniPictPlay();
             InitializeComponent();
         }
@@ -59,7 +58,7 @@ namespace ShowOpenCVResult
                 }
                 toolStripProgressBar1.Maximum = imgspath.Count;
                 toolStripProgressBar1.Value = 0;
-                toolStripButton2.Enabled = true;
+                tsbtnPlayPause.Enabled = true;
                 iniPictPlay();
             }
 
@@ -114,51 +113,51 @@ namespace ShowOpenCVResult
             });
             playthead.Start();
         }
-        void initTimer()
-        {
-            m_timer.Elapsed += M_timer_Tick;
-            m_timer.Interval = 500;
+        //void initTimer()
+        //{
+        //    m_timer.Elapsed += M_timer_Tick;
+        //    m_timer.Interval = 500;
 
-        }
+        //}
 
-        private void M_timer_Tick(object sender, EventArgs e)
-        {
-            if (curplayindex >= imgspath.Count)
-            {
-                m_timer.Stop();
-            }
-            mr.WaitOne();
-            mr.Reset();
-            Mat matimg = new Mat(imgspath[curplayindex++], LoadImageType.Unchanged);
-            if (imageIOControl1.Image1 != null)
-                imageIOControl1.Image1.Dispose();
-            imageIOControl1.Image1 = matimg;
-            long time = 0;
-            Mat road = null;
-            Mat result = OpencvMath.FinalLineProcess(matimg, out time, true);
-            var vpp = OpencvMath.WalkRoadImg(result);
-            for (int i = 0; i < vpp.Size; i++)
-            {
-                OpencvMath.DrawRotatedRect(CvInvoke.MinAreaRect(vpp[i]), result);
-            }
+        //private void M_timer_Tick(object sender, EventArgs e)
+        //{
+        //    if (curplayindex >= imgspath.Count)
+        //    {
+        //        m_timer.Stop();
+        //    }
+        //    mr.WaitOne();
+        //    mr.Reset();
+        //    Mat matimg = new Mat(imgspath[curplayindex++], LoadImageType.Unchanged);
+        //    if (imageIOControl1.Image1 != null)
+        //        imageIOControl1.Image1.Dispose();
+        //    imageIOControl1.Image1 = matimg;
+        //    long time = 0;
+        //    Mat road = null;
+        //    Mat result = OpencvMath.FinalLineProcess(matimg, out time, true);
+        //    var vpp = OpencvMath.WalkRoadImg(result);
+        //    for (int i = 0; i < vpp.Size; i++)
+        //    {
+        //        OpencvMath.DrawRotatedRect(CvInvoke.MinAreaRect(vpp[i]), result);
+        //    }
 
-            road.Dispose();
+        //    road.Dispose();
 
-            if (imageIOControl1.Image2 != null)
-                imageIOControl1.Image2.Dispose();
-            imageIOControl1.Image2 = result;
+        //    if (imageIOControl1.Image2 != null)
+        //        imageIOControl1.Image2.Dispose();
+        //    imageIOControl1.Image2 = result;
 
-            playcnt++;
-            timesum += time;
+        //    playcnt++;
+        //    timesum += time;
 
-            Thread.Sleep(1000);
-            Invoke(new Action(() =>
-            {
-                tsslbShow.Text = string.Format("总体耗时:{0}ms,播放帧数{1},平均耗时{2}", timesum, playcnt, timesum / playcnt);
+        //    Thread.Sleep(1000);
+        //    Invoke(new Action(() =>
+        //    {
+        //        tsslbShow.Text = string.Format("总体耗时:{0}ms,播放帧数{1},平均耗时{2}", timesum, playcnt, timesum / playcnt);
 
-            }));
-            mr.Set();
-        }
+        //    }));
+        //    mr.Set();
+        //}
 
         private void myTrackBar1_ValueChanged(object sender, EventArgs e)
         {
@@ -199,13 +198,8 @@ namespace ShowOpenCVResult
 
         }
 
-        private void toolStripButton1_Click(object sender, EventArgs e)
-        {
 
-        }
-
-
-        void iniVideotPlay()
+        void initVideotPlay()
         {
             Mat last = new Mat();
             playthead = new Task(() =>
@@ -332,10 +326,6 @@ namespace ShowOpenCVResult
              m_detector = new RoadDetect("svm.dat");
         }
 
-        private void toolStripButton5_Click(object sender, EventArgs e)
-        {
-
-        }
 
         private void toolStripButton5_Click_1(object sender, EventArgs e)
         {
@@ -388,6 +378,22 @@ namespace ShowOpenCVResult
         private void RoadDetectShow_FormClosing(object sender, FormClosingEventArgs e)
         {
             isclosewindows = true;
+        }
+
+        private void tsbtnConnectToVideo_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog of = new OpenFileDialog())
+            {
+                of.Filter = "Video|*.avi;*.flv;*.mp4";
+                if (of.ShowDialog() != DialogResult.OK) return;
+
+                m_captrue = new Emgu.CV.Capture(of.FileName);
+                fps = (int)m_captrue.GetCaptureProperty(CapProp.Fps);
+                playcnt = (int)m_captrue.GetCaptureProperty(CapProp.FrameCount);
+                initVideotPlay();
+                playthead.Start();
+                tsbtnPlayPause.Enabled = true;
+            }
         }
     }
 }
