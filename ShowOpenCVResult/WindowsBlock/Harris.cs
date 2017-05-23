@@ -34,8 +34,8 @@ namespace ShowOpenCVResult
 
         private void imageIOControl1_DoImgChange(object sender, EventArgs e)
         {
-            if (imageIOControl1.Image1 == null) return;
-            Image<Gray,Byte> img = (imageIOControl1.Image1 as Image<Bgr,Byte>).Convert<Gray,Byte>();
+            if (imageIOControl1.InImage == null) return;
+            Image<Gray,Byte> img = (imageIOControl1.InImage as Image<Bgr,Byte>).Convert<Gray,Byte>();
 
             Harris hs = new Harris();
             hs.detect(img);
@@ -43,7 +43,7 @@ namespace ShowOpenCVResult
             hs.GetCorners(vp, 0.3);
             Mat img2 = img.Mat.Clone();
             hs.DrawOnImage(img2, vp, new MCvScalar(255, 255, 255));
-            imageIOControl1.Image2 = img2;
+            imageIOControl1.OutImage = img2;
         }
     }
 }

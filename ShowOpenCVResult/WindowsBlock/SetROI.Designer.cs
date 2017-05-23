@@ -167,8 +167,8 @@
             // 
             this.imageIO1.AutoScroll = true;
             this.imageIO1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.imageIO1.Image1 = null;
-            this.imageIO1.Image2 = null;
+            this.imageIO1.InImage = null;
+            this.imageIO1.OutImage = null;
             this.imageIO1.Location = new System.Drawing.Point(0, 119);
             this.imageIO1.Name = "imageIO1";
             this.imageIO1.Size = new System.Drawing.Size(766, 325);

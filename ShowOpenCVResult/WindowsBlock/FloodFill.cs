@@ -30,20 +30,20 @@ namespace ShowOpenCVResult
 
         private void imageIO1_DoImgChange(object sender, EventArgs e)
         {
-            if (imageIO1.Image1 == null) return;
-            var imgbgr = imageIO1.Image1 as Image<Bgr, byte>;
+            if (imageIO1.InImage == null) return;
+            var imgbgr = imageIO1.InImage as Image<Bgr, byte>;
             var imggray = imgbgr.Convert<Gray, byte>();
           
             MCvScalar low = new MCvScalar((int)numericUpDown3.Value/*, (int)numericUpDown4.Value, (int)numericUpDown5.Value*/), high = new MCvScalar((int)numericUpDown6.Value/*, (int)numericUpDown7.Value, (int)numericUpDown8.Value*/);
             
             CvInvoke.FloodFill(imggray, null, new Point((int)numericUpDown1.Value, (int)numericUpDown2.Value), new MCvScalar(255, 0, 0), out rc, low, high, Emgu.CV.CvEnum.Connectivity.FourConnected, (Emgu.CV.CvEnum.FloodFillType)comboBox1.SelectedItem);
             CvInvoke.Rectangle(imggray, rc, new MCvScalar(0, 255, 0));
-            if (imageIO1.Image2 != null)
+            if (imageIO1.OutImage != null)
             {
-                imageIO1.Image2.Dispose();
+                imageIO1.OutImage.Dispose();
             }
 
-            imageIO1.Image2 = imggray;
+            imageIO1.OutImage = imggray;
 
 
         }

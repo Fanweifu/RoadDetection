@@ -15,8 +15,7 @@ namespace ShowOpenCVResult
         public ImageIO()
         {
             InitializeComponent();
-            imageBox1.DargOnNull = false;
-            imageBox1.DragDrop+= imageBox1_DragDrop;
+            imageBoxInput.DragDrop+= imageBox1_DragDrop;
         }
 
         public Orientation SpOrientation
@@ -32,24 +31,43 @@ namespace ShowOpenCVResult
 
         }
 
-        public IImage Image1 {
-            get {
-                return imageBox1.Image;
-            }
-            set
-            {
-                imageBox1.Image = value;
-            }
+        [DefaultValue(true)]
+        public bool AutoDispose
+        {
+            get;
+            set;
         }
-        public IImage Image2
+
+        public IImage InImage
         {
             get
             {
-                return imageBox2.Image;
+                return imageBoxInput.Image;
             }
             set
             {
-                imageBox2.Image = value;
+                if (imageBoxInput.Image != null && AutoDispose)
+                {
+                    imageBoxInput.Image.Dispose();
+                }
+
+                imageBoxInput.Image = value;
+            }
+        }
+        public IImage OutImage
+        {
+            get
+            {
+                return imageBoxOutput.Image;
+            }
+            set
+            {
+                if (imageBoxOutput.Image != null && AutoDispose)
+                {
+                    imageBoxOutput.Image.Dispose();
+                }
+
+                imageBoxOutput.Image = value;
             }
         }
         public event EventHandler DoImgChange;
@@ -72,7 +90,7 @@ namespace ShowOpenCVResult
 
         public void SetInput(IImage img) {
             if (img == null) return;
-            imageBox1.Image = img;
+            imageBoxInput.Image = img;
             onAfterImgLoaded();
             DoChange();
         }

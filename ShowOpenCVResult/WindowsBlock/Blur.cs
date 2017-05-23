@@ -43,31 +43,30 @@ namespace ShowOpenCVResult
         {
 
             if (myTrackBar1.Value == 0) return;
-            if (imageIOControl1.Image1 == null) return;
-            if (imageIOControl1.Image2 != null) imageIOControl1.Image2.Dispose();
+            
             int kernalsize = (int)myTrackBar1.Value;
 
-            Image<Bgr, Byte> image = new Image<Bgr, byte>(imageIOControl1.Image1.Size);//imageIOControl1.OutputImage as Image<Bgr, Byte>;
+            Image<Bgr, Byte> image = new Image<Bgr, byte>(imageIOControl1.InImage.Size);//imageIOControl1.OutputImage as Image<Bgr, Byte>;
             //imageIOControl1.OutputImage = GclrOpencvProces.BitmapGetBlurImg(imageIOControl1.InputImage as Bitmap,m_blurID, myTrackBar1.Value);
             switch (BlurID)
             {
                 case 0:
-                    CvInvoke.BoxFilter(imageIOControl1.Image1, image, Emgu.CV.CvEnum.DepthType.Default, new Size(2 * kernalsize + 1, 2 * kernalsize + 1), new Point(-1, -1));
+                    CvInvoke.BoxFilter(imageIOControl1.InImage, image, Emgu.CV.CvEnum.DepthType.Default, new Size(2 * kernalsize + 1, 2 * kernalsize + 1), new Point(-1, -1));
                     break;
                 case 1:
-                    CvInvoke.Blur(imageIOControl1.Image1,  image, new Size(2 * kernalsize + 1, 2 * kernalsize + 1), new Point(-1, -1));
+                    CvInvoke.Blur(imageIOControl1.InImage,  image, new Size(2 * kernalsize + 1, 2 * kernalsize + 1), new Point(-1, -1));
                     break;
                 case 2:
-                    CvInvoke.GaussianBlur(imageIOControl1.Image1, image, new Size(2 * kernalsize + 1, 2 * kernalsize + 1),0,0);
+                    CvInvoke.GaussianBlur(imageIOControl1.InImage, image, new Size(2 * kernalsize + 1, 2 * kernalsize + 1),0,0);
                     break;
                 case 3:
-                    CvInvoke.MedianBlur(imageIOControl1.Image1, image, 2 * kernalsize + 1);
+                    CvInvoke.MedianBlur(imageIOControl1.InImage, image, 2 * kernalsize + 1);
                     break;
                 case 4:
-                    CvInvoke.BilateralFilter(imageIOControl1.Image1,image, kernalsize, kernalsize * 2, kernalsize / 2);
+                    CvInvoke.BilateralFilter(imageIOControl1.InImage,image, kernalsize, kernalsize * 2, kernalsize / 2);
                     break;
             }
-            imageIOControl1.Image2 = image;
+            imageIOControl1.OutImage = image;
         }
 
         private void myTrackBar1_ValueChanged(object sender, EventArgs e)

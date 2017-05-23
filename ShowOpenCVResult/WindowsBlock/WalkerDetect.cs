@@ -25,7 +25,7 @@ namespace ShowOpenCVResult
             if (input == null) return;
             imageIO1.SetInput((input as Image<Bgr, Byte>));
             int time=0;
-            imageIO1.Image2=PedestrianDetection.FindPedestrian.Run((imageIO1.Image1 as Image<Bgr, Byte>).Mat,out time);
+            imageIO1.OutImage=PedestrianDetection.FindPedestrian.Run((imageIO1.InImage as Image<Bgr, Byte>).Mat,out time);
         }
 
         

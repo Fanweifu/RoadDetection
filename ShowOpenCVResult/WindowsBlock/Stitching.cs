@@ -47,7 +47,7 @@ namespace ShowOpenCVResult
                 treeView1.Nodes.Add(new TreeNode(Path.GetFileName(files[i])));
             }
             treeView1.SelectedNode = treeView1.Nodes[0];
-            imageIOControl1.Image1 = sti_image[0];
+            imageIOControl1.InImage = sti_image[0];
 
          
         }
@@ -57,7 +57,7 @@ namespace ShowOpenCVResult
             int index = e.Node.Index;
             if (index < sti_image.Size)
             {
-                imageIOControl1.Image1 = sti_image[index];
+                imageIOControl1.InImage = sti_image[index];
             }
         }
 
@@ -66,7 +66,7 @@ namespace ShowOpenCVResult
             Mat outmat = new Mat();
             if (_sticher.Stitch(sti_image, outmat))
             {
-                imageIOControl1.Image2 = outmat;
+                imageIOControl1.OutImage = outmat;
             }
             else
             {
@@ -83,7 +83,7 @@ namespace ShowOpenCVResult
 
         private void toolStripButton3_Click(object sender, EventArgs e)
         {
-            imageIOControl1.Image2 = null;
+            imageIOControl1.OutImage = null;
         }
     }
 }

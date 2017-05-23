@@ -409,6 +409,11 @@ namespace ShowOpenCVResult
                 LoadConfigFromXml(of.FileName);
             }
         }
+
+        private void 视频追踪ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new HsvTrack().Show(this.dockPanel1, DockState.Document);
+        }
     }
 
 

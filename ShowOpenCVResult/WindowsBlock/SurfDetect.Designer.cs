@@ -58,7 +58,7 @@
             // 
             // drawImageBox1
             // 
-            this.drawImageBox1.DargOnNull = true;
+
             this.drawImageBox1.AllowDrop = true;
             this.drawImageBox1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.drawImageBox1.Dock = System.Windows.Forms.DockStyle.Top;
@@ -72,7 +72,7 @@
             // 
             // drawImageBox2
             // 
-            this.drawImageBox2.DargOnNull = true;
+
             this.drawImageBox2.AllowDrop = true;
             this.drawImageBox2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.drawImageBox2.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -136,7 +136,7 @@
             // 
             // drawImageBox3
             // 
-            this.drawImageBox3.DargOnNull = true;
+
             this.drawImageBox3.AllowDrop = true;
             this.drawImageBox3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.drawImageBox3.Dock = System.Windows.Forms.DockStyle.Fill;

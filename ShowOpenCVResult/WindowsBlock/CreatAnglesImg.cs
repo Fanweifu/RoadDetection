@@ -25,14 +25,14 @@ namespace ShowOpenCVResult
         {
             path = OpencvForm.SelectImg();
             if (path == null) return;
-            imageIO1.Image1 = new Image<Gray,Byte>(path);
+            imageIO1.InImage = new Image<Gray,Byte>(path);
 
         }
 
         private void toolStripButton2_Click(object sender, EventArgs e)
         {
-            if (imageIO1.Image1 == null) return ;
-            Image<Gray, Byte> gray = imageIO1.Image1 as Image<Gray, Byte>;
+            if (imageIO1.InImage == null) return ;
+            Image<Gray, Byte> gray = imageIO1.InImage as Image<Gray, Byte>;
             angles = new List<double>();
             foreach (Control c in flowLayoutPanel1.Controls) {
                 CheckBox cb =c as CheckBox;
@@ -52,7 +52,7 @@ namespace ShowOpenCVResult
         private void treeView1_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             if (imgs != null) {
-                imageIO1.Image2 = imgs[e.Node.Index];
+                imageIO1.OutImage = imgs[e.Node.Index];
             }
         }
 

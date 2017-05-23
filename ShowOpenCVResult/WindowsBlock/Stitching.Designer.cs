@@ -91,8 +91,8 @@
             // imageIOControl1
             // 
             this.imageIOControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.imageIOControl1.Image1 = null;
-            this.imageIOControl1.Image2 = null;
+            this.imageIOControl1.InImage = null;
+            this.imageIOControl1.OutImage = null;
             this.imageIOControl1.Location = new System.Drawing.Point(96, 232);
             this.imageIOControl1.Name = "imageIOControl1";
             this.imageIOControl1.Size = new System.Drawing.Size(807, 191);

@@ -52,9 +52,9 @@ namespace ShowOpenCVResult
             lbLT.Tag = nudLT.Value;
             lbLT.Text = string.Format("LT:{0}", lbLT.Tag);
             tsbtnMultyDeal.Enabled = true;
-            if (imageIOControl1.Image1 == null) return;
+            if (imageIOControl1.InImage == null) return;
 
-            Size s = (imageIOControl1.Image1 as Image<Bgr, byte>).Size;
+            Size s = (imageIOControl1.InImage as Image<Bgr, byte>).Size;
 
             RoadTransform.SetTransform(s, (float)nudAX.Value / 100, (float)nudAY.Value / 100, (float)nudLT.Value / 100, (int)nudOW.Value, (int)nudOH.Value);
             var config = Properties.Settings.Default;
@@ -148,17 +148,15 @@ namespace ShowOpenCVResult
 
         private void imageIOControl1_DoImgChange(object sender, EventArgs e)
         {
-            if (imageIOControl1.Image1 == null) return;
-            if (imageIOControl1.Image2 != null) {
-                imageIOControl1.Image2.Dispose();
-             }
+            if (imageIOControl1.InImage == null) return;
+            
             int h = (int)nudOH.Value, w = (int)nudOW.Value;
-            var input = (imageIOControl1.Image1 as Image<Bgr, Byte>).Mat;
+            var input = (imageIOControl1.InImage as Image<Bgr, Byte>).Mat;
             Mat img = new Mat();
             Mat transform = OpencvMath.CalTransformatMat(input.Size, (float)nudAX.Value / 100, (float)nudAY.Value / 100, (float)nudLT.Value / 100,w,h);
             CvInvoke.WarpPerspective(input, img, transform,new Size(w,h), (Inter)comboBox1.SelectedItem,(Warp)comboBox2.SelectedItem,(BorderType)comboBox3.SelectedItem);
                 //imageIOControl1.OutputImage = GclrOpencvProces.BitmapTransformation(imageIOControl1.InputImage as Bitmap, TDepth, (double)nudAX.Value / 100, (double)nudAY.Value / 100, (int)nudOW.Value, (int)nudOH.Value);
-            imageIOControl1.Image2 = img;
+            imageIOControl1.OutImage = img;
         }
 
 
@@ -181,9 +179,9 @@ namespace ShowOpenCVResult
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
             VectorOfMat vm = new VectorOfMat();
-            CvInvoke.Split(imageIOControl1.Image2 as Mat, vm);
+            CvInvoke.Split(imageIOControl1.OutImage as Mat, vm);
              var img =OpencvMath.RoadLineDetect(vm[2], vm[2].Width/20);
-            imageIOControl1.Image1 = img;
+            imageIOControl1.InImage = img;
         }
     }
 }

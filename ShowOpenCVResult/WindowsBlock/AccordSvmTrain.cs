@@ -241,9 +241,7 @@ namespace ShowOpenCVResult
             var img = OpencvForm.GetImage();
             if (img == null) return;
             var gray = (img as Image<Bgr, byte>).Convert<Gray, byte>();
-            if (drawImageBox1.Image != null) {
-                drawImageBox1.Image.Dispose();
-            }
+            
             drawImageBox1.Image = gray;
             
         }

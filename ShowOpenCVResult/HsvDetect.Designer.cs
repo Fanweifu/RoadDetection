@@ -1,6 +1,6 @@
 ﻿namespace ShowOpenCVResult
 {
-    partial class HSVRangeTest
+    partial class HsvDetect :MoveBlock
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(HSVRangeTest));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(HsvDetect));
             this.imageIO1 = new ShowOpenCVResult.ImageIO();
             this.panel1 = new System.Windows.Forms.Panel();
             this.vmaxbar = new ShowOpenCVResult.MyTrackBar();
@@ -47,8 +47,8 @@
             // imageIO1
             // 
             this.imageIO1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.imageIO1.InImage = null;
-            this.imageIO1.OutImage = null;
+            this.imageIO1.Image1 = null;
+            this.imageIO1.Image2 = null;
             this.imageIO1.Location = new System.Drawing.Point(0, 153);
             this.imageIO1.Name = "imageIO1";
             this.imageIO1.Size = new System.Drawing.Size(724, 291);
@@ -161,7 +161,7 @@
             // 
             // toolStripButton1
             // 
-            //this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
+            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton1.Name = "toolStripButton1";
             this.toolStripButton1.Size = new System.Drawing.Size(60, 22);
@@ -171,13 +171,13 @@
             // toolStripButton2
             // 
             this.toolStripButton2.CheckOnClick = true;
-            //this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
+            this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
             this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton2.Name = "toolStripButton2";
             this.toolStripButton2.Size = new System.Drawing.Size(88, 22);
             this.toolStripButton2.Text = "Normalize";
             // 
-            // HSVRangeTest
+            // HsvDetect
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -185,8 +185,8 @@
             this.Controls.Add(this.imageIO1);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.toolStrip1);
-            this.Name = "HSVRangeTest";
-            this.Text = "HSVRangeTest";
+            this.Name = "HsvDetect";
+            this.Text = "HsvDetect";
             this.panel1.ResumeLayout(false);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();

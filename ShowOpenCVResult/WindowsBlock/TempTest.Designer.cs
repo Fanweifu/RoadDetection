@@ -91,8 +91,8 @@
             // imageIOControl1
             // 
             this.imageIOControl1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.imageIOControl1.Image1 = null;
-            this.imageIOControl1.Image2 = null;
+            this.imageIOControl1.InImage = null;
+            this.imageIOControl1.OutImage = null;
             this.imageIOControl1.Location = new System.Drawing.Point(0, 103);
             this.imageIOControl1.Name = "imageIOControl1";
             this.imageIOControl1.Size = new System.Drawing.Size(261, 341);
@@ -102,7 +102,7 @@
             // 
             // drawImageBox1
             // 
-            this.drawImageBox1.DargOnNull = true;
+
             this.drawImageBox1.AllowDrop = true;
             this.drawImageBox1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.drawImageBox1.Dock = System.Windows.Forms.DockStyle.Fill;

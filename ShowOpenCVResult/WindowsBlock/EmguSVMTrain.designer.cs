@@ -159,7 +159,7 @@
             // 
             this.drawImageBox1.AllowDrop = true;
             this.drawImageBox1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.drawImageBox1.DargOnNull = true;
+
             this.drawImageBox1.Dock = System.Windows.Forms.DockStyle.Right;
             this.drawImageBox1.Location = new System.Drawing.Point(472, 25);
             this.drawImageBox1.Name = "drawImageBox1";

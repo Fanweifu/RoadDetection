@@ -35,16 +35,15 @@ namespace ShowOpenCVResult
 
         private void imageIO1_DoImgChange(object sender, EventArgs e)
         {
-            var img = imageIO1.Image1 as Image<Bgr, byte>;
+            var img = imageIO1.InImage as Image<Bgr, byte>;
             if (img == null) return;
             int x = (int)numericUpDown1.Value, y = (int)numericUpDown2.Value, w = (int)numericUpDown3.Value, h = (int)numericUpDown4.Value;
             if (x + w > img.Width || y + h > img.Height)  return;
 
             Mat roi = new Mat(img.Mat, new Rectangle(new Point(x, y), new Size(w, h))).Clone();
 
-            if (imageIO1.Image2 != null)
-                imageIO1.Image2.Dispose();
-            imageIO1.Image2 = roi;            
+            
+            imageIO1.OutImage = roi;            
         }
 
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
@@ -80,7 +79,7 @@ namespace ShowOpenCVResult
 
         private void imageIO1_AfterImgLoaded(object sender, EventArgs e)
         {
-            var img = imageIO1.Image1 as Image<Bgr, byte>;
+            var img = imageIO1.InImage as Image<Bgr, byte>;
             if (img == null) return;
             //numericUpDown1.Maximum = numericUpDown3.Maximum = img.Width;
             //numericUpDown2.Maximum = numericUpDown4.Maximum = img.Height;

@@ -26,6 +26,7 @@ namespace ShowOpenCVResult
         int curplayindex = 0;
         int detectInternal = 1;
         bool isclosewindows = false;
+        VideoWriter vw;
         string[] exs = new string[] { ".jpg", ".png", ".bmp", "jpeg" };
 
         MulticlassSupportVectorMachine m_svm = null;
@@ -56,8 +57,8 @@ namespace ShowOpenCVResult
                         imgspath.Add(fi.FullName);
                     }
                 }
-                toolStripProgressBar1.Maximum = imgspath.Count;
-                toolStripProgressBar1.Value = 0;
+                tspbProcess.Maximum = imgspath.Count;
+                tspbProcess.Value = 0;
                 tsbtnPlayPause.Enabled = true;
                 iniPictPlay();
             }
@@ -79,9 +80,8 @@ namespace ShowOpenCVResult
                         return;
 
                     Mat matimg = new Mat(path, LoadImageType.Unchanged);
-                    if (imageIOControl1.Image1 != null)
-                        imageIOControl1.Image1.Dispose();
-                    imageIOControl1.Image1 = matimg;
+                    
+                    imageIOControl1.InImage = matimg;
                     if (tsbtnUpdate.Checked)
                     {
                         long time = 0;
@@ -92,9 +92,8 @@ namespace ShowOpenCVResult
                         {
                             OpencvMath.DrawRotatedRect(CvInvoke.MinAreaRect(vpp[i]), result);
                         }
-                        if (imageIOControl1.Image2 != null)
-                            imageIOControl1.Image2.Dispose();
-                        imageIOControl1.Image2 = result;
+                        
+                        imageIOControl1.OutImage = result;
                         playcnt++;
                         timesum += time;
 
@@ -108,7 +107,7 @@ namespace ShowOpenCVResult
                 }
 
 
-              
+
 
             });
             playthead.Start();
@@ -129,8 +128,7 @@ namespace ShowOpenCVResult
         //    mr.WaitOne();
         //    mr.Reset();
         //    Mat matimg = new Mat(imgspath[curplayindex++], LoadImageType.Unchanged);
-        //    if (imageIOControl1.Image1 != null)
-        //        imageIOControl1.Image1.Dispose();
+        //    
         //    imageIOControl1.Image1 = matimg;
         //    long time = 0;
         //    Mat road = null;
@@ -143,8 +141,7 @@ namespace ShowOpenCVResult
 
         //    road.Dispose();
 
-        //    if (imageIOControl1.Image2 != null)
-        //        imageIOControl1.Image2.Dispose();
+        //    
         //    imageIOControl1.Image2 = result;
 
         //    playcnt++;
@@ -171,8 +168,7 @@ namespace ShowOpenCVResult
 
         private void imageIOControl1_DoImgChange(object sender, EventArgs e)
         {
-            if (imageIOControl1.Image1 == null) return;
-            if (imageIOControl1.Image2 != null) imageIOControl1.Image2.Dispose();
+            
 
 
 
@@ -214,7 +210,12 @@ namespace ShowOpenCVResult
                     Stopwatch sw = Stopwatch.StartNew();
 
                     Mat img = m_captrue.QueryFrame();
-                    imageIOControl1.Image1 = img;
+                    imageIOControl1.InImage = img;
+
+                    Invoke(new Action(() => {
+                        tspbProcess.Value++;
+                    }));
+
                     m_queue.Enqueue(img);
 
                     if (tsbtnUpdate.Checked && cnt % detectInternal == 0)
@@ -243,9 +244,9 @@ namespace ShowOpenCVResult
 
                     sw.Stop();
                     int sleeptime = 1000 / fps - (int)sw.ElapsedMilliseconds;
-                    if(sleeptime>0)
+                    if (sleeptime > 0)
                         Thread.Sleep(sleeptime);
-                    
+
                 }
             });
 
@@ -256,6 +257,11 @@ namespace ShowOpenCVResult
         void doprocess(Mat img, out long time)
         {
             if (m_detector == null) { time = 0; return; }
+
+
+            int offest = lastoffset, lanewidth = lastlane;
+            Mat imgroi = new Mat(img.Clone(), Properties.Settings.Default.DetectArea);
+            Mat result = m_detector.DetectAndShow(imgroi, ref offest, ref lanewidth, out time);
 
             //img = img.Clone();
             //LineSegment2D[] lines = null;
@@ -287,9 +293,6 @@ namespace ShowOpenCVResult
             //Mat rect = new Mat(img, Properties.Settings.Default.DetectArea);
             //OpencvMath.MyAddWeight(rect, trans, 0.8);
 
-            int offest = lastoffset, lanewidth = lastlane;
-            Mat imgroi = new Mat(img.Clone(), Properties.Settings.Default.DetectArea);
-            Mat result = m_detector.DetectAndShow(imgroi, ref  offest, ref lanewidth,out time);
 
             //if ((offest - lastoffset) > (lastlane + lanewidth) / 3)
             //{
@@ -310,7 +313,7 @@ namespace ShowOpenCVResult
             lastoffset = offest;
             lastlane = lanewidth;
 
-            imageIOControl1.Image2 = result;
+            imageIOControl1.OutImage = result;
 
         }
         private void toolStripButton4_Click(object sender, EventArgs e)
@@ -323,23 +326,23 @@ namespace ShowOpenCVResult
             //}
             m_svm = MulticlassSupportVectorMachine.Load("svm.dat");
 
-             m_detector = new RoadDetect("svm.dat");
+            m_detector = new RoadDetect("svm.dat");
         }
 
 
         private void toolStripButton5_Click_1(object sender, EventArgs e)
         {
-            if (null == imageIOControl1.Image1) return;
-            Mat img = imageIOControl1.Image1 as Mat;
+            if (null == imageIOControl1.InImage) return;
+            Mat img = imageIOControl1.InImage as Mat;
             long time = 0;
-            doprocess(img,out time);
+            doprocess(img, out time);
         }
 
         private void toolStripButton3_Click(object sender, EventArgs e)
         {
             m_detector.ReLoadParams();
-            if (null == imageIOControl1.Image1) return;
-            Mat img = imageIOControl1.Image1 as Mat;
+            if (null == imageIOControl1.InImage) return;
+            Mat img = imageIOControl1.InImage as Mat;
             long time = 0;
             doprocess(img, out time);
         }
@@ -359,18 +362,61 @@ namespace ShowOpenCVResult
 
         private void tsbtnConnectcam_Click(object sender, EventArgs e)
         {
-            m_captrue = new Emgu.CV.Capture(1);
+            m_captrue = new Emgu.CV.Capture(0);
+
             playthead = new Task(() =>
             {
+                long sumtime = 0;
+                int cnt = 0;
                 while (true)
                 {
                     if (isclosewindows)
                         return;
-                    imageIOControl1.Image1 = m_captrue.QueryFrame();
-                    Thread.Sleep(33);
-                }
+                    if (!isinplay)
+                        mr.WaitOne();
+                    Stopwatch sw = Stopwatch.StartNew();
+                    cnt++;
+                    Mat img = m_captrue.QueryFrame();
+                    imageIOControl1.InImage = img;
 
+
+                    m_queue.Enqueue(img);
+
+                    if (tsbtnUpdate.Checked)
+                    {
+
+                        new Thread(() =>
+                        {
+                            long time = 0;
+                            if (m_detector == null) return;
+                            doprocess(img, out time);
+                            sumtime += time;
+                            if (!this.IsDisposed)
+                            {
+                               Invoke(new Action(() =>
+                               {
+                                   imageIOControl1.Refresh();
+                                   tsslbShow.Text = string.Format("总体耗时:{0}ms,播放帧数{1},当前耗时:{2}平均耗时{3}", sumtime, cnt, time, sumtime / cnt);
+                               }));
+                            }
+
+                        }).Start();
+
+                    }
+
+                    if (m_queue.Count > 4)
+                    {
+                        Mat outimg = m_queue.Dequeue();
+                        outimg.Dispose();
+                    }
+
+                    sw.Stop();
+                    Thread.Sleep(30);
+
+                }
             });
+
+        
 
             playthead.Start();
         }
@@ -387,13 +433,41 @@ namespace ShowOpenCVResult
                 of.Filter = "Video|*.avi;*.flv;*.mp4";
                 if (of.ShowDialog() != DialogResult.OK) return;
 
-                m_captrue = new Emgu.CV.Capture(of.FileName);
+                m_captrue = new Capture(of.FileName);
                 fps = (int)m_captrue.GetCaptureProperty(CapProp.Fps);
                 playcnt = (int)m_captrue.GetCaptureProperty(CapProp.FrameCount);
+                tspbProcess.Maximum = playcnt;
+                tspbProcess.Value = 0;
                 initVideotPlay();
                 playthead.Start();
                 tsbtnPlayPause.Enabled = true;
             }
+        }
+
+        Mat imgtowirte = null;
+        private void tsbtnStartRecord_Click(object sender, EventArgs e)
+        {
+            if (m_captrue == null) return;
+            Size size = new Size(m_captrue.Width, m_captrue.Height);
+            vw = new VideoWriter(string.Format(@"C:\Users\fwf\Desktop\cv\videos\{0}.avi", DateTime.Now.Millisecond),/* VideoWriter.Fourcc('w', 'm', 'v', '3'),*/15, size, true);
+            imgtowirte = new Mat(size, DepthType.Cv8U, 3);
+            m_captrue.ImageGrabbed += M_captrue_ImageGrabbed; 
+            
+        }
+
+        private void M_captrue_ImageGrabbed(object sender, EventArgs e)
+        {
+            if (vw.Ptr == (IntPtr)0) return;
+            m_captrue.Retrieve(imgtowirte);
+            vw.Write(imgtowirte);
+        }
+
+        private void tsbtnEnd_Click(object sender, EventArgs e)
+        {
+            if (vw == null || m_captrue == null) return;
+            m_captrue.ImageGrabbed -= M_captrue_ImageGrabbed;
+            vw.Dispose();
+
         }
     }
 }

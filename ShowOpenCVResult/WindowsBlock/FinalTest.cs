@@ -23,9 +23,9 @@ namespace ShowOpenCVResult
 
         private void imageIO1_DoImgChange(object sender, EventArgs e)
         {
-            if (imageIO1.Image1 == null) return;
+            if (imageIO1.InImage == null) return;
 
-            var img = (imageIO1.Image1 as Image<Bgr, Byte>).Mat;
+            var img = (imageIO1.InImage as Image<Bgr, Byte>).Mat;
             long time = 0;
             Mat  result = null;
             LineSegment2D[] lines = null;
@@ -34,12 +34,12 @@ namespace ShowOpenCVResult
             else
                 result = OpencvMath.SpeedProcessNoWarp(img, out time);
 
-            if (imageIO1.Image2 != null)
+            if (imageIO1.OutImage != null)
             {
-                imageIO1.Image2.Dispose();
+                imageIO1.OutImage.Dispose();
             }
 
-            imageIO1.Image2 = result;
+            imageIO1.OutImage = result;
 
             MessageBox.Show(string.Format("耗时{0}毫秒", time));
         }

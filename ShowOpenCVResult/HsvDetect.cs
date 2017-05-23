@@ -13,9 +13,9 @@ using Emgu.CV.Util;
 
 namespace ShowOpenCVResult
 {
-    public partial class HSVRangeTest : MoveBlock
+    public partial class HsvDetect : MoveBlock
     {
-        public HSVRangeTest()
+        public HsvDetect()
         {
             InitializeComponent();
         }
@@ -29,15 +29,16 @@ namespace ShowOpenCVResult
 
         private void imageIO1_DoImgChange(object sender, EventArgs e)
         {
-            if (imageIO1.InImage == null) return;
+            if (imageIO1.Image1 == null) return;
             if (sminbar.Value > smaxbar.Value || vminbar.Value > vmaxbar.Value) return;
 
-            var img = (imageIO1.InImage as Image<Bgr, byte>).Mat;
+            var img = (imageIO1.Image1 as Image<Bgr, byte>).Mat;
             Mat hsvreshold = OpencvMath.HsvThreshold(img, hminbar.Value, sminbar.Value, vminbar.Value, hmaxbar.Value, smaxbar.Value, vmaxbar.Value, true);
             
 
-            
-            imageIO1.OutImage = hsvreshold;
+            if (imageIO1.Image2 != null)
+                imageIO1.Image2.Dispose();
+            imageIO1.Image2 = hsvreshold;
 
 
         }

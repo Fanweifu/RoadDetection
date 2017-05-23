@@ -64,7 +64,7 @@
             this.imageIOControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.imageIOControl1.Location = new System.Drawing.Point(0, 93);
             this.imageIOControl1.Name = "imageIOControl1";
-            this.imageIOControl1.Image2 = null;
+            this.imageIOControl1.OutImage = null;
             this.imageIOControl1.Size = new System.Drawing.Size(663, 396);
             this.imageIOControl1.TabIndex = 1;
             this.imageIOControl1.DoImgChange += new System.EventHandler(this.imageIOControl1_DoImgChange);

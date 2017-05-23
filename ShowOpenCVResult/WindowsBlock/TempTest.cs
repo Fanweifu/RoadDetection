@@ -24,16 +24,16 @@ namespace ShowOpenCVResult
         {
             string file = OpencvForm.SelectImg();
             if (file == null) return;
-            imageIOControl1.Image1 = new Image<Bgr, byte>(file);
+            imageIOControl1.InImage = new Image<Bgr, byte>(file);
 
 
             //
-            Image<Gray, Byte> img1 = (imageIOControl1.Image1 as Image<Bgr, Byte>).Convert<Gray, Byte>();
+            Image<Gray, Byte> img1 = (imageIOControl1.InImage as Image<Bgr, Byte>).Convert<Gray, Byte>();
             double max, min;
             int[] maxind = new int[2], minidx = new int[2];
             CvInvoke.MinMaxIdx(img1,out  min, out max, minidx, maxind);
 
-            CvInvoke.Circle((imageIOControl1.Image1 as Image<Bgr, Byte>), new Point(minidx[1], minidx[0]), 5, new MCvScalar(255,0,255));
+            CvInvoke.Circle((imageIOControl1.InImage as Image<Bgr, Byte>), new Point(minidx[1], minidx[0]), 5, new MCvScalar(255,0,255));
             
         }
 
@@ -46,7 +46,7 @@ namespace ShowOpenCVResult
         {
             string file = OpencvForm.SelectImg();
             if (file == null) return;
-            imageIOControl1.Image2 = new Image<Bgr, byte>(file);
+            imageIOControl1.OutImage = new Image<Bgr, byte>(file);
 
         }
 
@@ -71,8 +71,8 @@ namespace ShowOpenCVResult
             b[0, 1] = new Gray(-1);
             b[0, 2] = new Gray(1);
             b[0, 3] = new Gray(-1);
-            imageIOControl1.Image1 = a;
-            imageIOControl1.Image2 = b;
+            imageIOControl1.InImage = a;
+            imageIOControl1.OutImage = b;
          
 
         }

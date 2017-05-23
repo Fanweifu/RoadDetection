@@ -57,7 +57,7 @@ namespace ShowOpenCVResult
 
         private void imageIO1_DoImgChange(object sender, EventArgs e)
         {
-            if (imageIO1.Image1 == null) return;
+            if (imageIO1.InImage == null) return;
 
             Mat img = null;
             if (isvideo)
@@ -80,8 +80,8 @@ namespace ShowOpenCVResult
                         Thread.Sleep((int)(1000.0 / fps));
                         Mat mask = new Mat();
 
-                        imageIO1.Image1 = img;
-                        imageIO1.Image2 = backup;
+                        imageIO1.InImage = img;
+                        imageIO1.OutImage = backup;
                         nums++;
                     }
 
@@ -108,13 +108,11 @@ namespace ShowOpenCVResult
 
             Mat result = FindObjectRect(img, out rr);
             OpencvMath.DrawRotatedRect(rr, img);
-            if (imageIO1.Image1 != null)
-                imageIO1.Image1.Dispose();
-            imageIO1.Image1 = img;
+            
+            imageIO1.InImage = img;
 
-            if (imageIO1.Image2 != null)
-                imageIO1.Image2.Dispose();
-            imageIO1.Image2 = result;
+            
+            imageIO1.OutImage = result;
         }
 
 

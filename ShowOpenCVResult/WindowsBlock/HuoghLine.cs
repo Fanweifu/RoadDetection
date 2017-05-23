@@ -38,8 +38,8 @@ namespace ShowOpenCVResult
                 CvInvoke.Threshold(grayimg, grayimg, 130, 255, Emgu.CV.CvEnum.ThresholdType.Binary);
             }
 
-            if (imageIOControl1.Image1 != null) imageIOControl1.Image1.Dispose();
-            imageIOControl1.Image1 = grayimg;
+            if (imageIOControl1.InImage != null) imageIOControl1.InImage.Dispose();
+            imageIOControl1.InImage = grayimg;
             LineSegment2D[] lns = CvInvoke.HoughLinesP(grayimg, (double)rhoBar.Value / 100, (double)thetaBar.Value / 100, thresholdBar.Value, minLenghtBar.Value, maxgrapBar.Value);
             Image<Bgr, byte> outimg = new Image<Bgr, byte>(m_src.Size);
 
@@ -52,14 +52,14 @@ namespace ShowOpenCVResult
                 CvInvoke.Line(outimg, ln.P1, ln.P2, new MCvScalar(b, g, r), 1);
             }
 
-            if (imageIOControl1.Image2 != null) imageIOControl1.Image2.Dispose();
-            imageIOControl1.Image2 = outimg;
+            if (imageIOControl1.OutImage != null) imageIOControl1.OutImage.Dispose();
+            imageIOControl1.OutImage = outimg;
             
         }
 
         private void imageIOControl1_AfterImgLoaded(object sender, EventArgs e)
         {
-            m_src = OpencvMath.MyBgrToGray((imageIOControl1.Image1 as Image<Bgr, Byte>).Mat);
+            m_src = OpencvMath.MyBgrToGray((imageIOControl1.InImage as Image<Bgr, Byte>).Mat);
         }
 
         private void HuoghLine_Load(object sender, EventArgs e)

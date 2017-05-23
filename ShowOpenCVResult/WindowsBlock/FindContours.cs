@@ -47,12 +47,12 @@ namespace ShowOpenCVResult
 
             CvInvoke.DrawContours(imgback, cons, -1, new MCvScalar(0, 0, 255), 2, LineType.FourConnected);
 
-            if (imageIOControl1.Image1 != null)
+            if (imageIOControl1.InImage != null)
             {
-                imageIOControl1.Image1.Dispose();
+                imageIOControl1.InImage.Dispose();
             }
 
-            imageIOControl1.Image1 = imgback;
+            imageIOControl1.InImage = imgback;
             
             myTrackBar6.Enabled = false;
         }
@@ -134,12 +134,12 @@ namespace ShowOpenCVResult
 
             CvInvoke.DrawContours(imgback, vvp, -1, new MCvScalar(0, 0, 255), 2, LineType.FourConnected);
 
-            if (imageIOControl1.Image1 != null)
+            if (imageIOControl1.InImage != null)
             {
-                imageIOControl1.Image1.Dispose();
+                imageIOControl1.InImage.Dispose();
             }
 
-            imageIOControl1.Image1 = imgback;
+            imageIOControl1.InImage = imgback;
         }
 
         private void toolStripButton1_Click(object sender, EventArgs e)
@@ -268,9 +268,9 @@ namespace ShowOpenCVResult
             selectIndex = index;
             Calfam(cons[index]);
 
-            if (imageIOControl1.Image1 != null) imageIOControl1.Image1.Dispose();
+            if (imageIOControl1.InImage != null) imageIOControl1.InImage.Dispose();
 
-            imageIOControl1.Image1 = img;
+            imageIOControl1.InImage = img;
 
             //if (tsbtnLookWhenSelect.Checked)
             //{
@@ -309,7 +309,7 @@ namespace ShowOpenCVResult
             tslblModeFilePath.Text = path;
             Image<Bgr, byte> draw = m_modeFile.Clone().Convert<Bgr, byte>();
             draw.DrawPolyline(m_modeLine.ToArray(), true, new Bgr(0, 0, 255), 3);
-            imageIOControl1.Image2 = draw;
+            imageIOControl1.OutImage = draw;
             groupBox1.Enabled = true;
         }
 
@@ -403,8 +403,8 @@ namespace ShowOpenCVResult
 
             
             }
-            if (imageIOControl1.Image1 != null) imageIOControl1.Image1.Dispose();
-            imageIOControl1.Image1 = selectimg;
+            if (imageIOControl1.InImage != null) imageIOControl1.InImage.Dispose();
+            imageIOControl1.InImage = selectimg;
         }
 
         private void setRange(bool resetvalue = false)
@@ -431,7 +431,7 @@ namespace ShowOpenCVResult
 
         private void imageIOControl1_AfterImgLoaded(object sender, EventArgs e)
         {
-            m_filesrc = (imageIOControl1.Image1 as Image<Bgr, byte>).Clone();
+            m_filesrc = (imageIOControl1.InImage as Image<Bgr, byte>).Clone();
             m_filegray = m_filesrc.Convert<Gray, byte>();
             setRange();
         }
@@ -441,7 +441,7 @@ namespace ShowOpenCVResult
             if (cons != null && selectIndex < cons.Size)
             {
                 Mat result = OpencvMath.GetSquareExampleImg(vvp[selectIndex], RoadTransform.ExampleSize);
-                imageIOControl1.Image2 = result;
+                imageIOControl1.OutImage = result;
             }
         }
 
@@ -455,8 +455,8 @@ namespace ShowOpenCVResult
             sw.Stop();
             MessageBox.Show(string.Format("耗时{0}毫秒", sw.ElapsedMilliseconds));
 
-            if (imageIOControl1.Image1 != null) imageIOControl1.Image1.Dispose();
-            imageIOControl1.Image1 = result;
+            if (imageIOControl1.InImage != null) imageIOControl1.InImage.Dispose();
+            imageIOControl1.InImage = result;
         }
 
         private void toolStripButton2_Click_1(object sender, EventArgs e)
@@ -481,7 +481,7 @@ namespace ShowOpenCVResult
         
             sw.Stop();
             MessageBox.Show(string.Format("耗时:{0}", sw.ElapsedMilliseconds));
-            imageIOControl1.Image2 = gray;
+            imageIOControl1.OutImage = gray;
         }
 
         private void FindContours_Load(object sender, EventArgs e)
@@ -511,11 +511,11 @@ namespace ShowOpenCVResult
                 CvInvoke.DrawContours(img, vvp , i, new MCvScalar(0, 0, 255), 2);
        
             }
-            if (imageIOControl1.Image1!=null)
+            if (imageIOControl1.InImage!=null)
             {
-                imageIOControl1.Image1.Dispose();   
+                imageIOControl1.InImage.Dispose();   
             }
-            imageIOControl1.Image1 = img;
+            imageIOControl1.InImage = img;
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -557,7 +557,7 @@ namespace ShowOpenCVResult
                 CvInvoke.DrawContours(imgback, vvp, i,OpencvMath.getcolor(lebel), -1);
                 
             }
-            imageIOControl1.Image2 = imgback;
+            imageIOControl1.OutImage = imgback;
             
         }
 

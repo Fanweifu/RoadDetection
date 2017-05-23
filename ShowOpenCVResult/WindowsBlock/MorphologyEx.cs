@@ -47,16 +47,15 @@ namespace ShowOpenCVResult
 
         private void imageIOControl1_DoImgChange(object sender, EventArgs e)
         {
-            if (imageIOControl1.Image1 == null) return;
-            if (imageIOControl1.Image2 != null) { imageIOControl1.Image2.Dispose(); }
+            
 
             int x = mybarX.Value;
             int y = mybarY.Value;
-            Image<Bgr, Byte> img = new Image<Bgr, byte>(imageIOControl1.Image1.Size);
+            Image<Bgr, Byte> img = new Image<Bgr, byte>(imageIOControl1.InImage.Size);
             Mat element = CvInvoke.GetStructuringElement((ElementShape)comboBox2.SelectedItem, new Size(2 * x + 1, 2 * y + 1), new Point(-1, -1));
-            CvInvoke.MorphologyEx(imageIOControl1.Image1 as Image<Bgr, byte>, img, (MorphOp)comboBox1.SelectedItem, element, new Point(-1, -1), (int)numericUpDown1.Value, BorderType.Default, new MCvScalar(0));  
+            CvInvoke.MorphologyEx(imageIOControl1.InImage as Image<Bgr, byte>, img, (MorphOp)comboBox1.SelectedItem, element, new Point(-1, -1), (int)numericUpDown1.Value, BorderType.Default, new MCvScalar(0));  
 
-            imageIOControl1.Image2 = img;
+            imageIOControl1.OutImage = img;
         }
 
         private void myTrackBar1_ValueChanged(object sender, EventArgs e)
