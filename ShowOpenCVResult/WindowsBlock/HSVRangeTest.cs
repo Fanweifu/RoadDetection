@@ -18,6 +18,7 @@ namespace ShowOpenCVResult
         public HSVRangeTest()
         {
             InitializeComponent();
+           
         }
 
         private void toolStripButton1_Click(object sender, EventArgs e)

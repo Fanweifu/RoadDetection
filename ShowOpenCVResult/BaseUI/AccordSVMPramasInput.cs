@@ -6,12 +6,12 @@ using Accord.Statistics.Kernels;
 
 namespace ShowOpenCVResult
 {
-    public partial class AccordSVMPramasInput : UserControl
+    public partial class AccordSVMParamsInput : UserControl
     {
         MulticlassSupportVectorMachine ksvm;
         bool hasTrained = false;
 
-        public AccordSVMPramasInput()
+        public AccordSVMParamsInput()
         {
             InitializeComponent();
             cbStrategy.DataSource = Enum.GetValues(typeof(SelectionStrategy));

@@ -414,6 +414,11 @@ namespace ShowOpenCVResult
         {
             new HsvTrack().Show(this.dockPanel1, DockState.Document);
         }
+
+        private void ocrToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new ORC().Show(this.dockPanel1, DockState.Document);
+        }
     }
 
 

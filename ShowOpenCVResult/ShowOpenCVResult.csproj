@@ -155,6 +155,10 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="tessnet2_32, Version=2.0.4.0, Culture=neutral, PublicKeyToken=1550524b5ba07e29, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>AccordSvmDll\tessnet2_32.dll</HintPath>
+    </Reference>
     <Reference Include="WeifenLuo.WinFormsUI.Docking">
       <HintPath>bin\Debug\WeifenLuo.WinFormsUI.Docking.dll</HintPath>
     </Reference>
@@ -173,6 +177,12 @@
       <DependentUpon>HsvTrack.cs</DependentUpon>
     </Compile>
     <Compile Include="ImgProcess\ObjectTrack.cs" />
+    <Compile Include="ORC.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ORC.Designer.cs">
+      <DependentUpon>ORC.cs</DependentUpon>
+    </Compile>
     <Compile Include="Videotoimg.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -351,8 +361,14 @@
     <EmbeddedResource Include="HsvTrack.resx">
       <DependentUpon>HsvTrack.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ORC.resx">
+      <DependentUpon>ORC.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Videotoimg.resx">
       <DependentUpon>Videotoimg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WindowsBlock\HSVRangeTest.resx">
+      <DependentUpon>HSVRangeTest.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WindowsBlock\SetROI.resx">
       <DependentUpon>SetROI.cs</DependentUpon>
@@ -436,6 +452,12 @@
     <EmbeddedResource Include="WindowsBlock\SurfDetect.resx">
       <DependentUpon>SurfDetect.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="Ocr\chi_sim.traineddata">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Ocr\eng.traineddata">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -495,11 +517,14 @@
     <Content Include="BaseUI\WeifenLuo.WinFormsUI.Docking.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Ocr\tessnet2_32.dll" />
     <Content Include="pedestrian.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Precess\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

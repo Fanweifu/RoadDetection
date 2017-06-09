@@ -106,8 +106,8 @@ namespace ShowOpenCVResult
             }
             vvp.Dispose();
             Mat result = r.Clone();
-            if(result.Size!=size)
-            CvInvoke.Resize(result, result, size, 0, 0, Inter.Nearest);
+            if (result.Size != size)
+                CvInvoke.Resize(result, result, size, 0, 0, Inter.Nearest);
             if (needthreshold)
             {
                 CvInvoke.Threshold(result, result, 127, 255, ThresholdType.Binary);
@@ -166,7 +166,7 @@ namespace ShowOpenCVResult
             }
             index = maxindex;
             return vvp;
-            
+
         }
         static VectorOfVectorOfPoint getCons(Mat img, ref int[] array, ref int[] delectindex, bool needselect)
         {
@@ -474,7 +474,8 @@ namespace ShowOpenCVResult
 
 
 
-        static public Mat MyBgrToGray(Mat img, double bk = 1, double gk = 1, double rk = 1) {
+        static public Mat MyBgrToGray(Mat img, double bk = 1, double gk = 1, double rk = 1)
+        {
             if (img == null || img.IsEmpty || img.NumberOfChannels != 3) throw new AggregateException("img is unvalid");
 
             Mat result = new Mat(img.Size, DepthType.Cv8U, 1);
@@ -607,7 +608,7 @@ namespace ShowOpenCVResult
             Mat result = new Mat(img.Size, DepthType.Cv8U, 1);
             unsafe
             {
-                byte* imghead = (byte*)img.DataPointer; 
+                byte* imghead = (byte*)img.DataPointer;
                 int rows = img.Rows, cols = img.Cols, step = img.Step;
                 for (int i = 0; i < rows; i++)
                 {
@@ -759,7 +760,7 @@ namespace ShowOpenCVResult
 
         }
 
-        static public LineSegment2D[] SelectLines(LineSegment2D[] lines, int exnums = 2)
+        static public LineSegment2D[] SelectLines(LineSegment2D[] lines, int errorangle = 5, int exnums = 2)
         {
             int referencedis = 0;
             int spindex = (Settings.Default.OW - 1) / 2; ;
@@ -771,36 +772,29 @@ namespace ShowOpenCVResult
             {
                 var line = lines[i];
 
-                //if (Math.Abs(line.P1.Y - line.P2.Y) < size.Height / 5) continue;
-                //if (Math.Min(line.P1.Y, line.P2.Y) > size.Height / 3) continue;
                 double x = compare(lines[i]);
                 if (x > spindex && lastx < spindex && i >= 1 && lastindex != -1)
                 {
                     for (int j = i; j < cnt; j++)
                     {
                         var lnj = lines[j];
-                        if (lnj.Length < Settings.Default.OH / 4||Math.Max(lnj.P1.Y,lnj.P2.Y)<  Settings.Default.OH /3*2) continue;
-                        //if (Math.Min(lines[j].P1.Y, lines[j].P2.Y) > size.Height / 3) continue;
+                        if (lnj.Length < Settings.Default.OH / 4 || Math.Max(lnj.P1.Y, lnj.P2.Y) < Settings.Default.OH / 3 * 2) continue;
                         for (int k = lastindex; k >= 0; k--)
                         {
-                          
+
                             var lnk = lines[k];
-                            if ( lnk.Length < Settings.Default.OH / 4|| Math.Max(lnk.P1.Y, lnk.P2.Y) < Settings.Default.OH / 3 * 2) continue;
-                            //if (Math.Min(lines[k].P1.Y, lines[k].P2.Y) > size.Height / 3) continue;
-                            //PointF result = GetPoint(lnj, lnk);
+                            if (lnk.Length < Settings.Default.OH / 4 || Math.Max(lnk.P1.Y, lnk.P2.Y) < Settings.Default.OH / 3 * 2) continue;
+
                             double jx = compare(lnj);
                             double kx = compare(lnk);
-                            //if (Math.Abs(result.Y) < size.Height / 5 && result.Y > 0 && Math.Abs(xj - xk) > size.Width )
-                            //    return new LineSegment2D[] { lines[k], lines[j] };
-                            double angle = Math.Abs( lnj.GetExteriorAngleDegree(lnk));
+
+                            double angle = Math.Abs(lnj.GetExteriorAngleDegree(lnk));
                             if (angle > 90)
                                 angle = 180 - angle;
-                            if (/*Math.Abs(result.Y) < size.Height / 5 && result.Y > 0 &&*/ Math.Abs(jx - kx) > Settings.Default.OW/ 4&& angle<4)
+                            if (Math.Abs(jx - kx) > Settings.Default.OW / 4 && angle < errorangle)
                                 return new LineSegment2D[] { lines[k], lines[j] };
                         }
                     }
-
-                
                 }
                 lastx = x;
                 lastindex = i;
@@ -818,7 +812,7 @@ namespace ShowOpenCVResult
             MCvScalar col = new MCvScalar(0, 255, 255);
             MCvScalar pcol = new MCvScalar(100, 100, 255);
             int middleindex = (img.Width - 1) / 2;
-            int verticalvalue = (int)(img.Height*0.95)  - 1;
+            int verticalvalue = (int)(img.Height * 0.95) - 1;
             int verticalvalue2 = 0;
             //Point p1 = new Point(middleindex, verticalvalue - 10);
             //Point p2 = new Point(middleindex, verticalvalue + 10);
@@ -875,6 +869,7 @@ namespace ShowOpenCVResult
             }
 
         }
+
         static public Mat RoadLineDetect(Mat img, int range = 10, byte diff = 20, bool isHorizontal = true)
         {
             if (img.IsEmpty) return null;
@@ -1251,7 +1246,7 @@ namespace ShowOpenCVResult
             //imgs[0].Dispose();
             //imgs[1].Dispose();
             Mat vch = OpencvMath.MyBgrToGray(img);
-            
+
 
 
             Mat trans = RoadTransform.WarpPerspective(vch);
@@ -1309,37 +1304,67 @@ namespace ShowOpenCVResult
             time = sw.ElapsedMilliseconds;
             return line;
         }
+
+        static public Mat MyHorizontalCanny(Mat grayimg, int thresholdhigh = 40 , int thresholdlow = 20, int type = 1) {
+            if (null == grayimg || grayimg.IsEmpty || grayimg.Depth != DepthType.Cv8U || grayimg.NumberOfChannels != 1) throw new ArgumentException("img is valid!");
+            int row = grayimg.Rows, col = grayimg.Cols, step = grayimg.Step;
+            Mat img = new Mat();
+            CvInvoke.GaussianBlur(grayimg, img, new Size(3, 3), 0, 0);
+            Mat result = new Mat(grayimg.Size, DepthType.Cv8U, 1);
+            Mat maxresult = new Mat(grayimg.Size, DepthType.Cv8U, 1);
+            result.SetTo(default(MCvScalar));
+            maxresult.SetTo(default(MCvScalar));
+            unsafe
+            {
+                byte* dataptr = (byte*)img.DataPointer;
+                int rstep = result.Step;
+                byte* rdataptr = (byte*)result.DataPointer;
+                byte* mrdataptr = (byte*)maxresult.DataPointer;
+                for (int i = 0; i < row; i++)
+                {
+                    byte diff = 0;
+                    double ys = (double)i / (row - 1);
+                    if (type == -1)
+                    {
+                        diff = (byte)Math.Sqrt( ys * thresholdhigh * thresholdhigh + (1 - ys) * thresholdlow * thresholdlow);
+                    }else if (type == 1)
+                    {
+                        diff = (byte)Math.Pow(ys * Math.Sqrt(thresholdhigh) + (1 - ys) * Math.Sqrt(thresholdlow),2);
+                    }else
+                    {
+                        diff = (byte)(ys * thresholdhigh + (1 - ys) * thresholdlow);
+                    }
+
+                    for (int j = 1;j< col ; j++)
+                    {
+                        int index = i * step + j;
+                        int rindex = i * rstep + j;
+                        int curdiff = dataptr[index] - dataptr[index - 1];
+                        if (curdiff > diff|| curdiff < -diff)
+                        {
+                            rdataptr[rindex] = (byte)curdiff;
+                        }
+                        
+                    }
+                }
+
+                for (int i = 0; i < row; i++)
+                {
+                    for (int j = 0; j < col-1; j++)
+                    {
+                        int rindex = i * rstep + j;
+                        if (rdataptr[rindex] > rdataptr[rindex - 1] && rdataptr[rindex] > rdataptr[rindex + 1])
+                            mrdataptr[rindex] = 255;
+                    }
+                }
+                img.Dispose();
+                result.Dispose();
+                return maxresult;
+            }
+
+
+        }
         #endregion
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     }
     static public class RoadTransform

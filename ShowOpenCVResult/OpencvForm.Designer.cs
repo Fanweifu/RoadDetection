@@ -69,8 +69,9 @@
             this.读取ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.其他ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.视频分解ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.dockPanel1 = new WeifenLuo.WinFormsUI.Docking.DockPanel();
             this.视频追踪ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dockPanel1 = new WeifenLuo.WinFormsUI.Docking.DockPanel();
+            this.ocrToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.msMenus.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -225,21 +226,21 @@
             // acoordsvmToolStripMenuItem
             // 
             this.acoordsvmToolStripMenuItem.Name = "acoordsvmToolStripMenuItem";
-            this.acoordsvmToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.acoordsvmToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.acoordsvmToolStripMenuItem.Text = "Accordsvm";
             this.acoordsvmToolStripMenuItem.Click += new System.EventHandler(this.acoordsvmToolStripMenuItem_Click);
             // 
             // 特征点检测ToolStripMenuItem
             // 
             this.特征点检测ToolStripMenuItem.Name = "特征点检测ToolStripMenuItem";
-            this.特征点检测ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.特征点检测ToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.特征点检测ToolStripMenuItem.Text = "特征点检测";
             this.特征点检测ToolStripMenuItem.Click += new System.EventHandler(this.特征点检测ToolStripMenuItem_Click);
             // 
             // svm训练ToolStripMenuItem
             // 
             this.svm训练ToolStripMenuItem.Name = "svm训练ToolStripMenuItem";
-            this.svm训练ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.svm训练ToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.svm训练ToolStripMenuItem.Text = "svm训练";
             this.svm训练ToolStripMenuItem.Click += new System.EventHandler(this.svm训练ToolStripMenuItem_Click);
             // 
@@ -255,14 +256,14 @@
             // 保存ToolStripMenuItem
             // 
             this.保存ToolStripMenuItem.Name = "保存ToolStripMenuItem";
-            this.保存ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.保存ToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
             this.保存ToolStripMenuItem.Text = "保存";
             this.保存ToolStripMenuItem.Click += new System.EventHandler(this.保存ToolStripMenuItem_Click);
             // 
             // 读取ToolStripMenuItem
             // 
             this.读取ToolStripMenuItem.Name = "读取ToolStripMenuItem";
-            this.读取ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.读取ToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
             this.读取ToolStripMenuItem.Text = "读取";
             this.读取ToolStripMenuItem.Click += new System.EventHandler(this.读取ToolStripMenuItem_Click);
             // 
@@ -270,7 +271,8 @@
             // 
             this.其他ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.视频分解ToolStripMenuItem,
-            this.视频追踪ToolStripMenuItem});
+            this.视频追踪ToolStripMenuItem,
+            this.ocrToolStripMenuItem});
             this.其他ToolStripMenuItem.Name = "其他ToolStripMenuItem";
             this.其他ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
             this.其他ToolStripMenuItem.Text = "其他";
@@ -281,6 +283,13 @@
             this.视频分解ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.视频分解ToolStripMenuItem.Text = "视频分解";
             this.视频分解ToolStripMenuItem.Click += new System.EventHandler(this.视频分解ToolStripMenuItem_Click);
+            // 
+            // 视频追踪ToolStripMenuItem
+            // 
+            this.视频追踪ToolStripMenuItem.Name = "视频追踪ToolStripMenuItem";
+            this.视频追踪ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.视频追踪ToolStripMenuItem.Text = "视频追踪";
+            this.视频追踪ToolStripMenuItem.Click += new System.EventHandler(this.视频追踪ToolStripMenuItem_Click);
             // 
             // dockPanel1
             // 
@@ -338,12 +347,12 @@
             this.dockPanel1.Skin = dockPanelSkin1;
             this.dockPanel1.TabIndex = 3;
             // 
-            // 视频追踪ToolStripMenuItem
+            // ocrToolStripMenuItem
             // 
-            this.视频追踪ToolStripMenuItem.Name = "视频追踪ToolStripMenuItem";
-            this.视频追踪ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.视频追踪ToolStripMenuItem.Text = "视频追踪";
-            this.视频追踪ToolStripMenuItem.Click += new System.EventHandler(this.视频追踪ToolStripMenuItem_Click);
+            this.ocrToolStripMenuItem.Name = "ocrToolStripMenuItem";
+            this.ocrToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.ocrToolStripMenuItem.Text = "Ocr";
+            this.ocrToolStripMenuItem.Click += new System.EventHandler(this.ocrToolStripMenuItem_Click);
             // 
             // OpencvForm
             // 
@@ -395,6 +404,7 @@
         private System.Windows.Forms.ToolStripMenuItem 其他ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 视频分解ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 视频追踪ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ocrToolStripMenuItem;
     }
 }
 

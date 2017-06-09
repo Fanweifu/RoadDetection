@@ -46,7 +46,7 @@ namespace ShowOpenCVResult
             }
             set
             {
-                if (imageBoxInput.Image != null && AutoDispose)
+                if (imageBoxInput.Image!=null&&AutoDispose)
                 {
                     imageBoxInput.Image.Dispose();
                 }
@@ -66,6 +66,7 @@ namespace ShowOpenCVResult
                 {
                     imageBoxOutput.Image.Dispose();
                 }
+
 
                 imageBoxOutput.Image = value;
             }

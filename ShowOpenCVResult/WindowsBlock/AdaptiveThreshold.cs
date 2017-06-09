@@ -28,12 +28,15 @@ namespace ShowOpenCVResult
 
         private void imageIOControl1_DoImgChange(object sender, EventArgs e)
         {
-            
-            Image<Gray, Byte> img = (imageIOControl1.InImage as Image<Bgr, Byte>).Convert<Gray, Byte>();
-           
-            CvInvoke.AdaptiveThreshold(img, img, 255, (radioButton1.Checked ? AdaptiveThresholdType.GaussianC : AdaptiveThresholdType.MeanC),ThresholdType.Binary, 2 * blockSizeBar.Value + 1, (double)prama1Bar.Value);
-            //CvInvoke.MorphologyEx(img, img, MorphOp.Close, CvInvoke.GetStructuringElement(ElementShape.Rectangle, new Size(2, 10), new Point(-1, -1)), new Point(-1, -1), 1, BorderType.Default, default(MCvScalar));
-            imageIOControl1.OutImage = img;
+            if (imageIOControl1.InImage == null) return;
+            Mat img = OpencvMath.MyBgrToGray((imageIOControl1.InImage as Image<Bgr, byte>).Mat);
+            Mat adresult = new Mat();
+            Mat otusresult = new Mat();
+            CvInvoke.AdaptiveThreshold(img, adresult, 255, (radioButton1.Checked ? AdaptiveThresholdType.GaussianC : AdaptiveThresholdType.MeanC),ThresholdType.Binary, 2 * blockSizeBar.Value + 1, (double)prama1Bar.Value);
+            //CvInvoke.Threshold(img, otusresult, 100, 255, ThresholdType.Otsu);
+            //CvInvoke.BitwiseAnd(adresult, otusresult, adresult);
+
+            imageIOControl1.OutImage = adresult;
         }
 
         private void myTrackBar1_ValueChanged(object sender, EventArgs e)

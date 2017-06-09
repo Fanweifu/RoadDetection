@@ -27,32 +27,33 @@ namespace ShowOpenCVResult
         private void imageIOControl1_DoImgChange(object sender, EventArgs e)
         {
             if (m_src == null) return;
-            Mat grayimg = m_src.Clone();
 
-            if (toolStripButton2.Checked)
+            Mat grayimg = m_src.Clone();
+            if (rbtnCanny.Checked)
             {
                 CvInvoke.Canny(grayimg, grayimg, myTrackBar1.Value, myTrackBar2.Value);
+        
             }
             else
             {
-                CvInvoke.Threshold(grayimg, grayimg, 130, 255, Emgu.CV.CvEnum.ThresholdType.Binary);
+                grayimg = OpencvMath.MyHorizontalCanny(grayimg, myTrackBar1.Value, myTrackBar2.Value, 0);
             }
 
-            if (imageIOControl1.InImage != null) imageIOControl1.InImage.Dispose();
             imageIOControl1.InImage = grayimg;
             LineSegment2D[] lns = CvInvoke.HoughLinesP(grayimg, (double)rhoBar.Value / 100, (double)thetaBar.Value / 100, thresholdBar.Value, minLenghtBar.Value, maxgrapBar.Value);
             Image<Bgr, byte> outimg = new Image<Bgr, byte>(m_src.Size);
 
-            if (toolStripButton4.Checked)
-                lns = OpencvMath.SelectLines(lns);
+            if (checkSelectLines.Checked)
+                lns = OpencvMath.SelectLines(lns,barAngle.Value);
             Random rm = new Random();
+
             foreach (var ln in lns)
             {
                 int b = rm.Next(0, 255), g = rm.Next(0, 255), r = rm.Next(0, 255);
                 CvInvoke.Line(outimg, ln.P1, ln.P2, new MCvScalar(b, g, r), 1);
             }
 
-            if (imageIOControl1.OutImage != null) imageIOControl1.OutImage.Dispose();
+            
             imageIOControl1.OutImage = outimg;
             
         }
@@ -91,6 +92,29 @@ namespace ShowOpenCVResult
         private void toolStripButton4_Click(object sender, EventArgs e)
         {
             imageIOControl1.DoChange();
+        }
+
+        private void checkSelectLines_CheckedChanged(object sender, EventArgs e)
+        {
+            imageIOControl1.DoChange();
+        }
+
+        private void barAngle_ValueChanged(object sender, EventArgs e)
+        {
+            imageIOControl1.DoChange();
+        }
+
+        private void rbtnCanny_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rbtnCanny.Checked)
+            {
+                myTrackBar1.Title = "Threshold1";
+                myTrackBar2.Title = "Threshold2";
+            }else
+            {
+                myTrackBar1.Title = "ThresholdButtom";
+                myTrackBar2.Title = "ThresholdTop";
+            }
         }
     }
 }

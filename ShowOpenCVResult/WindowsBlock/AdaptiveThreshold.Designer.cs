@@ -39,12 +39,14 @@
             this.tsbtnOpen = new System.Windows.Forms.ToolStripButton();
             this.tsbtnSave = new System.Windows.Forms.ToolStripButton();
             this.imageIOControl1 = new ShowOpenCVResult.ImageIO();
+            this.checkUseOtus = new System.Windows.Forms.CheckBox();
             this.panel1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.checkUseOtus);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.radioButton2);
             this.panel1.Controls.Add(this.radioButton1);
@@ -147,15 +149,26 @@
             // 
             // imageIOControl1
             // 
+            this.imageIOControl1.AutoDispose = false;
             this.imageIOControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.imageIOControl1.InImage = null;
-            this.imageIOControl1.OutImage = null;
             this.imageIOControl1.Location = new System.Drawing.Point(0, 133);
             this.imageIOControl1.Name = "imageIOControl1";
+            this.imageIOControl1.OutImage = null;
             this.imageIOControl1.Size = new System.Drawing.Size(723, 311);
             this.imageIOControl1.SpOrientation = System.Windows.Forms.Orientation.Vertical;
             this.imageIOControl1.TabIndex = 2;
             this.imageIOControl1.DoImgChange += new System.EventHandler(this.imageIOControl1_DoImgChange);
+            // 
+            // checkUseOtus
+            // 
+            this.checkUseOtus.AutoSize = true;
+            this.checkUseOtus.Location = new System.Drawing.Point(298, 4);
+            this.checkUseOtus.Name = "checkUseOtus";
+            this.checkUseOtus.Size = new System.Drawing.Size(144, 16);
+            this.checkUseOtus.TabIndex = 5;
+            this.checkUseOtus.Text = "combineOutsThreshold";
+            this.checkUseOtus.UseVisualStyleBackColor = true;
             // 
             // AdaptiveThreshold
             // 
@@ -189,5 +202,6 @@
         private System.Windows.Forms.RadioButton radioButton1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ToolStripButton tsbtnSave;
+        private System.Windows.Forms.CheckBox checkUseOtus;
     }
 }

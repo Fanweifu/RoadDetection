@@ -53,7 +53,7 @@
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.svmControl = new ShowOpenCVResult.AccordSVMPramasInput();
+            this.svmControl = new ShowOpenCVResult.AccordSVMParamsInput();
             this.panel2 = new System.Windows.Forms.Panel();
             this.btnClassifyElimination = new System.Windows.Forms.Button();
             this.btnDoTrain = new System.Windows.Forms.Button();
@@ -571,7 +571,7 @@
 
         #endregion
 
-        private AccordSVMPramasInput svmControl;
+        private AccordSVMParamsInput svmControl;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button btnClassifyElimination;

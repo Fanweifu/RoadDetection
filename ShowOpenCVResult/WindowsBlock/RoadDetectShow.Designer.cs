@@ -129,8 +129,8 @@
             this.tsbtnPlayPause.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnPlayPause.Image")));
             this.tsbtnPlayPause.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnPlayPause.Name = "tsbtnPlayPause";
-            this.tsbtnPlayPause.Size = new System.Drawing.Size(81, 22);
-            this.tsbtnPlayPause.Text = "暂停/播放";
+            this.tsbtnPlayPause.Size = new System.Drawing.Size(90, 22);
+            this.tsbtnPlayPause.Text = "Pause/Play";
             this.tsbtnPlayPause.Click += new System.EventHandler(this.toolStripButton2_Click);
             // 
             // tsbtnUpdate
@@ -139,8 +139,8 @@
             this.tsbtnUpdate.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnUpdate.Image")));
             this.tsbtnUpdate.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnUpdate.Name = "tsbtnUpdate";
-            this.tsbtnUpdate.Size = new System.Drawing.Size(71, 22);
-            this.tsbtnUpdate.Text = "Updata";
+            this.tsbtnUpdate.Size = new System.Drawing.Size(87, 22);
+            this.tsbtnUpdate.Text = "OnReflash";
             this.tsbtnUpdate.ToolTipText = "更新";
             // 
             // toolStripSeparator3
@@ -153,8 +153,8 @@
             this.tsbtnLoadSvm.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnLoadSvm.Image")));
             this.tsbtnLoadSvm.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnLoadSvm.Name = "tsbtnLoadSvm";
-            this.tsbtnLoadSvm.Size = new System.Drawing.Size(103, 22);
-            this.tsbtnLoadSvm.Text = "LoadSVMFile";
+            this.tsbtnLoadSvm.Size = new System.Drawing.Size(108, 22);
+            this.tsbtnLoadSvm.Text = "Load_SVMFile";
             this.tsbtnLoadSvm.Click += new System.EventHandler(this.toolStripButton4_Click);
             // 
             // tsbtnTest
@@ -162,8 +162,8 @@
             this.tsbtnTest.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnTest.Image")));
             this.tsbtnTest.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnTest.Name = "tsbtnTest";
-            this.tsbtnTest.Size = new System.Drawing.Size(75, 22);
-            this.tsbtnTest.Text = "ImgTest";
+            this.tsbtnTest.Size = new System.Drawing.Size(99, 22);
+            this.tsbtnTest.Text = "OneImgTest";
             this.tsbtnTest.Click += new System.EventHandler(this.toolStripButton5_Click_1);
             // 
             // tsbtnReloadParams
@@ -172,7 +172,7 @@
             this.tsbtnReloadParams.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnReloadParams.Name = "tsbtnReloadParams";
             this.tsbtnReloadParams.Size = new System.Drawing.Size(103, 22);
-            this.tsbtnReloadParams.Text = "ResetPramas";
+            this.tsbtnReloadParams.Text = "ResetParams";
             this.tsbtnReloadParams.Click += new System.EventHandler(this.toolStripButton3_Click);
             // 
             // toolStripSeparator2
@@ -185,7 +185,7 @@
             this.tsbtnStartRecord.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnStartRecord.Image")));
             this.tsbtnStartRecord.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnStartRecord.Name = "tsbtnStartRecord";
-            this.tsbtnStartRecord.Size = new System.Drawing.Size(97, 22);
+            this.tsbtnStartRecord.Size = new System.Drawing.Size(97, 21);
             this.tsbtnStartRecord.Text = "StartRecord";
             this.tsbtnStartRecord.ToolTipText = "StartRecord";
             this.tsbtnStartRecord.Click += new System.EventHandler(this.tsbtnStartRecord_Click);
@@ -195,18 +195,19 @@
             this.tsbtnEnd.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnEnd.Image")));
             this.tsbtnEnd.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnEnd.Name = "tsbtnEnd";
-            this.tsbtnEnd.Size = new System.Drawing.Size(50, 22);
+            this.tsbtnEnd.Size = new System.Drawing.Size(50, 21);
             this.tsbtnEnd.Text = "End";
             this.tsbtnEnd.ToolTipText = "StartRecord";
             this.tsbtnEnd.Click += new System.EventHandler(this.tsbtnEnd_Click);
             // 
             // imageIOControl1
             // 
+            this.imageIOControl1.AutoDispose = false;
             this.imageIOControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.imageIOControl1.InImage = null;
-            this.imageIOControl1.OutImage = null;
             this.imageIOControl1.Location = new System.Drawing.Point(0, 0);
             this.imageIOControl1.Name = "imageIOControl1";
+            this.imageIOControl1.OutImage = null;
             this.imageIOControl1.Size = new System.Drawing.Size(823, 458);
             this.imageIOControl1.SpOrientation = System.Windows.Forms.Orientation.Vertical;
             this.imageIOControl1.TabIndex = 2;

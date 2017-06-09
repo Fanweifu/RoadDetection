@@ -268,7 +268,7 @@ namespace ShowOpenCVResult
             selectIndex = index;
             Calfam(cons[index]);
 
-            if (imageIOControl1.InImage != null) imageIOControl1.InImage.Dispose();
+            
 
             imageIOControl1.InImage = img;
 
@@ -403,7 +403,7 @@ namespace ShowOpenCVResult
 
             
             }
-            if (imageIOControl1.InImage != null) imageIOControl1.InImage.Dispose();
+            
             imageIOControl1.InImage = selectimg;
         }
 
@@ -455,7 +455,7 @@ namespace ShowOpenCVResult
             sw.Stop();
             MessageBox.Show(string.Format("耗时{0}毫秒", sw.ElapsedMilliseconds));
 
-            if (imageIOControl1.InImage != null) imageIOControl1.InImage.Dispose();
+            
             imageIOControl1.InImage = result;
         }
 

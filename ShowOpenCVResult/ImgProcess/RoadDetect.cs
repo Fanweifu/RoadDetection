@@ -13,13 +13,13 @@ using ShowOpenCVResult.Properties;
 
 namespace ShowOpenCVResult.ImgProcess
 {
-    interface ILoadPramas
+    interface ILoadParams
     {
         void LoadSetting();
 
     }
 
-    public class RoadTransformation: ILoadPramas
+    public class RoadTransformation: ILoadParams
     {
         #region Field
         private float m_AX = 0.25f;
@@ -94,20 +94,6 @@ namespace ShowOpenCVResult.ImgProcess
             }
         }
 
-        public static RoadTransformation Default
-        {
-            get
-            {
-                if (m_default == null)
-                {
-                    m_default = new RoadTransformation();
-                    m_default.LoadSetting();
-                }
-
-                return m_default;
-            }
-        }
-
         public Inter InterType
         {
             get
@@ -138,9 +124,9 @@ namespace ShowOpenCVResult.ImgProcess
 
         #region Construct
 
-        private RoadTransformation()
+        public RoadTransformation()
         {
-
+            LoadSetting();
         }
 
         #endregion
@@ -207,7 +193,7 @@ namespace ShowOpenCVResult.ImgProcess
         #endregion
     }
 
-    public class LaneDetect:ILoadPramas
+    public class LaneDetect:ILoadParams
     {
         #region Field
         int m_HuoghThreshold = 0;
@@ -246,8 +232,9 @@ namespace ShowOpenCVResult.ImgProcess
             if (!m_loadParams) return null;
             if (img == null || img.IsEmpty || img.Depth != DepthType.Cv8U || img.NumberOfChannels != 1) throw new ArgumentException("img is unvalid");
             m_size = img.Size;
-            Mat edge = new Mat();
-            CvInvoke.Canny(img, edge, m_CannyThreshold, m_CannyThresholdLink);
+            Mat edge = OpencvMath.MyHorizontalCanny(img, m_CannyThreshold, m_CannyThresholdLink);
+
+            //CvInvoke.Canny(img, edge, m_CannyThreshold, m_CannyThresholdLink);
             var result = CvInvoke.HoughLinesP(edge, m_rho, m_theata, m_HuoghThreshold, m_HuoghMinLength, m_HuoghMaxGrap);
             ///to  delect
             //var mat = new Mat(edge.Size, DepthType.Cv8U, 3);
@@ -287,7 +274,7 @@ namespace ShowOpenCVResult.ImgProcess
                             double angle = Math.Abs(lnj.GetExteriorAngleDegree(lnk));
                             if (angle > 90)
                                 angle = 180 - angle;
-                            if (/*Math.Abs(result.Y) < size.Height / 5 && result.Y > 0 &&*/ Math.Abs(jx - kx) > m_size.Width/ 4 && angle < 4)
+                            if (/*Math.Abs(result.Y) < size.Height / 5 && result.Y > 0 &&*/ Math.Abs(jx - kx) > m_size.Width/ 4 && angle < 2.5)
                                 return new LineSegment2D[] { lines[k], lines[j] };
                         }
                     }
@@ -384,6 +371,7 @@ namespace ShowOpenCVResult.ImgProcess
         }
 
         #endregion
+
         void normalize(Mat inputimg,out double mingray, out double maxgray)
         {
             Mat rect = new Mat(inputimg, new Rectangle(new Point(inputimg.Width / 6, inputimg.Height / 4), new Size(inputimg.Width / 3 * 2, inputimg.Height / 2)));
@@ -400,15 +388,15 @@ namespace ShowOpenCVResult.ImgProcess
 
         public void RoadPreProcess(Mat inputimg)
         {
-            double mingray = 0, maxgray = 0;
-            normalize(inputimg, out mingray, out maxgray);
+            // double mingray = 0, maxgray = 0;
+            //normalize(inputimg, out mingray, out maxgray);
             CvInvoke.MedianBlur(inputimg, inputimg, MeadinSize * 2 + 1);
-            CvInvoke.MorphologyEx(inputimg, inputimg, MorphOp.Close, m_structElement, new Point(-1, -1), 1, BorderType.Default, new MCvScalar(0));
+            //CvInvoke.MorphologyEx(inputimg, inputimg, MorphOp.Close, m_structElement, new Point(-1, -1), 1, BorderType.Default, new MCvScalar(0));
         }
 
     }
 
-    public class ContoursSegment : ILoadPramas
+    public class ContoursSegment : ILoadParams
     {
         #region Field
         double m_minLenght = 0;
@@ -419,7 +407,10 @@ namespace ShowOpenCVResult.ImgProcess
 
         int m_adBlockSize = 0;
         double m_adParams = 0;
-        
+
+        Size m_vertialOpenSize = default(Size);
+        Mat m_structElement = null;
+
         //MulticlassSupportVectorMachine m_svm = null;
 
         bool[] m_usetag = null;
@@ -443,16 +434,39 @@ namespace ShowOpenCVResult.ImgProcess
         {
             //m_svm = MulticlassSupportVectorMachine.Load("svm.dat");
             LoadSetting();
+            VertialOpenSize = new Size(2, 5);
         }
 
 
         #endregion
 
-        Mat imgSegment(Mat img)
+        public Size VertialOpenSize
+        {
+            get
+            {
+                return m_vertialOpenSize;
+            }
+
+            set
+            {
+                if (m_vertialOpenSize != value)
+                {
+                    m_structElement = CvInvoke.GetStructuringElement(ElementShape.Rectangle, value, new Point(-1, -1));
+                    m_vertialOpenSize = value;
+                }
+
+            }
+        }
+
+        Mat imgSegment(Mat img,Mat roadmask)
         {
             Mat linesegmentimg = new Mat();
             CvInvoke.AdaptiveThreshold(img, linesegmentimg, 255, AdaptiveThresholdType.MeanC, ThresholdType.Binary, m_adBlockSize * 2 + 1, m_adParams);
-            CvInvoke.BitwiseAnd(linesegmentimg, RoadTransformation.Default.RoadMask, linesegmentimg);
+            //Mat outs = new Mat();
+            //CvInvoke.Threshold(img, outs, 255, 255, ThresholdType.Otsu);
+            //CvInvoke.BitwiseAnd(linesegmentimg, outs, linesegmentimg);
+            CvInvoke.MorphologyEx(linesegmentimg, linesegmentimg , MorphOp.Close, m_structElement, new Point(-1, -1), 1, BorderType.Default, new MCvScalar(0));
+            CvInvoke.BitwiseAnd(linesegmentimg, roadmask, linesegmentimg);
             return linesegmentimg;
         }
 
@@ -473,7 +487,6 @@ namespace ShowOpenCVResult.ImgProcess
                 double area = CvInvoke.ContourArea(vp);
                 double length = CvInvoke.ArcLength(vp, true);
                 if (!(area >= m_minArea && area <=m_maxArea &&length >= m_minLenght  && area / length < m_maxwidth)) continue;
-
                 var rect = CvInvoke.MinAreaRect(vp);
                 //double rate = area / (rect.Size.Width * rect.Size.Height);
                 //if (rate < config.MinRateToRect) continue;
@@ -496,10 +509,9 @@ namespace ShowOpenCVResult.ImgProcess
             return layer % 2 == 0;
         }
 
-        public VectorOfVectorOfPoint GetSelectContours(Mat img, ref Mat imgseg, ref bool [] usetag)
+        public VectorOfVectorOfPoint GetSelectContours(Mat img ,Mat mask, ref bool [] usetag)
         {
-            var seg = imgSegment(img);
-            imgseg = seg.Clone();
+            var seg = imgSegment(img,mask);
             var result = getContours(seg, ref usetag);
             seg.Dispose();
             return result;
@@ -596,6 +608,7 @@ namespace ShowOpenCVResult.ImgProcess
 
     public class RoadDetect
     {
+        private Rectangle rectroi = default(Rectangle);
         private RoadTransformation m_trans = null;// RoadTransform.Default;
         private PreProcess m_precess = null;// new PreProcess();
         private ContoursSegment m_contours = null;//= new ContoursSegment();
@@ -609,9 +622,10 @@ namespace ShowOpenCVResult.ImgProcess
 
         public RoadDetect(string svmDataPath)
         {
+            rectroi = Settings.Default.DetectArea;
             int ow = m_config.OW, oh = m_config.OH;
             //Rectangle rect = new Rectangle(ow / 32 , oh / 8, ow / 16 * 15, oh / 32 * 27);
-            m_trans = RoadTransformation.Default;
+            m_trans = new RoadTransformation();
             m_precess = new PreProcess();
             m_svm = new RoadSvm(svmDataPath);
             m_lane = new LaneDetect(new Size(ow,oh));
@@ -619,28 +633,28 @@ namespace ShowOpenCVResult.ImgProcess
         }
 
 
-        public  VectorOfVectorOfPoint MainDetectAfterWarp(Mat warpimg,ref Mat segimg ,ref int[] labels , ref LineSegment2D[] lines,out long time){
+        public  VectorOfVectorOfPoint MainDetectAfterWarp(Mat warpimg ,ref int[] labels , ref LineSegment2D[] lines,out long time){
             Stopwatch sw = Stopwatch.StartNew();
             bool[] usetag = null;
             lines = m_lane.Detect(warpimg);
             m_precess.RoadPreProcess(warpimg);
-            var vvp = m_contours.GetSelectContours(warpimg, ref segimg,ref usetag);
+            var vvp = m_contours.GetSelectContours(warpimg ,m_trans.RoadMask,ref usetag);
             labels = m_svm.Predict(vvp, usetag);
             sw.Stop();
             time = sw.ElapsedMilliseconds;
             return vvp;
         }
-        public VectorOfVectorOfPoint MainDetect(Mat roi,ref Mat segimg ,ref int[] labels , ref LineSegment2D[] lines,out long time)
+        public VectorOfVectorOfPoint MainDetect(Mat roi ,ref int[] labels , ref LineSegment2D[] lines,out long time)
         {
             Mat transimg = m_trans.ImgWarpPerspective(roi);
-            return MainDetectAfterWarp(transimg, ref segimg, ref labels, ref lines,out time);
+            return MainDetectAfterWarp(transimg, ref labels, ref lines,out time);
         }
         public Point[][] GetOutputData(Mat orginimg, ref int[] labels, ref bool[] usetag, ref Point[][] linePts)
         {
             LineSegment2D[] lines = null;
             Mat segment = null;
             long time = 0;
-            var result = MainDetect(orginimg, ref segment, ref labels, ref lines,out time);
+            var result = MainDetect(orginimg , ref labels, ref lines,out time);
 
             if (lines == null || lines.Count() == 0)
                 linePts = new Point[0][] { };
@@ -701,7 +715,7 @@ namespace ShowOpenCVResult.ImgProcess
         }
         MCvScalar getcolor(int lebel)
         {
-            if (lebel >= 12)
+            if (lebel >= 10)
                 return new MCvScalar(127, 127, 127);
             else
             {
@@ -745,15 +759,16 @@ namespace ShowOpenCVResult.ImgProcess
             }
             return black;
         }
-        public Mat DetectAndShow(Mat imgroi, ref int offset, ref  int lanewidth,out long caltime)
+        public Mat DetectAndShow(Mat inputimg, ref int offset, ref  int lanewidth,out long caltime)
         {
-
+            Mat imgroi = new Mat(inputimg.Clone(), rectroi);
             Mat imggray = OpencvMath.MyBgrToGray(imgroi);
             int[] lebels = null;
             bool[] usetag = null;
             LineSegment2D[] lines = null;
-            Mat segmat = null;
-            var vvp = MainDetect(imggray, ref segmat, ref lebels , ref lines,out caltime);
+            Mat segmat = new Mat(m_trans.OutSize, DepthType.Cv8U, 1);
+            segmat.SetTo(default(MCvScalar));
+            var vvp = MainDetect(imggray , ref lebels , ref lines,out caltime);
             Mat svmresult = SvmResultImg(segmat, vvp, lebels);
             if (lines != null&& lines.Count() != 0)
             {
@@ -769,6 +784,7 @@ namespace ShowOpenCVResult.ImgProcess
 
         public void ReLoadParams()
         {
+            rectroi = Settings.Default.DetectArea;
             m_trans.LoadSetting();
             m_lane.LoadSetting();
             m_contours.LoadSetting();

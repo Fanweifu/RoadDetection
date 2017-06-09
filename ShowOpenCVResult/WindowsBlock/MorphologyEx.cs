@@ -47,8 +47,8 @@ namespace ShowOpenCVResult
 
         private void imageIOControl1_DoImgChange(object sender, EventArgs e)
         {
+            if (imageIOControl1.InImage == null) return;
             
-
             int x = mybarX.Value;
             int y = mybarY.Value;
             Image<Bgr, Byte> img = new Image<Bgr, byte>(imageIOControl1.InImage.Size);

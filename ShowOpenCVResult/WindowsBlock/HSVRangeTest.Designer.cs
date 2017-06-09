@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(HSVRangeTest));
             this.imageIO1 = new ShowOpenCVResult.ImageIO();
             this.panel1 = new System.Windows.Forms.Panel();
             this.vmaxbar = new ShowOpenCVResult.MyTrackBar();
@@ -46,11 +45,12 @@
             // 
             // imageIO1
             // 
+            this.imageIO1.AutoDispose = false;
             this.imageIO1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.imageIO1.InImage = null;
-            this.imageIO1.OutImage = null;
             this.imageIO1.Location = new System.Drawing.Point(0, 153);
             this.imageIO1.Name = "imageIO1";
+            this.imageIO1.OutImage = null;
             this.imageIO1.Size = new System.Drawing.Size(724, 291);
             this.imageIO1.SpOrientation = System.Windows.Forms.Orientation.Vertical;
             this.imageIO1.TabIndex = 0;
@@ -80,7 +80,7 @@
             this.vmaxbar.Size = new System.Drawing.Size(357, 43);
             this.vmaxbar.TabIndex = 5;
             this.vmaxbar.Title = "vmax";
-            this.vmaxbar.Value = 200;
+            this.vmaxbar.Value = 255;
             this.vmaxbar.ValueChanged += new System.EventHandler(this.vmaxbar_ValueChanged);
             // 
             // vminbar
@@ -93,7 +93,7 @@
             this.vminbar.Size = new System.Drawing.Size(357, 43);
             this.vminbar.TabIndex = 4;
             this.vminbar.Title = "vmin";
-            this.vminbar.Value = 100;
+            this.vminbar.Value = 0;
             this.vminbar.ValueChanged += new System.EventHandler(this.vminbar_ValueChanged);
             // 
             // smaxbar
@@ -106,7 +106,7 @@
             this.smaxbar.Size = new System.Drawing.Size(357, 43);
             this.smaxbar.TabIndex = 3;
             this.smaxbar.Title = "smax";
-            this.smaxbar.Value = 200;
+            this.smaxbar.Value = 255;
             this.smaxbar.ValueChanged += new System.EventHandler(this.smaxbar_ValueChanged);
             // 
             // sminbar
@@ -119,7 +119,7 @@
             this.sminbar.Size = new System.Drawing.Size(357, 43);
             this.sminbar.TabIndex = 2;
             this.sminbar.Title = "smin";
-            this.sminbar.Value = 100;
+            this.sminbar.Value = 0;
             this.sminbar.ValueChanged += new System.EventHandler(this.sminbar_ValueChanged);
             // 
             // hmaxbar
@@ -132,7 +132,7 @@
             this.hmaxbar.Size = new System.Drawing.Size(357, 43);
             this.hmaxbar.TabIndex = 1;
             this.hmaxbar.Title = "hmax";
-            this.hmaxbar.Value = 150;
+            this.hmaxbar.Value = 180;
             this.hmaxbar.ValueChanged += new System.EventHandler(this.hmaxbar_ValueChanged);
             // 
             // hminbar
@@ -145,7 +145,7 @@
             this.hminbar.Size = new System.Drawing.Size(357, 43);
             this.hminbar.TabIndex = 0;
             this.hminbar.Title = "hmin";
-            this.hminbar.Value = 30;
+            this.hminbar.Value = 0;
             this.hminbar.ValueChanged += new System.EventHandler(this.hminbar_ValueChanged);
             // 
             // toolStrip1
@@ -161,20 +161,18 @@
             // 
             // toolStripButton1
             // 
-            //this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(60, 22);
+            this.toolStripButton1.Size = new System.Drawing.Size(44, 22);
             this.toolStripButton1.Text = "Open";
             this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
             // toolStripButton2
             // 
             this.toolStripButton2.CheckOnClick = true;
-            //this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
             this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(88, 22);
+            this.toolStripButton2.Size = new System.Drawing.Size(72, 22);
             this.toolStripButton2.Text = "Normalize";
             // 
             // HSVRangeTest

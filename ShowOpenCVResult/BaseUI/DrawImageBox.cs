@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Data;
-using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
 using Emgu.CV.UI;
 using Emgu.CV;
 using Emgu.CV.Structure;
+using System.Linq;
 
 namespace ShowOpenCVResult
 {
@@ -61,7 +61,7 @@ namespace ShowOpenCVResult
 
         void DrawImageBox_DragDrop(object sender, DragEventArgs e)
         {
-            if (Image != null ) return;
+            
 
             if (e.Effect == DragDropEffects.Copy || e.Effect == DragDropEffects.Move)
             {

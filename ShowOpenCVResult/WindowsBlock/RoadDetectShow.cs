@@ -205,6 +205,7 @@ namespace ShowOpenCVResult
                 long sumtime = 0;
                 while (cnt++ < playcnt)
                 {
+                    if (isclosewindows) return;
                     if (!isinplay)
                         mr.WaitOne();
                     Stopwatch sw = Stopwatch.StartNew();
@@ -213,6 +214,7 @@ namespace ShowOpenCVResult
                     imageIOControl1.InImage = img;
 
                     Invoke(new Action(() => {
+                        if (isclosewindows) return;
                         tspbProcess.Value++;
                     }));
 
@@ -229,7 +231,6 @@ namespace ShowOpenCVResult
                             sumtime += time;
                             Invoke(new Action(() =>
                             {
-                                if (!imageIOControl1.IsDisposed) imageIOControl1.Refresh();
                                 tsslbShow.Text = string.Format("总体耗时:{0}ms,播放帧数{1},当前耗时:{2}平均耗时{3}", sumtime, cnt, time, sumtime / cnt);
                             }));
 
@@ -260,8 +261,7 @@ namespace ShowOpenCVResult
 
 
             int offest = lastoffset, lanewidth = lastlane;
-            Mat imgroi = new Mat(img.Clone(), Properties.Settings.Default.DetectArea);
-            Mat result = m_detector.DetectAndShow(imgroi, ref offest, ref lanewidth, out time);
+            Mat result = m_detector.DetectAndShow(img, ref offest, ref lanewidth, out time);
 
             //img = img.Clone();
             //LineSegment2D[] lines = null;
@@ -340,6 +340,7 @@ namespace ShowOpenCVResult
 
         private void toolStripButton3_Click(object sender, EventArgs e)
         {
+            if (m_detector == null) return;
             m_detector.ReLoadParams();
             if (null == imageIOControl1.InImage) return;
             Mat img = imageIOControl1.InImage as Mat;
@@ -362,8 +363,8 @@ namespace ShowOpenCVResult
 
         private void tsbtnConnectcam_Click(object sender, EventArgs e)
         {
-            m_captrue = new Emgu.CV.Capture(0);
-
+            m_captrue = new Emgu.CV.Capture(1);
+            tsbtnPlayPause.Enabled = true;
             playthead = new Task(() =>
             {
                 long sumtime = 0;
@@ -391,7 +392,7 @@ namespace ShowOpenCVResult
                             if (m_detector == null) return;
                             doprocess(img, out time);
                             sumtime += time;
-                            if (!this.IsDisposed)
+                            if (!IsDisposed)
                             {
                                Invoke(new Action(() =>
                                {
@@ -450,9 +451,12 @@ namespace ShowOpenCVResult
             if (m_captrue == null) return;
             Size size = new Size(m_captrue.Width, m_captrue.Height);
             vw = new VideoWriter(string.Format(@"C:\Users\fwf\Desktop\cv\videos\{0}.avi", DateTime.Now.Millisecond),/* VideoWriter.Fourcc('w', 'm', 'v', '3'),*/15, size, true);
+      
+      
+
             imgtowirte = new Mat(size, DepthType.Cv8U, 3);
-            m_captrue.ImageGrabbed += M_captrue_ImageGrabbed; 
-            
+            m_captrue.ImageGrabbed += M_captrue_ImageGrabbed;
+
         }
 
         private void M_captrue_ImageGrabbed(object sender, EventArgs e)

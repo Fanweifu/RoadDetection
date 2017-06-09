@@ -83,22 +83,25 @@ namespace ShowOpenCVResult.ImgProcess
             return new Rectangle(new Point((int)rr.Center.X - length / 2, (int)rr.Center.Y - length / 2), new Size(length, length));
         }
 
-        public Rectangle Track(Mat curimg ,int index =1,int stopsize =3)
+        public Rectangle Track(Mat orimg ,int index =1,int stopsize =3)
         {
             if (lastimg == null || lastimg.IsEmpty || lastimg.NumberOfChannels != 3
-                || curimg == null || curimg.IsEmpty || curimg.NumberOfChannels != 3
+                || orimg == null || orimg.IsEmpty || orimg.NumberOfChannels != 3
             ) return m_currect;
-            if (!judgeRectInSize(curimg.Size, m_currect)||m_currect.Size.Height<stopsize|| m_currect.Size.Width < stopsize)
+            if (!judgeRectInSize(orimg.Size, m_currect)||m_currect.Size.Height<stopsize|| m_currect.Size.Width < stopsize)
             {
                 Reset();
                 return m_currect;
             }
+
+            Mat dataimg = orimg.Clone();
+            
             Mat matroi = new Mat(lastimg, m_currect);
             var himg = getHimg(matroi, index);
 
             DenseHistogram dh = new DenseHistogram(256, new RangeF(0, 255));
             dh.Calculate(new Image<Gray, byte>[] { himg }, false, null);
-            var curh = getHimg(curimg, index);
+            var curh = getHimg(dataimg, index);
             var bpimg = dh.BackProject(new Image<Gray, byte>[] { curh });
 
             //int[] bins = new int[] { 181, 256, 256 };
@@ -113,7 +116,7 @@ namespace ShowOpenCVResult.ImgProcess
 
             //CvInvoke.MeanShift(bpimg, ref m_currect, m_criteria);
             lastimg.Dispose();
-            lastimg = curimg;
+            lastimg = dataimg;
             return m_currect;
         }
 
