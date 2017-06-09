@@ -15,6 +15,7 @@ using Emgu.CV;
 using Emgu.CV.Structure;
 using ShowOpenCVResult.Properties;
 using System.Xml;
+using ShowOpenCVResult.Windows;
 
 namespace ShowOpenCVResult
 {

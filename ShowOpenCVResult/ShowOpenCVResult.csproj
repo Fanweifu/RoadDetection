@@ -170,128 +170,128 @@
     <Compile Include="BaseUI\AccordSVMPramasInput.Designer.cs">
       <DependentUpon>AccordSVMPramasInput.cs</DependentUpon>
     </Compile>
-    <Compile Include="HsvTrack.cs">
+    <Compile Include="Windows\HsvTrack.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="HsvTrack.Designer.cs">
+    <Compile Include="Windows\HsvTrack.Designer.cs">
       <DependentUpon>HsvTrack.cs</DependentUpon>
     </Compile>
     <Compile Include="ImgProcess\ObjectTrack.cs" />
-    <Compile Include="ORC.cs">
+    <Compile Include="Windows\ORC.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ORC.Designer.cs">
+    <Compile Include="Windows\ORC.Designer.cs">
       <DependentUpon>ORC.cs</DependentUpon>
     </Compile>
-    <Compile Include="Videotoimg.cs">
+    <Compile Include="Windows\Videotoimg.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Videotoimg.Designer.cs">
+    <Compile Include="Windows\Videotoimg.Designer.cs">
       <DependentUpon>Videotoimg.cs</DependentUpon>
     </Compile>
     <Compile Include="ImgProcess\RoadDetect.cs" />
-    <Compile Include="WindowsBlock\SetROI.cs">
+    <Compile Include="Windows\SetROI.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WindowsBlock\SetROI.Designer.cs">
+    <Compile Include="Windows\SetROI.Designer.cs">
       <DependentUpon>SetROI.cs</DependentUpon>
     </Compile>
     <Compile Include="Settings.cs" />
-    <Compile Include="WindowsBlock\AccordSvmTrain.cs">
+    <Compile Include="Windows\AccordSvmTrain.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WindowsBlock\AccordSvmTrain.Designer.cs">
+    <Compile Include="Windows\AccordSvmTrain.Designer.cs">
       <DependentUpon>AccordSvmTrain.cs</DependentUpon>
     </Compile>
-    <Compile Include="WindowsBlock\HSVRangeTest.cs">
+    <Compile Include="Windows\HSVRangeTest.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WindowsBlock\HSVRangeTest.Designer.cs">
+    <Compile Include="Windows\HSVRangeTest.Designer.cs">
       <DependentUpon>HSVRangeTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="WindowsBlock\VideoFindMechine.cs">
+    <Compile Include="Windows\VideoFindMechine.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WindowsBlock\VideoFindMechine.Designer.cs">
+    <Compile Include="Windows\VideoFindMechine.Designer.cs">
       <DependentUpon>VideoFindMechine.cs</DependentUpon>
     </Compile>
-    <Compile Include="WindowsBlock\EmguSVMTrain.cs">
+    <Compile Include="Windows\EmguSVMTrain.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WindowsBlock\EmguSVMTrain.designer.cs">
+    <Compile Include="Windows\EmguSVMTrain.designer.cs">
       <DependentUpon>EmguSVMTrain.cs</DependentUpon>
     </Compile>
     <Compile Include="ImgProcess\BaseFunc.cs" />
-    <Compile Include="WindowsBlock\AdaptiveThreshold.cs">
+    <Compile Include="Windows\AdaptiveThreshold.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WindowsBlock\AdaptiveThreshold.Designer.cs">
+    <Compile Include="Windows\AdaptiveThreshold.Designer.cs">
       <DependentUpon>AdaptiveThreshold.cs</DependentUpon>
     </Compile>
-    <Compile Include="WindowsBlock\Blur.cs">
+    <Compile Include="Windows\Blur.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WindowsBlock\Blur.Designer.cs">
+    <Compile Include="Windows\Blur.Designer.cs">
       <DependentUpon>Blur.cs</DependentUpon>
     </Compile>
-    <Compile Include="WindowsBlock\WalkerDetect.cs">
+    <Compile Include="Windows\WalkerDetect.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WindowsBlock\WalkerDetect.Designer.cs">
+    <Compile Include="Windows\WalkerDetect.Designer.cs">
       <DependentUpon>WalkerDetect.cs</DependentUpon>
     </Compile>
-    <Compile Include="WindowsBlock\TempTest.cs">
+    <Compile Include="Windows\TempTest.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WindowsBlock\TempTest.Designer.cs">
+    <Compile Include="Windows\TempTest.Designer.cs">
       <DependentUpon>TempTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="WindowsBlock\FindContours.cs">
+    <Compile Include="Windows\FindContours.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WindowsBlock\FindContours.Designer.cs">
+    <Compile Include="Windows\FindContours.Designer.cs">
       <DependentUpon>FindContours.cs</DependentUpon>
     </Compile>
-    <Compile Include="WindowsBlock\Harris.cs">
+    <Compile Include="Windows\Harris.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WindowsBlock\Harris.Designer.cs">
+    <Compile Include="Windows\Harris.Designer.cs">
       <DependentUpon>Harris.cs</DependentUpon>
     </Compile>
-    <Compile Include="WindowsBlock\RoadDetectShow.cs">
+    <Compile Include="Windows\RoadDetectShow.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WindowsBlock\RoadDetectShow.Designer.cs">
+    <Compile Include="Windows\RoadDetectShow.Designer.cs">
       <DependentUpon>RoadDetectShow.cs</DependentUpon>
     </Compile>
-    <Compile Include="WindowsBlock\HuoghLine.cs">
+    <Compile Include="Windows\HuoghLine.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WindowsBlock\HuoghLine.Designer.cs">
+    <Compile Include="Windows\HuoghLine.Designer.cs">
       <DependentUpon>HuoghLine.cs</DependentUpon>
     </Compile>
-    <Compile Include="WindowsBlock\MorphologyEx.cs">
+    <Compile Include="Windows\MorphologyEx.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WindowsBlock\MorphologyEx.Designer.cs">
+    <Compile Include="Windows\MorphologyEx.Designer.cs">
       <DependentUpon>MorphologyEx.cs</DependentUpon>
     </Compile>
-    <Compile Include="WindowsBlock\Stitching.cs">
+    <Compile Include="Windows\Stitching.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WindowsBlock\Stitching.Designer.cs">
+    <Compile Include="Windows\Stitching.Designer.cs">
       <DependentUpon>Stitching.cs</DependentUpon>
     </Compile>
-    <Compile Include="WindowsBlock\WarpPerspective.cs">
+    <Compile Include="Windows\WarpPerspective.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WindowsBlock\WarpPerspective.Designer.cs">
+    <Compile Include="Windows\WarpPerspective.Designer.cs">
       <DependentUpon>WarpPerspective.cs</DependentUpon>
     </Compile>
-    <Compile Include="WindowsBlock\CompareTest.cs">
+    <Compile Include="Windows\CompareTest.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WindowsBlock\CompareTest.Designer.cs">
+    <Compile Include="Windows\CompareTest.Designer.cs">
       <DependentUpon>CompareTest.cs</DependentUpon>
     </Compile>
     <Compile Include="BaseUI\DrawImageBox.cs">
@@ -303,22 +303,22 @@
     <Compile Include="ImgProcess\DrawMatches.cs" />
     <Compile Include="ImgProcess\FinderDetect.cs" />
     <Compile Include="ImgProcess\FindPedestrian.cs" />
-    <Compile Include="WindowsBlock\CreatAnglesImg.cs">
+    <Compile Include="Windows\CreatAnglesImg.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WindowsBlock\CreatAnglesImg.Designer.cs">
+    <Compile Include="Windows\CreatAnglesImg.Designer.cs">
       <DependentUpon>CreatAnglesImg.cs</DependentUpon>
     </Compile>
-    <Compile Include="WindowsBlock\FloodFill.cs">
+    <Compile Include="Windows\FloodFill.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WindowsBlock\FloodFill.Designer.cs">
+    <Compile Include="Windows\FloodFill.Designer.cs">
       <DependentUpon>FloodFill.cs</DependentUpon>
     </Compile>
-    <Compile Include="WindowsBlock\FinalTest.cs">
+    <Compile Include="Windows\FinalTest.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WindowsBlock\FinalTest.Designer.cs">
+    <Compile Include="Windows\FinalTest.Designer.cs">
       <DependentUpon>FinalTest.cs</DependentUpon>
     </Compile>
     <Compile Include="ImgProcess\HarrisTest.cs" />
@@ -349,82 +349,82 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WindowsBlock\SurfDetect.cs">
+    <Compile Include="Windows\SurfDetect.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WindowsBlock\SurfDetect.Designer.cs">
+    <Compile Include="Windows\SurfDetect.Designer.cs">
       <DependentUpon>SurfDetect.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="BaseUI\AccordSVMPramasInput.resx">
       <DependentUpon>AccordSVMPramasInput.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="HsvTrack.resx">
+    <EmbeddedResource Include="Windows\HsvTrack.resx">
       <DependentUpon>HsvTrack.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ORC.resx">
+    <EmbeddedResource Include="Windows\ORC.resx">
       <DependentUpon>ORC.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Videotoimg.resx">
+    <EmbeddedResource Include="Windows\Videotoimg.resx">
       <DependentUpon>Videotoimg.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WindowsBlock\HSVRangeTest.resx">
+    <EmbeddedResource Include="Windows\HSVRangeTest.resx">
       <DependentUpon>HSVRangeTest.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WindowsBlock\SetROI.resx">
+    <EmbeddedResource Include="Windows\SetROI.resx">
       <DependentUpon>SetROI.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WindowsBlock\AccordSvmTrain.resx">
+    <EmbeddedResource Include="Windows\AccordSvmTrain.resx">
       <DependentUpon>AccordSvmTrain.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WindowsBlock\VideoFindMechine.resx">
+    <EmbeddedResource Include="Windows\VideoFindMechine.resx">
       <DependentUpon>VideoFindMechine.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WindowsBlock\EmguSVMTrain.resx">
+    <EmbeddedResource Include="Windows\EmguSVMTrain.resx">
       <DependentUpon>EmguSVMTrain.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WindowsBlock\AdaptiveThreshold.resx">
+    <EmbeddedResource Include="Windows\AdaptiveThreshold.resx">
       <DependentUpon>AdaptiveThreshold.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WindowsBlock\Blur.resx">
+    <EmbeddedResource Include="Windows\Blur.resx">
       <DependentUpon>Blur.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WindowsBlock\WalkerDetect.resx">
+    <EmbeddedResource Include="Windows\WalkerDetect.resx">
       <DependentUpon>WalkerDetect.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WindowsBlock\TempTest.resx">
+    <EmbeddedResource Include="Windows\TempTest.resx">
       <DependentUpon>TempTest.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WindowsBlock\FindContours.resx">
+    <EmbeddedResource Include="Windows\FindContours.resx">
       <DependentUpon>FindContours.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WindowsBlock\Harris.resx">
+    <EmbeddedResource Include="Windows\Harris.resx">
       <DependentUpon>Harris.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WindowsBlock\RoadDetectShow.resx">
+    <EmbeddedResource Include="Windows\RoadDetectShow.resx">
       <DependentUpon>RoadDetectShow.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WindowsBlock\HuoghLine.resx">
+    <EmbeddedResource Include="Windows\HuoghLine.resx">
       <DependentUpon>HuoghLine.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WindowsBlock\MorphologyEx.resx">
+    <EmbeddedResource Include="Windows\MorphologyEx.resx">
       <DependentUpon>MorphologyEx.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WindowsBlock\Stitching.resx">
+    <EmbeddedResource Include="Windows\Stitching.resx">
       <DependentUpon>Stitching.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WindowsBlock\WarpPerspective.resx">
+    <EmbeddedResource Include="Windows\WarpPerspective.resx">
       <DependentUpon>WarpPerspective.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WindowsBlock\CreatAnglesImg.resx">
+    <EmbeddedResource Include="Windows\CreatAnglesImg.resx">
       <DependentUpon>CreatAnglesImg.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WindowsBlock\CompareTest.resx">
+    <EmbeddedResource Include="Windows\CompareTest.resx">
       <DependentUpon>CompareTest.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WindowsBlock\FloodFill.resx">
+    <EmbeddedResource Include="Windows\FloodFill.resx">
       <DependentUpon>FloodFill.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WindowsBlock\FinalTest.resx">
+    <EmbeddedResource Include="Windows\FinalTest.resx">
       <DependentUpon>FinalTest.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="BaseUI\ImageIO.resx">
@@ -449,7 +449,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="WindowsBlock\SurfDetect.resx">
+    <EmbeddedResource Include="Windows\SurfDetect.resx">
       <DependentUpon>SurfDetect.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Ocr\chi_sim.traineddata">
